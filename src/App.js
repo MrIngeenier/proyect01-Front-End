@@ -1,11 +1,15 @@
-import logo from './styles/App.css';
-import './App.css';
+import Principal from './pages/Principal';
+import HomePage from './pages/HomePage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/auth" element={< Principal/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
