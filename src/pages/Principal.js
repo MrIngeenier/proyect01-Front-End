@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import {Container,TextField,Button,Typography,Box, Avatar,CssBaseline,Grid,Link} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Container, TextField, Button, Typography, Box, Avatar, CssBaseline, Grid, Link } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -9,6 +10,7 @@ const theme = createTheme();
 function Principal() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Hook useNavigate dentro del componente
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -22,20 +24,26 @@ function Principal() {
     e.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
+
+    // Redirigir a /home después del submit
+    navigate('/home');
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" sx={{ bgcolor: '#d2d1d1',  // Color de fondo gris
-    color: '#333',       // Color del texto
-    padding: 4,          // Espaciado interno
-    borderRadius: 4,     // Bordes redondeados
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Sombra
-    display: 'flex', 
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '80vh',marginTop:'5%' }}>
+      <Container component="main" maxWidth="xs" sx={{
+        bgcolor: '#d2d1d1',  // Color de fondo gris
+        color: '#333',       // Color del texto
+        padding: 4,          // Espaciado interno
+        borderRadius: 4,     // Bordes redondeados
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Sombra
+        display: 'flex', 
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '80vh',
+        marginTop: '5%'
+      }}>
         <CssBaseline />
         <Box
           sx={{
