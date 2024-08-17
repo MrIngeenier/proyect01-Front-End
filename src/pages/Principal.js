@@ -4,30 +4,41 @@ import { useNavigate } from 'react-router-dom';
 import { Container, TextField, Button, Typography, Box, Avatar, CssBaseline, Grid, Link } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import publicServices from '../service/public.services';
 
 const theme = createTheme();
 
 function Principal() {
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Hook useNavigate dentro del componente
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    setName(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email);
+    console.log('Email:', name);
     console.log('Password:', password);
 
-    // Redirigir a /home después del submit
-    navigate('/home');
-  };
+    try {
+      const data = await publicServices.login(name, password);
+      console.log('Login successful:', data);
+      localStorage.setItem('token', data.token);
+      
+      navigate('/home'); // Guarda el token si es necesario
+    } catch (error) {
+      //console.error('Login failed:', error.message);
+      alert('Login failed: Invalid credentials. Please check your username and password.');
+
+    }
+};
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,10 +77,10 @@ function Principal() {
               fullWidth
               id="text"
               label="User name"
-              name="email"
+              name="name"
               autoComplete="text"
               autoFocus
-              value={email}
+              value={name}
               onChange={handleEmailChange}
             />
             <TextField
