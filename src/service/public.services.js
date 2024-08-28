@@ -1,8 +1,10 @@
-const publicServices = {
+const loginServices = {
     // Función para el login
+
+    // http://localhost:10000/users/login - https://proyect01-back-end-8ujk.onrender.com/users/login
     async login(name, password) {
       try {
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/users/login', {
+        const response = await fetch('http://localhost:10000/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -24,9 +26,9 @@ const publicServices = {
     },
   
     // Función para el ping
-    async ping() {
+    async getUsers() {
       try {
-        const response = await fetch('http://localhost:10000/users/ping', {
+        const response = await fetch('http://localhost:10000/users/allUsers', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -41,13 +43,18 @@ const publicServices = {
           throw new Error(data.error || 'Ping failed');
         }
       } catch (error) {
-        console.error('Error during ping:', error);
+        console.error('Error during get all users:', error);
         throw error;
       }
     },
+
+    
+    
   
     // Puedes agregar más funciones aquí para manejar otras peticiones
   };
+
   
-  export default publicServices;
+  
+  export default loginServices;
   

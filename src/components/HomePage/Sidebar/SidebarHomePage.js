@@ -1,41 +1,43 @@
-import React from 'react';
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Box,
-  CssBaseline,
-  //Typography,
-} from '@mui/material';
+import React, { useState } from 'react';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Box, CssBaseline, IconButton, Switch, useMediaQuery, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SettingsIcon from '@mui/icons-material/Settings';
-
-const drawerWidth = 240;
+import LogoutIcon from '@mui/icons-material/Logout';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const SiderbarHomePage = () => {
-  // Función para manejar los clics en los botones
+  const [darkMode, setDarkMode] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width:600px)');
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
   const handleClick = (buttonName) => {
-    switch (buttonName) {
-      case 'Dashboard':
-        console.log('Has hecho clic en Dashboard');
-        break;
-      case 'Users':
-        console.log('Has hecho clic en Users');
-        break;
-      case 'Products':
-        console.log('Has hecho clic en Products');
-        break;
-      case 'Settings':
-        console.log('Has hecho clic en Settings');
-        break;
-      default:
-        console.log('Botón desconocido');
+    if (buttonName === 'Log Out') {
+      setDialogOpen(true); // Abre el diálogo de confirmación
+    } else {
+      console.log(`Has hecho clic en ${buttonName}`);
     }
+  };
+
+  const handleLogout = () => {
+    console.log('Usuario ha cerrado sesión');
+    setDialogOpen(false); // Cierra el diálogo
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false); // Cierra el diálogo sin cerrar sesión
   };
 
   return (
@@ -44,70 +46,111 @@ const SiderbarHomePage = () => {
       <Drawer
         variant="permanent"
         sx={{
-          width: drawerWidth,
+          width: open ? (isMobile ? 60 : 240) : (isMobile ? 60 : 70),
           flexShrink: 0,
+          transition: 'width 0.3s',
           '& .MuiDrawer-paper': {
-            width: drawerWidth,
+            width: open ? (isMobile ? 60 : 240) : (isMobile ? 60 : 70),
             boxSizing: 'border-box',
-            backgroundColor: 'rgba(25, 118, 210, 0.95)', // Azul oscuro con 50% de transparencia
-            color: '#ffffff', // Texto blanco
+            backgroundColor: darkMode ? '#333' : 'rgba(25, 118, 210, 0.95)',
+            color: '#ffffff',
+            transition: 'width 0.3s',
+             borderRadius:'10px'
           },
         }}
       >
-        <Toolbar>
-          <Box
-            component="img"
-            sx={{
-              height: 90,
-              width: 100,
-              borderRadius: '30%',
-              padding: '8px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              display: 'block',
-            }}
-            src="https://cdn-icons-png.flaticon.com/512/6463/6463383.png"
-            alt="Profile"
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0 8px',
+            minHeight: isMobile ? 'auto' : '64px',
+          }}
+        >
+          <IconButton onClick={toggleDrawer} sx={{ color: '#ffffff' }}>
+            <MenuIcon />
+          </IconButton>
+          
+          <Switch
+            checked={darkMode}
+            onChange={toggleDarkMode}
+            icon={<Brightness7Icon />}
+            checkedIcon={<Brightness4Icon />}
           />
         </Toolbar>
         <List
           sx={{
-            height: '80%', // Asegura que la lista ocupe todo el alto disponible
+            flexGrow: 1,
             display: 'flex',
             flexDirection: 'column',
-            padding:'10%',
-            
+            justifyContent: isMobile ? 'flex-start' : 'center',
+            alignItems: open ? 'flex-start' : 'center',
+            padding: open ? '10%' : '0',
+            transition: 'padding 0.3s',
           }}
         >
           {[
             { text: 'Dashboard', icon: <DashboardIcon /> },
             { text: 'Users', icon: <PeopleIcon /> },
             { text: 'Products', icon: <ShoppingCartIcon /> },
-            { text: 'Settings', icon: <SettingsIcon /> },
           ].map((item) => (
             <ListItem
               button
               key={item.text}
-              onClick={() => handleClick(item.text)} // Manejador de clics
+              onClick={() => handleClick(item.text)}
+              sx={{ justifyContent: open ? 'flex-start' : 'center' }}
             >
-              <ListItemIcon sx={{ color: '#ffffff' }}>
+              <ListItemIcon sx={{ color: '#ffffff', minWidth: 0, mr: open ? 2 : 'auto' }}>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText primary={item.text} />
+              {open && <ListItemText primary={item.text} />}
+            </ListItem>
+          ))}
+        </List>
+        <Box sx={{ flexGrow: 1 }} />
+        <List>
+          {[
+            { text: 'Settings', icon: <SettingsIcon /> },
+            { text: 'Log Out', icon: <LogoutIcon /> },
+          ].map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => handleClick(item.text)}
+              sx={{ justifyContent: open ? 'flex-start' : 'center' }}
+            >
+              <ListItemIcon sx={{ color: '#ffffff', minWidth: 0, mr: open ? 2 : 'auto' }}>
+                {item.icon}
+              </ListItemIcon>
+              {open && <ListItemText primary={item.text} />}
             </ListItem>
           ))}
         </List>
       </Drawer>
 
-     {/*  <Box component="main" sx={{ flexGrow: 1, bgcolor: '#f5f5f5', p: 3 }}>
-        <Toolbar />
-        <Typography variant="h4" gutterBottom>
-          Bienvenido a la Página Principal
-        </Typography>
-        <Typography variant="body1">
-          Aquí puedes agregar el contenido principal de tu aplicación.
-        </Typography>
-      </Box>*/}
+      {/* Diálogo de confirmación para Log Out */}
+      <Dialog
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirmación de Cierre de Sesión"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            ¿Estás seguro de que quieres cerrar sesión?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleLogout} color="primary" autoFocus>
+            Cerrar Sesión
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
