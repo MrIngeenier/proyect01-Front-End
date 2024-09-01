@@ -1,5 +1,6 @@
 import Principal from './pages/Principal';
 import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //const homePath = process.env.REACT_APP_HOME_PATH || '/home';
@@ -15,6 +16,7 @@ function App() {
 
         <Route path="/home" element={<HomePage />} />
         <Route path="/" element={< Principal/>} />
+        <Route path="/dash" element={< Dashboard/>} />
       </Routes>
     </BrowserRouter>
   );

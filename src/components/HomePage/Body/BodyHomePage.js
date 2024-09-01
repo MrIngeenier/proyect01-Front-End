@@ -6,13 +6,18 @@ import RegisterUsersForm from '../../Forms/registerUsers.from'
 
 function BodyHomepage() {
   return (
-    <div style={{ width:'100%'}}>
+    <div style={{display:'flex'}}>
+      <div style={{ width:'40%'}}>
+        <Getallusers/>
+      </div>
       
       
-      
-      <Getallusers/>
       <br></br>
-      <RegisterUsersForm/>
+      <div style={{ width:'40%'}}>
+        <RegisterUsersForm/>
+      </div>
+      
+      
      
     </div>
   );
