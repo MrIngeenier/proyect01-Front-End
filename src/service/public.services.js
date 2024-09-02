@@ -53,12 +53,64 @@ const loginServices = {
       }
     },
 
+    
+
     //
+    async addUsers(name, password, type) {
+      try {
+        const token = localStorage.getItem('token'); 
+        console.log(token);
+        const response = await fetch('http://localhost:10000/users/newUser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ name, password, type }),
+        });
+
+        const data = await response.json(); 
+        console.log(data);
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
+    },
+
+    async updateUser(name, newName, newPassword, newType) {
+      try {
+        const token = localStorage.getItem('token');
+         
+        console.log(token);
+        
+        const response = await fetch('http://localhost:10000/users/updateUser', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({ name, newName, newPassword, newType }),
+        });
     
-    
-  
-    // Puedes agregar más funciones aquí para manejar otras peticiones
+        const data = await response.json(); 
+        console.log(data);
+        
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error actualizando usuario:', error);
+      }
+    }
   };
+
+  
+  
 
   
   

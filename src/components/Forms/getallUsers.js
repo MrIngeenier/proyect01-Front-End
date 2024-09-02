@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Container, TextField, Button, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Dialog, DialogContent, DialogActions } from '@mui/material';
 import publicServices from '../../service/public.services';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateIcon from '@mui/icons-material/Update';
 import RegisterUsersForm from './registerUsers.from';
+import UpdateUsers from './updateUsers';
 
 function Getallusers() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogUpdate, setOpenDialogUpdate] = useState(false);
 
   const fetchUsers = async () => {
     try {
@@ -28,13 +30,13 @@ function Getallusers() {
   );
 
   const handleDelete = (userId) => {
-    // Lógica para eliminar el usuario
     console.log(`Delete user with ID: ${userId}`);
   };
 
   const handleUpdate = (userId) => {
-    // Lógica para actualizar el usuario
-    console.log(`Update user with ID: ${userId}`);
+    setOpenDialogUpdate(true);
+    console.log(`Update user with name: ${userId}`);
+    localStorage.setItem('userName', userId); // Guardar el userId en localStorage
   };
 
   const handleOpenDialog = () => {
@@ -45,11 +47,13 @@ function Getallusers() {
     setOpenDialog(false);
   };
 
+  const handleCloseDialogUpdate = () => {
+    setOpenDialogUpdate(false);
+  };
+
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Lista de Usuarios
-      </Typography>
+    <Container style={{ padding: 0, textAlign: 'center' }}>
+      <Typography variant="h5" gutterBottom>Lista de Usuarios</Typography>
       <TextField
         label="Buscar por nombre"
         variant="outlined"
@@ -64,7 +68,7 @@ function Getallusers() {
       <Button variant="contained" color="primary" onClick={handleOpenDialog} style={{ marginLeft: 20 }}>
         Agregar
       </Button>
-      <Paper style={{ marginTop: 20, overflowX: 'auto' }}>
+      <Paper style={{ marginTop: 20, maxHeight: 400, overflowY: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -84,7 +88,7 @@ function Getallusers() {
                   <Button variant="contained" color="error" onClick={() => handleDelete(user.id)} style={{ marginRight: 8 }}>
                     <DeleteForeverIcon />
                   </Button>
-                  <Button variant="contained" color="success" onClick={() => handleUpdate(user.id)}>
+                  <Button variant="contained" color="success" onClick={() => handleUpdate(user.name)}>
                     <UpdateIcon />
                   </Button>
                 </TableCell>
@@ -102,7 +106,17 @@ function Getallusers() {
           <Button onClick={handleCloseDialog} color="primary">
             Cancelar
           </Button>
-         
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={openDialogUpdate} onClose={handleCloseDialogUpdate}>
+        <DialogContent>
+          <UpdateUsers />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialogUpdate} color="primary">
+            Cancelar
+          </Button>
         </DialogActions>
       </Dialog>
     </Container>

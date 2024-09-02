@@ -1,38 +1,30 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Grid } from '@mui/material';
+import { Container, TextField, Button, Typography, Grid, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import publicServices from '../../service/public.services';
 
 const RegisterUsersForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    password: '',
-    type: '',
-  });
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [type, setType] = useState('');
 
   const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    if (name === 'name') setName(value);
+    if (name === 'password') setPassword(value);
+    if (name === 'type') setType(value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:10000/users/regiserUsers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        alert('Usuario registrado exitosamente');
-        setFormData({ name: '', password: '', type: '' });
-      } else {
-        alert('Error al registrar usuario');
-      }
+      await publicServices.addUsers(name, password, type);
+      alert('Usuario registrado exitosamente');
+      setName('');
+      setPassword('');
+      setType('');
     } catch (error) {
       console.error('Error registrando usuario:', error);
+      alert('Error al registrar usuario');
     }
   };
 
@@ -48,7 +40,7 @@ const RegisterUsersForm = () => {
               label="Nombre"
               name="name"
               variant="outlined"
-              value={formData.name}
+              value={name}
               onChange={handleChange}
               fullWidth
               required
@@ -60,22 +52,26 @@ const RegisterUsersForm = () => {
               name="password"
               type="password"
               variant="outlined"
-              value={formData.password}
+              value={password}
               onChange={handleChange}
               fullWidth
               required
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Tipo"
-              name="type"
-              variant="outlined"
-              value={formData.type}
-              onChange={handleChange}
-              fullWidth
-              required
-            />
+            <FormControl fullWidth variant="outlined" required>
+              <InputLabel>Tipo</InputLabel>
+              <Select
+                name="type"
+                value={type}
+                onChange={handleChange}
+                label="Tipo"
+              >
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="2">2</MenuItem>
+                <MenuItem value="3">3</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" fullWidth>
