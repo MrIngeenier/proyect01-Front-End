@@ -25,20 +25,25 @@ const loginServices = {
       }
     },
   
-    // Función para el ping
+    // Funcio para tomar todos los
     async getUsers() {
       try {
-        const response = await fetch('http://localhost:10000/users/allUsers', {
+        const token = localStorage.getItem('token'); 
+        console.log(token);
+        const response = await fetch('http://localhost:10000/users/users', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
           },
         });
-  
+        
         const data = await response.json();
+
+        console.log(data);
   
         if (response.ok) {
-          return data; // Devuelve la respuesta del ping
+          return data.body; // Devuelve la respuesta del ping
         } else {
           throw new Error(data.error || 'Ping failed');
         }
@@ -48,6 +53,7 @@ const loginServices = {
       }
     },
 
+    //
     
     
   

@@ -29,9 +29,10 @@ function Principal() {
     try {
       const data = await publicServices.login(name, password);
       console.log('Login successful:', data);
-      localStorage.setItem('token', data.token);
-      
-      navigate('/home'); // Guarda el token si es necesario
+      localStorage.setItem('token', data.body.token);
+      //console.log(data.body.token);
+      console.log(localStorage.getItem('token'));
+      navigate('/dash'); // Guarda el token si es necesario
     } catch (error) {
       //console.error('Login failed:', error.message);
       alert('Login failed: Invalid credentials. Please check your username and password.');
