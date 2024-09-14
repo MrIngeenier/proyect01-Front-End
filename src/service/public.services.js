@@ -2,14 +2,14 @@ const loginServices = {
     // Función para el login
 
     // http://localhost:10000/users/login - https://proyect01-back-end-8ujk.onrender.com/users/login
-    async login(name, password) {
+    async login(nombreusuario, password) {
       try {
         const response = await fetch('http://localhost:10000/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ name, password }),
+          body: JSON.stringify({ nombreusuario, password }),
         });
   
         const data = await response.json();
@@ -40,12 +40,12 @@ const loginServices = {
         
         const data = await response.json();
 
-        console.log(data);
+        console.log(data.body);
   
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
         } else {
-          throw new Error(data.error || 'Ping failed');
+          throw new Error(data.error || 'Error fetching users');
         }
       } catch (error) {
         console.error('Error during get all users:', error);
