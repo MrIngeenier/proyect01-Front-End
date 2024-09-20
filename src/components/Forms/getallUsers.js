@@ -34,10 +34,21 @@ function Getallusers() {
         console.log(`Delete user with ID: ${userId}`);
     };
 
-    const handleUpdate = (userId) => {
+    const handleUpdate = (userId, userName, userType, userActive) => {
         setOpenDialogUpdate(true);
-        localStorage.setItem('userId', userId); // Guardar el userId en localStorage
+        
+        // Crear un objeto con todos los datos del usuario
+        const userData = {
+            id: userId,
+            name: userName,
+            type: userType,
+            active: userActive
+        };
+    
+        // Almacenar el objeto en localStorage
+        localStorage.setItem('userData', JSON.stringify(userData));
     };
+    
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
@@ -75,6 +86,7 @@ function Getallusers() {
                             <TableCell sx={{ width: '20%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>ID</TableCell>
                             <TableCell sx={{ width: '40%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Nombre</TableCell>
                             <TableCell sx={{ width: '20%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Tipo</TableCell>
+                            <TableCell sx={{ width: '20%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Estado</TableCell>
                             <TableCell sx={{ width: '20%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Acciones</TableCell>
                         </TableRow>
                     </TableHead>
@@ -84,11 +96,27 @@ function Getallusers() {
                                 <TableCell sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.idusuarios}</TableCell>
                                 <TableCell sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.nombreusuario}</TableCell>
                                 <TableCell sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.fk_idrol}</TableCell>
+                                <TableCell sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                    <Button
+                                        variant="contained"
+                                        style={{
+                                            backgroundColor: user.activo ? 'yellow' : 'black',
+                                            color: user.activo ? 'black' : 'white',
+                                            width: '80px', // Ancho fijo para ambos botones
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        {user.activo ? 'Activo' : 'Inactivo'}
+                                    </Button>
+                                </TableCell>
+
+
+
                                 <TableCell>
                                     <Button variant="contained" color="error" onClick={() => handleDelete(user.idusuarios)} style={{ marginRight: 8 }}>
                                         <DeleteForeverIcon />
                                     </Button>
-                                    <Button variant="contained" color="success" onClick={() => handleUpdate(user.idusuarios)}>
+                                    <Button variant="contained" color="success" onClick={() => handleUpdate(user.idusuarios,user.nombreusuario,user.fk_idrol,user.activo)}>
                                         <UpdateIcon />
                                     </Button>
                                 </TableCell>

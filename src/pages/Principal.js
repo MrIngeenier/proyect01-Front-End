@@ -23,15 +23,15 @@ function Principal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', name);
-    console.log('Password:', password);
+    //console.log('Email:', name);
+    //console.log('Password:', password);
 
     try {
       const data = await publicServices.login(name, password);
-      console.log('Login successful:', data);
+      //console.log('Login successful:', data);
       localStorage.setItem('token', data.body.token);
       //console.log(data.body.token);
-      console.log(localStorage.getItem('token'));
+      //console.log(localStorage.getItem('token'));
       navigate('/dash'); // Guarda el token si es necesario
     } catch (error) {
       //console.error('Login failed:', error.message);

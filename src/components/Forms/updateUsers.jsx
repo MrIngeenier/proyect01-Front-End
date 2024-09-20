@@ -3,12 +3,13 @@ import { Container, TextField, Button, Typography, Grid, FormControl, InputLabel
 import publicServices from '../../service/public.services';
 
 const UpdateUsers = () => {
-  const [name, setName] = useState('');
-  const [newName, setNewName] = useState('');
+  const [nombreusuario, setName] = useState('');
+  const [newName, setNewName] = useState(localStorage.getItem('userName'));
   const [newPassword, setNewPassword] = useState('');
   const [newType, setNewType] = useState('');
+  const [newActive, setNewActive] = useState('1'); // Inicializa 'newActive' como 1 (Activo)
 
-  // Inicializa el estado 'name' con el valor de localStorage cuando el componente se monta
+  // Inicializa el estado 'nombreusuario' con el valor de localStorage cuando el componente se monta
   useEffect(() => {
     const userId = localStorage.getItem('userName');
     if (userId) {
@@ -18,14 +19,24 @@ const UpdateUsers = () => {
 
   const handleUpdate = async (event) => {
     event.preventDefault();
+
+    // Validación simple
+    if (!newName || !newPassword || !newType) {
+      alert('Por favor completa todos los campos');
+      return;
+    }
+
     try {
-      // Aquí 'name' ya debería tener el valor correcto
-      await publicServices.updateUser(name, newName, newPassword, newType);
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const nombreusuario = userData.name;
+      console.log(nombreusuario)
+      await publicServices.updateUser(nombreusuario, newName, newPassword, newType, newActive);
       alert('Usuario actualizado exitosamente');
       setName('');
       setNewName('');
       setNewPassword('');
       setNewType('');
+      setNewActive('1'); // Reinicia el estado a activo
     } catch (error) {
       console.error('Error actualizando usuario:', error);
       alert('Error al actualizar usuario');
@@ -38,7 +49,6 @@ const UpdateUsers = () => {
         Actualizar Datos del Usuario
       </Typography>
       <Grid container spacing={2}>
-        
         <Grid item xs={12}>
           <TextField
             label="Nuevo nombre"
@@ -70,6 +80,20 @@ const UpdateUsers = () => {
               <MenuItem value="1">1</MenuItem>
               <MenuItem value="2">2</MenuItem>
               <MenuItem value="3">3</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl fullWidth variant="outlined" required>
+            <InputLabel>Estado del usuario</InputLabel>
+            <Select
+              name="newActive"
+              value={newActive}
+              onChange={(e) => setNewActive(e.target.value)}
+              label="Estado del usuario"
+            >
+              <MenuItem value="1">Activo</MenuItem>
+              <MenuItem value="0">Inactivo</MenuItem>
             </Select>
           </FormControl>
         </Grid>

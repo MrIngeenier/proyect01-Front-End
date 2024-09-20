@@ -40,7 +40,7 @@ const loginServices = {
         
         const data = await response.json();
 
-        console.log(data.body);
+        //console.log(data.body);
   
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
@@ -56,7 +56,7 @@ const loginServices = {
     
 
     //
-    async addUsers(name, password, type) {
+    async addUsers(nombreusuario, password, fk_idrol) {
       try {
         const token = localStorage.getItem('token'); 
         console.log(token);
@@ -66,7 +66,7 @@ const loginServices = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ token,
           },
-          body: JSON.stringify({ name, password, type }),
+          body: JSON.stringify({ nombreusuario, password, fk_idrol }),
         });
 
         const data = await response.json(); 
@@ -81,24 +81,23 @@ const loginServices = {
       }
     },
 
-    async updateUser(name, newName, newPassword, newType) {
+    async updateUser(nombreusuario, newName, newPassword, newType, newActive) {
       try {
         const token = localStorage.getItem('token');
-         
-        console.log(token);
-        
+        console.log(nombreusuario, newName, newPassword, newType, newActive);
+    
         const response = await fetch('http://localhost:10000/users/updateUser', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token,
           },
-          body: JSON.stringify({ name, newName, newPassword, newType }),
+          body: JSON.stringify({ nombreusuario, newName, newPassword, newType, newActive }),
         });
     
-        const data = await response.json(); 
-        console.log(data);
-        
+        const data = await response.json();
+        console.log("Response :" + data);
+    
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
@@ -107,6 +106,10 @@ const loginServices = {
         console.error('Error actualizando usuario:', error);
       }
     }
+    
+    
+
+    
   };
 
   
