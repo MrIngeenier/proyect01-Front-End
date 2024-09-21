@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Dialog, DialogContent, DialogActions } from '@mui/material';
-import publicServices from '../../service/public.services';
+import publicServices from '../../../service/public.services';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateIcon from '@mui/icons-material/Update';
 import RegisterUsersForm from './registerUsers.from';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Grid, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import publicServices from '../../service/public.services';
+import publicServices from '../../../service/public.services';
 
 const RegisterUsersForm = () => {
   const [name, setName] = useState('');

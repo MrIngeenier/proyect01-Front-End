@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, TextField, Button, Typography, Grid, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import publicServices from '../../service/public.services';
+import publicServices from '../../../service/public.services';
 
 const UpdateUsers = () => {
   const [nombreusuario, setName] = useState('');

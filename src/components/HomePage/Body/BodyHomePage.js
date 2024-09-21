@@ -1,6 +1,6 @@
 import React from 'react';
 //import Button from '@mui/material/Button';
-import Getallusers from '../../../components/Forms/getallUsers';
+import Getallusers from '../../Forms/users/getallUsers';
 //import RegisterUsersForm from '../../Forms/registerUsers.from'
 
 

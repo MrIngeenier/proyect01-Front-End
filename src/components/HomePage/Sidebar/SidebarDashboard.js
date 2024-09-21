@@ -27,7 +27,7 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import BodyHomepage from '../Body/BodyHomePage';
 import QrScanner from '../Body/QrScanner';
 import SalesDashboard from '../Body/SalesDashboard';
-
+import PageInventary from '../../../pages/inventary.page';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -131,6 +131,7 @@ export default function SidebarDashboard() {
   const handleInventariosClick = () => {
     console.log('Botón Inventarios presionado');
     setTitle("INVENTARIO");
+    setActiveComponent(() => PageInventary);
   };
 
   const handleHerramientasClick = () => {
