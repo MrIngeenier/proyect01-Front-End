@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Dialog, DialogContent, DialogActions, Box } from '@mui/material';
+import { Container, TextField, Button, Box } from '@mui/material';
 
 function Inventary () {
     const [search, setSearch] = useState('');
