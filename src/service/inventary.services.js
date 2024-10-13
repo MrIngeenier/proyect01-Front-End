@@ -184,6 +184,55 @@ const inventaryServices = {
       }
     },
 
+    async addInventary(tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/inventario/addData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla }),
+        });
+
+        const data = await response.json(); 
+        console.log(data);
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
+    },
+
+    async getInventary() {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/inventario/data', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+          
+        const data = await response.json();
+    
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error fetching users');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
     
 
     

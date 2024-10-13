@@ -126,7 +126,7 @@ export default function SidebarDashboard() {
 
   const handleProductosClick = () => {
     console.log('Botón Productos presionado');
-    setTitle("PRODUCTOS");ADDReferences
+    setTitle("PRODUCTOS");
     setActiveComponent(() => ADDReferences);
   };
 

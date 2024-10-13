@@ -1,11 +1,41 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Container, TextField, Button, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import inventaryServices from '../../../service/inventary.services';
 
-function Inventary () {
+function Inventary() {
     const [search, setSearch] = useState('');
+    const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        fetchInventary();
+    }, []);
 
     const handleSearchChange = (event) => {
-        setSearch(event.target.value);
+        const value = event.target.value;
+        setSearch(value);
+        
+        // Filtra los datos según la búsqueda
+        const filtered = data.filter(item => 
+            item.referenciaid.toString().includes(value) || // Filtrar por ID de referencia
+            item.ubicacionesproductoid.toString().includes(value) || // Filtrar por ID de ubicación
+            item.usuarioid.toString().includes(value) || // Filtrar por ID de usuario
+            item.cantidad.toString().includes(value) || // Filtrar por cantidad
+            (item.talla && item.talla.toString().includes(value)) || // Filtrar por talla (si existe)
+            item.tipoingresoid.toString().includes(value) || // Filtrar por ID de tipo de ingreso
+            (item.fecha && item.fecha.toString().includes(value)) // Filtrar por fecha (si existe)
+        );
+        setFilteredData(filtered);
+    };
+
+    const fetchInventary = async () => {
+        try {
+            const response = await inventaryServices.getInventary();
+            setData(response); // Asignar la respuesta al estado
+            setFilteredData(response); // Inicializar también filteredData
+        } catch (error) {
+            console.error('Error fetching inventory:', error);
+        }
     };
 
     const ButtonAdd = () => {
@@ -14,18 +44,19 @@ function Inventary () {
 
     return (
         <Container maxWidth="sm" sx={{
-            backgroundColor: '#121212', // Fondo estilo dark
-            color: 'white', // Texto claro para contrastar
-            border: '2px solid #333', // Borde oscuro
-            borderRadius: '8px',
-            opacity: 0.9, // Transparencia ligera
-            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)', // Sombra más oscura
-            backdropFilter: 'blur(10px)', // Desenfoque de fondo
-            padding: '20px',
+            backgroundColor: '#121212',
+        color: 'white',
+        border: '2px solid #333',
+        borderRadius: '8px',
+        opacity: 0.9,
+        boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
+        height: '400px', // Establece el tamaño fijo vertical
+        overflowY: 'auto', // Habilita el desplazamiento vertical
+        padding: '20px',
         }}>
             
             <TextField
-                label="Buscar por nombre"
+                label="Buscar por ID o cantidad"
                 variant="outlined"
                 value={search}
                 onChange={handleSearchChange}
@@ -41,24 +72,54 @@ function Inventary () {
             />
 
             <Box display="flex" justifyContent="center" gap={2}>
-                <Button variant="outlined" color='primary' size="medium" onClick={ButtonAdd}  sx={{ 
+                <Button variant="outlined" color='primary' size="medium" onClick={ButtonAdd} sx={{ 
                     borderColor: 'white', // Color del borde
                     color: 'white', // Color del texto  
-                }} >
+                }}>
                     MOSTRAR
                 </Button>
 
-                <Button variant="outlined" color='primary' size="medium" onClick={ButtonAdd}  sx={{ 
+                <Button variant="outlined" color='primary' size="medium" onClick={ButtonAdd} sx={{ 
                     borderColor: 'white', // Color del borde
                     color: 'white', // Color del texto  
-                }} >
+                }}>
                     OCULTAR
                 </Button>
-
             </Box>
 
+            <TableContainer component={Paper} sx={{ marginTop: '20px', backgroundColor: '#333', borderRadius: '8px' }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={{ color: 'white' }}>ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Referencia ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Ubicación ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Usuario ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Cantidad</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Tipo de Ingreso ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Talla</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Fecha</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {filteredData.map((item) => (
+                            <TableRow key={item.id}>
+                                <TableCell sx={{ color: 'white' }}>{item.id}</TableCell>
+                                <TableCell sx={{ color: 'white' }}>{item.referenciaid}</TableCell>
+                                <TableCell sx={{ color: 'white' }}>{item.ubicacionesproductoid}</TableCell>
+                                <TableCell sx={{ color: 'white' }}>{item.usuarioid}</TableCell>
+                                <TableCell sx={{ color: 'white' }}>{item.cantidad}</TableCell>
+                                <TableCell sx={{ color: 'white' }}>{item.tipoingresoid}</TableCell>
+                                <TableCell sx={{ color: 'white' }}>{item.talla || 'N/A'}</TableCell> {/* Mostrar 'N/A' si no hay talla */}
+                                <TableCell sx={{ color: 'white' }}>{item.fecha ? new Date(item.fecha).toLocaleString() : 'N/A'}</TableCell> {/* Formato de fecha */}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Container>
     );
 }
 
 export default Inventary;
+
