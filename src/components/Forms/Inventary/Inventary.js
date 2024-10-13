@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Container, TextField, Button, Box, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Container, TextField, Button, Box, Grid, FormControl, InputLabel, Select, MenuItem,Autocomplete  } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
 import inventaryServices from '../../../service/inventary.services';
 
 function ADDInventary() {
     const [formData, setFormData] = useState({
+        empresa:'',
         cantidad: '',
         talla: '',
         idUsuario: '',
@@ -20,7 +22,12 @@ function ADDInventary() {
     });
 
     const [places, setPlaces] = useState([]); // Estado para almacenar lugares
-    const [publico, setPublico] = useState([]); // Estado para almacenar lugares
+    const [publico, setPublico] = useState([]); // Estado para almacenar publico
+    const [empresas, setEmpresas] = useState([]); // Estado para almacenar lugares
+    const [referencias, setReferencias] = useState([]); // Estado para almacenar lugares
+
+    const { control } = useForm(); // Inicializa useForm
+
 
     const handleChange = (event) => {
         setFormData({
@@ -60,20 +67,54 @@ function ADDInventary() {
         }
     };
 
+    const fetchEmpresas = async () => {
+        try {
+            const response = await inventaryServices.getEmpresa();
+            setEmpresas(response); // Asignar la respuesta al estado
+            if (response.length > 0) {
+                setFormData((prev) => ({
+                    ...prev,
+                    empresa: response[0].id, // Establece el primer lugar como valor por defecto
+                }));
+            }
+        } catch (error) {
+            console.error('Error fetching Empresas:', error);
+        }
+    };
+
+    const fetchReferencia = async () => {
+        try {
+            const response = await inventaryServices.getReferencia();
+            setReferencias(response); // Asignar la respuesta al estado
+            if (response.length > 0) {
+                setFormData((prev) => ({
+                    ...prev,
+                    empresa: response[0].id, // Establece el primer lugar como valor por defecto
+                }));
+            }
+        } catch (error) {
+            console.error('Error fetching Refernceses:', error);
+        }
+    };
+
 
     useEffect(() => {
         fetchPlaces(); // Cargar lugares al montar el componente
         fetchPublico();
+        fetchEmpresas();
+        fetchReferencia();
     }, []);
 
     const ButtonUpdate = () => {
         fetchPlaces();
         fetchPublico();
+        fetchEmpresas();
+        fetchReferencia();
     };
 
     const ButtonADD = () => {
-        alert("Agregar");
-        console.log(formData);
+        alert("Agregar: " + JSON.stringify(formData, null, 2));
+        //console.log(formData);
     };
 
     return (
@@ -90,46 +131,99 @@ function ADDInventary() {
             Inventary
             <Grid container spacing={1}>
                 
-            <Grid item xs={12} sm={1}>
-                    <TextField
-                        label="Empresa"
-                        variant="outlined"
-                        name="descripcionTipoIngreso"
-                        value={formData.descripcionTipoIngreso}
-                        onChange={handleChange}
-                        fullWidth
-                        InputLabelProps={{ style: { color: 'white' } }}
-                        InputProps={{
-                            style: {
-                                color: 'white',
-                                backgroundColor: '#333',
-                            }
-                        }}
-                    />
-                </Grid>
+            <Grid item xs={12} sm={4}>
+                <Controller
+                    name="empresa"
+                    control={control}
+                    defaultValue=""
+                    value={formData.empresa}
+                    render={({ field }) => (
+                        <Autocomplete
+                            {...field}
+                            options={empresas} // Usa el objeto completo
+                            getOptionLabel={(option) => option.nombre || ""} // Asegúrate de que devuelva una cadena válida
+                            freeSolo // Permite escribir libremente
+
+                            onChange={(event, newValue) => {
+                                const selectedId = newValue ? newValue.id : "";
+                                field.onChange(newValue); // Actualiza el valor con el objeto completo
+
+                                setFormData((prevData) => ({
+                                    ...prevData,
+                                    empresa: selectedId, // Actualiza formData.empresa con el selectedId
+                                }));
+                            }}
+
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Empresa"
+                                    variant="outlined"
+                                    fullWidth
+                                    InputLabelProps={{ style: { color: 'white' } }}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        style: {
+                                            color: 'white',
+                                            backgroundColor: '#333',
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
+                />
+            </Grid>
+
+
+            <Grid item xs={12} sm={4}>
+                <Controller
+                    name="serialReferencia"
+                    control={control}
+                    defaultValue=""
+                    value={formData.serialReferencia}
+                    render={({ field }) => (
+                        <Autocomplete
+                            {...field}
+                            options={referencias} // Usa el objeto completo
+                            getOptionLabel={(option) => option.serial || ""} // Asegúrate de que devuelva una cadena válida
+                            freeSolo // Permite escribir libremente
+
+                            onChange={(event, newValue) => {
+                                const selectedId = newValue ? newValue.id : "";
+                                field.onChange(newValue); // Actualiza el valor con el objeto completo
+
+                                setFormData((prevData) => ({
+                                    ...prevData,
+                                    serialReferencia: selectedId, // Actualiza formData.empresa con el selectedId
+                                }));
+                            }}
+
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Referencia"
+                                    variant="outlined"
+                                    fullWidth
+                                    InputLabelProps={{ style: { color: 'white' } }}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        style: {
+                                            color: 'white',
+                                            backgroundColor: '#333',
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
+                />
+            </Grid>    
 
                     
+                
 
-                    
-                <Grid item xs={12} sm={1}>
-                    <TextField
-                        label="Referencia"
-                        variant="outlined"
-                        name="serialReferencia"
-                        value={formData.serialReferencia}
-                        onChange={handleChange}
-                        fullWidth
-                        InputLabelProps={{ style: { color: 'white' } }}
-                        InputProps={{
-                            style: {
-                                color: 'white',
-                                backgroundColor: '#333',
-                            }
-                        }}
-                    />
-                </Grid>
-
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={4}>
                     <TextField
                         label="Color"
                         variant="outlined"
@@ -301,7 +395,7 @@ function ADDInventary() {
 
                 <Grid item xs={12} sm={1}>
                     <FormControl fullWidth>
-                        <InputLabel style={{ color: 'white' }}>Lugar</InputLabel>
+                        <InputLabel style={{ color: 'white' }}>Publico</InputLabel>
                         <Select
                             variant="outlined"
                             name="descripcionLugar"

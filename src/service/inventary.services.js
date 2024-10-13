@@ -3,7 +3,7 @@ const inventaryServices = {
     async getPlaces() {
       try {
         const token = localStorage.getItem('token'); 
-        console.log(token);
+        //console.log(token);
         const response = await fetch('http://localhost:10000/place/users', {
           method: 'GET',
           headers: {
@@ -30,7 +30,7 @@ const inventaryServices = {
     async addPlaces(nombreusuario, password, fk_idrol) {
       try {
         const token = localStorage.getItem('token'); 
-        console.log(token);
+        //console.log(token);
         const response = await fetch('http://localhost:10000/place/NewUsers', {
           method: 'POST',
           headers: {
@@ -55,7 +55,7 @@ const inventaryServices = {
     async updatePlaces(nombreusuario, newName, newPassword, newType, newActive) {
       try {
         const token = localStorage.getItem('token');
-        console.log(nombreusuario, newName, newPassword, newType, newActive);
+        //console.log(nombreusuario, newName, newPassword, newType, newActive);
     
         const response = await fetch('http://localhost:10000/place/updatePlace', {
           method: 'PUT',
@@ -81,7 +81,7 @@ const inventaryServices = {
     async getPublico() {
         try {
           const token = localStorage.getItem('token'); 
-          console.log(token);
+          //console.log(token);
           const response = await fetch('http://localhost:10000/tipozapato/getData', {
             method: 'GET',
             headers: {
@@ -103,8 +103,87 @@ const inventaryServices = {
           console.error('Error during get all users:', error);
           throw error;
         }
-      }
+      },
     
+    async getEmpresa() {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/empresas/data', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+          
+        const data = await response.json();
+  
+        //console.log(data.body);
+    
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error fetching users');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
+
+    async getReferencia() {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/referencias/getData', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+          
+        const data = await response.json();
+  
+        //console.log(data.body);
+    
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error fetching users');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
+
+    async addReferences(color, serial,descripcion,tipozapatoid) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/referencias/addData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ color, serial,descripcion,tipozapatoid }),
+        });
+
+        const data = await response.json(); 
+        console.log(data);
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
+    },
+
     
 
     
