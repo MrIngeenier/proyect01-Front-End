@@ -208,6 +208,30 @@ const inventaryServices = {
         console.error('Error registrando usuario:', error);
       }
     },
+    async addEmpresaRef(empresaid, referenciaid) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/empresas/addData/empresaReferencia', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ empresaid, referenciaid }),
+        });
+
+        const data = await response.json(); 
+        console.log(data);
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
+    },
 
     async getInventary() {
       try {

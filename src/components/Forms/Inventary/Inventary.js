@@ -138,13 +138,25 @@ function ADDInventary() {
         try {
             console.log("Cantidad :", formData.cantidad);
             var idUser = formData.cantidad;
-            var cantidad = formData.idUsuario;
-            // tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla
-    
+            var cantidad = formData.idUsuario;    
             // Llama al servicio pasando el objeto completo
             const result = await inventaryServices.addInventary(formData.tipoPublicoTipoZapato,formData.serialReferencia,
                 formData.descripcionLugar,idUser,cantidad,formData.talla);
             alert('Inventario agregado exitosamente');
+            console.log('Resultado del inventario agregado:', result);
+        } catch (error) {
+            console.error('Error agregando inventario:', error);
+            alert('Error al agregar inventario');
+        }
+    };
+
+    const FetchAddEmpresa = async (event) => {
+        try {
+            console.log("Cantidad :", formData.cantidad);
+            
+            // Llama al servicio pasando el objeto completo {empresaid, referenciaid}
+            const result = await inventaryServices.addEmpresaRef(formData.empresa,formData.serialReferencia);
+            alert('Empresa Referencia agregado exitosamente');
             console.log('Resultado del inventario agregado:', result);
         } catch (error) {
             console.error('Error agregando inventario:', error);
@@ -177,6 +189,7 @@ function ADDInventary() {
     const ButtonADD = () => {
         //showJWT();
         FetchAddInventary();
+        FetchAddEmpresa();
         console.log("Form Data:", formData); // Agrega esta línea para depurar
 
         //alert("Agregar: " + JSON.stringify(formData, null, 2));
