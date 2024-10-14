@@ -135,26 +135,24 @@ function ADDInventary() {
     }
 
     const FetchAddInventary = async (event) => {
-    
         try {
-            // Llama a tu servicio para agregar el inventario, pasando los valores necesarios
-            const result = await inventaryServices.addInventary(
-                formData.tipoPublicoTipoZapato, // Asegúrate de que este campo existe en formData
-                formData.serialReferencia, // Este debería ser el id de la referencia seleccionada
-                formData.descripcionLugar, // Este debería ser el id del lugar seleccionado
-                formData.idUsuario, // Extrae idUsuario del estado
-                formData.cantidad, // Extrae cantidad del estado
-                formData.talla // Extrae talla del estado
-            );
+            console.log("Cantidad :", formData.cantidad);
+            var idUser = formData.cantidad;
+            var cantidad = formData.idUsuario;
+            // tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla
     
+            // Llama al servicio pasando el objeto completo
+            const result = await inventaryServices.addInventary(formData.tipoPublicoTipoZapato,formData.serialReferencia,
+                formData.descripcionLugar,idUser,cantidad,formData.talla);
             alert('Inventario agregado exitosamente');
-            console.log('Resultado del inventario agregado:', result); // Puedes hacer algo con el resultado, como limpiar el formulario o redirigir
-           
+            console.log('Resultado del inventario agregado:', result);
         } catch (error) {
             console.error('Error agregando inventario:', error);
-            alert('Error al agregar inventario'); // Muestra un mensaje de error
+            alert('Error al agregar inventario');
         }
     };
+    
+    
     
     
     

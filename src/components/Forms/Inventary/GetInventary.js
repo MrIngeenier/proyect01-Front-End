@@ -26,6 +26,7 @@ function Inventary() {
             (item.fecha && item.fecha.toString().includes(value)) // Filtrar por fecha (si existe)
         );
         setFilteredData(filtered);
+        console.log(filtered);
     };
 
     const fetchInventary = async () => {
@@ -33,6 +34,7 @@ function Inventary() {
             const response = await inventaryServices.getInventary();
             setData(response); // Asignar la respuesta al estado
             setFilteredData(response); // Inicializar también filteredData
+            //console.log(data);
         } catch (error) {
             console.error('Error fetching inventory:', error);
         }
@@ -72,19 +74,8 @@ function Inventary() {
             />
 
             <Box display="flex" justifyContent="center" gap={2}>
-                <Button variant="outlined" color='primary' size="medium" onClick={ButtonAdd} sx={{ 
-                    borderColor: 'white', // Color del borde
-                    color: 'white', // Color del texto  
-                }}>
-                    MOSTRAR
-                </Button>
 
-                <Button variant="outlined" color='primary' size="medium" onClick={ButtonAdd} sx={{ 
-                    borderColor: 'white', // Color del borde
-                    color: 'white', // Color del texto  
-                }}>
-                    OCULTAR
-                </Button>
+                
             </Box>
 
             <TableContainer component={Paper} sx={{ marginTop: '20px', backgroundColor: '#333', borderRadius: '8px' }}>
@@ -92,11 +83,11 @@ function Inventary() {
                     <TableHead>
                         <TableRow>
                             <TableCell sx={{ color: 'white' }}>ID</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Referencia ID</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Ubicación ID</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Usuario ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Ubicación</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Usuario</TableCell>
                             <TableCell sx={{ color: 'white' }}>Cantidad</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Tipo de Ingreso ID</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Tipo</TableCell>
                             <TableCell sx={{ color: 'white' }}>Talla</TableCell>
                             <TableCell sx={{ color: 'white' }}>Fecha</TableCell>
                         </TableRow>
