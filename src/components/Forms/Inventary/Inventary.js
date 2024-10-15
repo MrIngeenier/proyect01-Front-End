@@ -31,7 +31,33 @@ function ADDInventary() {
             [event.target.name]: event.target.value
             
         });
+        console.log("Nuevo valor de descripcionLugar:", event.target.value); // Verifica el valor
+
     };
+
+    const handleChangeLugar = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+            
+        });
+        console.log("Nuevo valor de descripcionLugar:", event.target.value); // Verifica el valor
+
+    };
+
+    const handleChangeTipo = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+            
+        });
+        console.log("Nuevo valor de descripcionLugar:", event.target.value); // Verifica el valor
+
+    };
+
+    
+
+    
 
     const fetchPlaces = async () => {
         try {
@@ -136,7 +162,7 @@ function ADDInventary() {
 
     const FetchAddInventary = async (event) => {
         try {
-            console.log("Cantidad :", formData.cantidad);
+           // console.log("Cantidad :", formData.cantidad);
             var idUser = formData.cantidad;
             var cantidad = formData.idUsuario;    
             // Llama al servicio pasando el objeto completo
@@ -170,12 +196,11 @@ function ADDInventary() {
     
 
     useEffect(() => {
-        
+      //  showJWT();
         fetchPlaces(); // Cargar lugares al montar el componente
         fetchPublico();
         fetchEmpresas();
         fetchReferencia();
-        showJWT();
     }, []);
 
     const ButtonUpdate = () => {
@@ -186,14 +211,23 @@ function ADDInventary() {
         
     };
 
-    const ButtonADD = () => {
+    //const ButtonADD = () => {
+      //  event.preventDefault();
         //showJWT();
-        FetchAddInventary();
-        FetchAddEmpresa();
-        console.log("Form Data:", formData); // Agrega esta línea para depurar
+        //FetchAddInventary();
+        //FetchAddEmpresa();
+        //console.log("Form Data:", formData); // Agrega esta línea para depurar
 
         //alert("Agregar: " + JSON.stringify(formData, null, 2));
         //console.log(formData);
+    //};
+
+    const ButtonADD = (event) => {
+        event.preventDefault();
+        //showJWT();
+        FetchAddInventary();
+        FetchAddEmpresa();
+        console.log("Form Data:", formData); // Muestra el objeto completo
     };
 
     return (
@@ -347,7 +381,7 @@ function ADDInventary() {
                             variant="outlined"
                             name="tipoPublicoTipoZapato"
                             value={formData.tipoPublicoTipoZapato }
-                            onChange={handleChange}
+                            onChange={handleChangeLugar}
                             label="Publico"
                             style={{ color: 'white', backgroundColor: '#333' }}
                             inputProps={{ style: { color: 'white' } }}
@@ -361,7 +395,7 @@ function ADDInventary() {
                     </FormControl>
                 </Grid>
 
-
+               
 
                 <Grid item xs={12} sm={1}>
                     <FormControl fullWidth>
@@ -370,7 +404,7 @@ function ADDInventary() {
                             variant="outlined"
                             name="descripcionLugar"
                             value={formData.descripcionLugar} 
-                            onChange={handleChange}
+                            onChange={handleChangeTipo}
                             label="Lugar"
                             style={{ color: 'white', backgroundColor: '#333' }}
                             inputProps={{ style: { color: 'white' } }}
@@ -383,6 +417,11 @@ function ADDInventary() {
                         </Select>
                     </FormControl>
                 </Grid>
+                <div>
+                    <p>Descripción de Tipo: {formData.tipoPublicoTipoZapato}</p>
+                    <p>Descripción del Lugar: {formData.descripcionLugar}</p>
+
+                </div>
 
                 {/* --------------------------------------------------------------*/}
                     
