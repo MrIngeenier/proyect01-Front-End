@@ -194,9 +194,11 @@ function ADDInventary() {
     
     
     
+    
+    
 
     useEffect(() => {
-      //  showJWT();
+        showJWT();
         fetchPlaces(); // Cargar lugares al montar el componente
         fetchPublico();
         fetchEmpresas();
@@ -208,9 +210,20 @@ function ADDInventary() {
         fetchPublico();
         fetchEmpresas();
         fetchReferencia();
+        //console.log(data);
         
     };
 
+    const fetchInventary = async () => {
+        try {
+            const response = await inventaryServices.getInventary();
+            console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
+
+           // setData(response); // Asignar la respuesta al estado
+        } catch (error) {
+            console.error('Error fetching inventory:', error);
+        }
+    };
     //const ButtonADD = () => {
       //  event.preventDefault();
         //showJWT();
@@ -227,6 +240,7 @@ function ADDInventary() {
         //showJWT();
         FetchAddInventary();
         FetchAddEmpresa();
+        fetchInventary();
         console.log("Form Data:", formData); // Muestra el objeto completo
     };
 
@@ -417,12 +431,7 @@ function ADDInventary() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <div>
-                    <p>Descripción de Tipo: {formData.tipoPublicoTipoZapato}</p>
-                    <p>Descripción del Lugar: {formData.descripcionLugar}</p>
-
-                </div>
-
+                
                 {/* --------------------------------------------------------------*/}
                     
                 <Grid item xs={12}>

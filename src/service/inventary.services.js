@@ -237,7 +237,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/inventario/data', {
+        const response = await fetch('http://localhost:10000/inventario/AllData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -250,7 +250,7 @@ const inventaryServices = {
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
         } else {
-          throw new Error(data.error || 'Error fetching users');
+          throw new Error(data.error || 'Error Get all Data shoes');
         }
       } catch (error) {
         console.error('Error during get all users:', error);
