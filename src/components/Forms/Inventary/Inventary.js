@@ -23,40 +23,6 @@ function ADDInventary() {
     const token = localStorage.getItem('token');
 
     const { control } = useForm(); // Inicializa useForm
-
-
-    const handleChange = (event) => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-            
-        });
-        console.log("Nuevo valor de descripcionLugar:", event.target.value); // Verifica el valor
-
-    };
-
-    const handleChangeLugar = (event) => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-            
-        });
-        console.log("Nuevo valor de descripcionLugar:", event.target.value); // Verifica el valor
-
-    };
-
-    const handleChangeTipo = (event) => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-            
-        });
-        console.log("Nuevo valor de descripcionLugar:", event.target.value); // Verifica el valor
-
-    };
-
-    
-
     
 
     const fetchPlaces = async () => {
@@ -123,42 +89,8 @@ function ADDInventary() {
         }
     };
 
-    function decodeJWT(token) {
-        if (!token) {
-            console.error("No token provided");
-            return null;
-        }
     
-        const parts = token.split('.');
-        if (parts.length !== 3) {
-            console.error("Invalid token format");
-            return null;
-        }
     
-        const payload = parts[1];
-    
-        // Decodificar la carga útil de base64 a un objeto JSON
-        try {
-            const decodedPayload = atob(payload);
-            const parsedPayload = JSON.parse(decodedPayload);
-            return parsedPayload;
-        } catch (error) {
-            console.error("Error decoding token payload:", error);
-            return null;
-        }
-    }
-    
-
-    function showJWT() {
-        const myToken = token; // Asegúrate de que 'token' esté definido y tenga el valor correcto
-        //console.log("My token: " + myToken);
-        const decodedData = decodeJWT(myToken);
-        setFormData((prev) => ({
-            ...prev,
-            idUsuario: decodedData.userId 
-        }));
-       // console.log("DecodeJWT:", decodedData.userId);
-    }
 
     const FetchAddInventary = async (event) => {
         try {
@@ -190,7 +122,40 @@ function ADDInventary() {
         }
     };
     
+    function decodeJWT(token) {
+        if (!token) {
+            console.error("No token provided");
+            return null;
+        }
     
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            console.error("Invalid token format");
+            return null;
+        }
+    
+        const payload = parts[1];
+    
+        // Decodificar la carga útil de base64 a un objeto JSON
+        try {
+            const decodedPayload = atob(payload);
+            const parsedPayload = JSON.parse(decodedPayload);
+            return parsedPayload;
+        } catch (error) {
+            console.error("Error decoding token payload:", error);
+            return null;
+        }
+    }
+    function showJWT() {
+        const myToken = token; // Asegúrate de que 'token' esté definido y tenga el valor correcto
+        //console.log("My token: " + myToken);
+        const decodedData = decodeJWT(myToken);
+        setFormData((prev) => ({
+            ...prev,
+            idUsuario: decodedData.userId 
+        }));
+       // console.log("DecodeJWT:", decodedData.userId);
+    }
     
     
     
@@ -356,7 +321,15 @@ function ADDInventary() {
                         variant="outlined"
                         name="talla"
                         value={formData.talla}
-                        onChange={handleChange}
+                        
+                        onChange={(event) => {
+                            const selectedValue = event.target.value;
+                
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                talla: selectedValue, // Actualiza formData.talla con el valor seleccionado
+                            }));
+                        }}
                         fullWidth
                         InputLabelProps={{ style: { color: 'white' } }}
                         InputProps={{
@@ -375,7 +348,14 @@ function ADDInventary() {
                         variant="outlined"
                         name="cantidad"
                         value={formData.cantidad}
-                        onChange={handleChange}
+                        onChange={(event) => {
+                            const selectedValue = event.target.value;
+
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                cantidad: selectedValue, // Actualiza formData.talla con el selectedId
+                            }));
+                        }}
                         fullWidth
                         InputLabelProps={{ style: { color: 'white' } }}
                         InputProps={{
@@ -395,7 +375,21 @@ function ADDInventary() {
                             variant="outlined"
                             name="tipoPublicoTipoZapato"
                             value={formData.tipoPublicoTipoZapato }
-                            onChange={handleChangeLugar}
+                            onChange={(event) => {
+                                const selectedId = event.target.value;    
+                                setFormData((prevData) => ({
+                                    ...prevData,
+                                    tipoPublicoTipoZapato: selectedId, // Actualiza formData.talla con el selectedId
+                                }));
+                            }}
+                            fullWidth
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{
+                                style: {
+                                    color: 'white',
+                                    backgroundColor: '#333',
+                                }
+                            }}
                             label="Publico"
                             style={{ color: 'white', backgroundColor: '#333' }}
                             inputProps={{ style: { color: 'white' } }}
@@ -418,7 +412,15 @@ function ADDInventary() {
                             variant="outlined"
                             name="descripcionLugar"
                             value={formData.descripcionLugar} 
-                            onChange={handleChangeTipo}
+                            onChange={(event) => {
+                                const selectedId = event.target.value;
+                              //  field.onChange(newValue); // Actualiza el valor con el objeto completo
+    
+                                setFormData((prevData) => ({
+                                    ...prevData,
+                                    descripcionLugar: selectedId, // Actualiza formData.talla con el selectedId
+                                }));
+                            }}
                             label="Lugar"
                             style={{ color: 'white', backgroundColor: '#333' }}
                             inputProps={{ style: { color: 'white' } }}

@@ -31,7 +31,7 @@ function Inventary() {
     const fetchInventary = async () => {
         try {
             const response = await inventaryServices.getInventary();
-            console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
+            //console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
 
             setData(response); // Asignar la respuesta al estado
             setFilteredData(response); // Inicializar también filteredData
@@ -40,11 +40,16 @@ function Inventary() {
         }
     };
 
-    
+    const handlePdfClick = (item) => {
+        console.log('Botón PDF presionado para:', item.empresa); // Aquí puedes ver qué botón se presionó
+        // Aquí puedes agregar la lógica para generar el PDF con la información del 'item'
+    };
     
 
     return (
-        <Container maxWidth="lg" sx={{
+        <Container
+        maxWidth="lg"
+        sx={{
             backgroundColor: '#121212',
             color: 'white',
             border: '2px solid #333',
@@ -52,14 +57,15 @@ function Inventary() {
             opacity: 0.9,
             boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
             padding: '20px',
-        }}>
-        <Box display="flex" alignItems="center" sx={{padding: '20px 0px',}}> {/* Alinea verticalmente el contenido */}
+        }}
+    >
+        <Box display="flex" alignItems="center" sx={{ padding: '20px 0px' }}>
             <TextField
                 label="Buscar por Empresa, Referencia, Color o Lugar"
                 variant="outlined"
                 value={search}
                 onChange={handleSearchChange}
-                sx={{ width: '80%', margin: 'normal', height: '56px' }} // Establece la altura aquí
+                sx={{ width: '80%', margin: 'normal', height: '56px' }}
                 InputLabelProps={{ style: { color: 'white' } }}
                 InputProps={{
                     style: {
@@ -71,30 +77,46 @@ function Inventary() {
             <Button
                 variant="outlined"
                 color='primary'
-                sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px',width: '20%'}}
-                onClick={fetchInventary} 
+                sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px', width: '20%' }}
+                onClick={fetchInventary}
             >
                 ACTUALIZAR
             </Button>
         </Box>
-           
 
-            <TableContainer component={Paper} sx={{  backgroundColor: '#333', borderRadius: '8px' }}>
+        {/* Contenedor de la tabla con barra de desplazamiento */}
+        <Box sx={{  maxHeight: { xs: '300px', sm: '400px', md: '500px' },
+                overflowY: 'auto',
+                maxWidth: {
+                    xs: '100%',  // Ancho completo en pantallas extra pequeñas
+                    sm: 'auto', // Ancho máximo de 300px en pantallas pequeñas
+                    md: 'auto'  // Ancho máximo de 500px en pantallas medianas y más grandes
+                },
+                width: '100%',
+                margin: '0 auto',
+                backgroundColor: '#121212',
+                color: 'white',
+                border: '2px solid #333',
+                borderRadius: '8px',
+                padding: '20px', }}> {/* Ajusta la altura máxima según sea necesario */}
+            <TableContainer component={Paper} sx={{ backgroundColor: '#333', borderRadius: '8px' }}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ color: 'white' }}>ID Inventario</TableCell>
+                            <TableCell sx={{ color: 'white' }}>ID</TableCell>
                             <TableCell sx={{ color: 'white' }}>Empresa</TableCell>
                             <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
                             <TableCell sx={{ color: 'white' }}>Color</TableCell>
                             <TableCell sx={{ color: 'white' }}>Ubicación</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T34</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T35</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T36</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T37</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T38</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T39</TableCell>
-                            <TableCell sx={{ color: 'white' }}>T40</TableCell>
+                            <TableCell sx={{ color: 'white' }}>34</TableCell>
+                            <TableCell sx={{ color: 'white' }}>35</TableCell>
+                            <TableCell sx={{ color: 'white' }}>36</TableCell>
+                            <TableCell sx={{ color: 'white' }}>37</TableCell>
+                            <TableCell sx={{ color: 'white' }}>38</TableCell>
+                            <TableCell sx={{ color: 'white' }}>39</TableCell>
+                            <TableCell sx={{ color: 'white' }}>40</TableCell>
+                            <TableCell sx={{ color: 'white' }}>Buttons</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -112,13 +134,19 @@ function Inventary() {
                                 <TableCell sx={{ color: 'white' }}>{item.t38 || 0}</TableCell>
                                 <TableCell sx={{ color: 'white' }}>{item.t39 || 0}</TableCell>
                                 <TableCell sx={{ color: 'white' }}>{item.t40 || 0}</TableCell>
+                                <Box sx={{display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100px',  }}>
+                                    <Button variant="outlined" color="primary"sx={{borderColor: 'white',color: 'white',}}onClick={() => handlePdfClick(item)} >
+                                        PDF
+                                    </Button>
+                                </Box>
 
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-        </Container>
+        </Box>
+    </Container>
     );
 }
 
