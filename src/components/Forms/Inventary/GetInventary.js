@@ -3,6 +3,9 @@ import {
     Button,Container, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
     Box
 } from '@mui/material';
+import { jsPDF } from 'jspdf';
+import QRCode from 'qrcode';
+
 import inventaryServices from '../../../service/inventary.services';
 
 function Inventary() {
@@ -40,10 +43,45 @@ function Inventary() {
         }
     };
 
-    const handlePdfClick = (item) => {
-        console.log('Botón PDF presionado para:', item.empresa); // Aquí puedes ver qué botón se presionó
-        // Aquí puedes agregar la lógica para generar el PDF con la información del 'item'
+    const handlePdfClick = async (item) => {
+        const doc = new jsPDF();
+
+        // Agregar contenido al PDF
+        doc.setFontSize(20);
+        doc.text("Detalles del Item", 20, 20);
+        doc.setFontSize(12);
+        doc.text(`ID: ${item.idinventario}`, 20, 25);
+        doc.text(`Empresa: ${item.empresa}`, 20, 30);
+        doc.text(`Referencia: ${item.referencia}`, 20, 35);
+        doc.text(`Color: ${item.color}`, 20, 40);
+        doc.text(`Ubicación: ${item.lugar}`, 20, 45);
+
+        // Generar el QR en base64
+        try {
+            const qrDataUrl34 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+34, { errorCorrectionLevel: 'H' });
+            doc.addImage(qrDataUrl34, 'PNG', 10, 50, 30, 30);
+            doc.addImage(qrDataUrl34, 'PNG', 40, 50, 30, 30);
+            doc.addImage(qrDataUrl34, 'PNG', 70, 50, 30, 30);
+            doc.addImage(qrDataUrl34, 'PNG', 100, 50, 30, 30);
+            doc.addImage(qrDataUrl34, 'PNG', 130, 50, 30, 30);
+            doc.addImage(qrDataUrl34, 'PNG', 160, 50, 30, 30);
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}34`, 80, 85);
+
+            const qrDataUrl35 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+35, { errorCorrectionLevel: 'H' });
+            doc.addImage(qrDataUrl35, 'PNG', 10, 90, 30, 30);
+            doc.addImage(qrDataUrl35, 'PNG', 40, 90, 30, 30);
+            doc.addImage(qrDataUrl35, 'PNG', 70, 90, 30, 30);
+            doc.addImage(qrDataUrl35, 'PNG', 100, 90, 30, 30);
+            doc.addImage(qrDataUrl35, 'PNG', 130, 90, 30, 30);
+            doc.addImage(qrDataUrl35, 'PNG', 160, 90, 30, 30);
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}35`, 80, 125);
+            // Guardar el PDF
+            doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
+        } catch (error) {
+            console.error('Error generating QR code:', error);
+        }
     };
+
     
 
     return (
@@ -135,7 +173,7 @@ function Inventary() {
                                 <TableCell sx={{ color: 'white' }}>{item.t39 || 0}</TableCell>
                                 <TableCell sx={{ color: 'white' }}>{item.t40 || 0}</TableCell>
                                 <Box sx={{display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100px',  }}>
-                                    <Button variant="outlined" color="primary"sx={{borderColor: 'white',color: 'white',}}onClick={() => handlePdfClick(item)} >
+                                    <Button variant="outlined" color="primary"sx={{borderColor: 'white',color: 'white',}} onClick={() => handlePdfClick(item)} >
                                         PDF
                                     </Button>
                                 </Box>
