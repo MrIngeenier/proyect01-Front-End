@@ -47,34 +47,102 @@ function Inventary() {
         const doc = new jsPDF();
 
         // Agregar contenido al PDF
-        doc.setFontSize(20);
-        doc.text("Detalles del Item", 20, 20);
+        //doc.setFontSize(20);
+        //doc.text("Detalles del Item", 10, 20);
         doc.setFontSize(12);
-        doc.text(`ID: ${item.idinventario}`, 20, 25);
-        doc.text(`Empresa: ${item.empresa}`, 20, 30);
-        doc.text(`Referencia: ${item.referencia}`, 20, 35);
-        doc.text(`Color: ${item.color}`, 20, 40);
-        doc.text(`Ubicación: ${item.lugar}`, 20, 45);
+        doc.setLineWidth(0.5);
+        //doc.text(`ID: ${item.idinventario}`, 20, 25);
+        //doc.text(`Empresa: ${item.empresa}`, 20, 30);
+        //doc.text(`Referencia: ${item.referencia}`, 20, 35);
+        //doc.text(`Color: ${item.color}`, 20, 40);
+        //doc.text(`Ubicación: ${item.lugar}`, 20, 45);
 
         // Generar el QR en base64
         try {
             const qrDataUrl34 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+34, { errorCorrectionLevel: 'H' });
-            doc.addImage(qrDataUrl34, 'PNG', 10, 50, 30, 30);
-            doc.addImage(qrDataUrl34, 'PNG', 40, 50, 30, 30);
-            doc.addImage(qrDataUrl34, 'PNG', 70, 50, 30, 30);
-            doc.addImage(qrDataUrl34, 'PNG', 100, 50, 30, 30);
-            doc.addImage(qrDataUrl34, 'PNG', 130, 50, 30, 30);
-            doc.addImage(qrDataUrl34, 'PNG', 160, 50, 30, 30);
-            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}34`, 80, 85);
+            doc.rect(10, 20, 180, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 10,  20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 30,  20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 50,  20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 70,  20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 90,  20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 110, 20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 130, 20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 150, 20, 20, 20);
+            doc.addImage(qrDataUrl34, 'PNG', 170, 20, 20, 20);
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}34`, 
+                80, 45);
 
             const qrDataUrl35 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+35, { errorCorrectionLevel: 'H' });
-            doc.addImage(qrDataUrl35, 'PNG', 10, 90, 30, 30);
-            doc.addImage(qrDataUrl35, 'PNG', 40, 90, 30, 30);
-            doc.addImage(qrDataUrl35, 'PNG', 70, 90, 30, 30);
-            doc.addImage(qrDataUrl35, 'PNG', 100, 90, 30, 30);
-            doc.addImage(qrDataUrl35, 'PNG', 130, 90, 30, 30);
-            doc.addImage(qrDataUrl35, 'PNG', 160, 90, 30, 30);
-            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}35`, 80, 125);
+            doc.rect(10, 50, 180, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 10,  50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 30,  50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 50,  50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 70,  50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 90,  50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 110, 50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 130, 50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 150, 50, 20, 20);
+            doc.addImage(qrDataUrl35, 'PNG', 170, 50, 20, 20);
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}35`,
+                 80, 75);
+
+            const qrDataUrl36 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+36, { errorCorrectionLevel: 'H' });
+            doc.rect(10, 80, 180, 20); 
+            doc.addImage(qrDataUrl36, 'PNG', 10,  80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 30,  80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 50,  80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 70,  80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 90,  80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 110, 80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 130, 80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 150, 80, 20, 20);
+            doc.addImage(qrDataUrl36, 'PNG', 170, 80, 20, 20);
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}36`,
+                 80, 105);
+
+            const qrDataUrl37 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+37, { errorCorrectionLevel: 'H' });
+            doc.rect(10, 110, 180, 20); 
+            doc.addImage(qrDataUrl37, 'PNG', 10,  110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 30,  110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 50,  110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 70,  110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 90,  110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 110, 110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 130, 110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 150, 110, 20, 20);
+            doc.addImage(qrDataUrl37, 'PNG', 170, 110, 20, 20);
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}37`,
+                 80, 135);
+                 
+            const qrDataUrl38 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+38, { errorCorrectionLevel: 'H' });
+            doc.rect(10, 140, 180, 20); 
+            doc.addImage(qrDataUrl38, 'PNG', 10,  140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 30,  140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 50,  140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 70,  140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 90,  140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 110, 140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 130, 140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 150, 140, 20, 20);
+            doc.addImage(qrDataUrl38, 'PNG', 170, 140, 20, 20);
+
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}38`,
+                 80, 165);
+            doc.rect(10, 170, 180, 20); 
+            const qrDataUrl39 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+39, { errorCorrectionLevel: 'H' });
+            doc.addImage(qrDataUrl39, 'PNG', 10,  170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 30,  170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 50,  170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 70,  170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 90,  170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 110, 170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 130, 170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 150, 170, 20, 20);
+            doc.addImage(qrDataUrl39, 'PNG', 170, 170, 20, 20);
+
+            doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}39`,
+                 80, 195);
             // Guardar el PDF
             doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
         } catch (error) {
