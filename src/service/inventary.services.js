@@ -104,6 +104,34 @@ const inventaryServices = {
           throw error;
         }
       },
+
+      async getTipoIngreso() {
+        try {
+            const token = localStorage.getItem('token'); 
+            const response = await fetch('http://localhost:10000/tipoingreso/getData', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                },
+            });
+            
+            const data = await response.json();
+            if (response.ok) {
+                return data.response; // Devuelve la respuesta del ping
+            } else {
+                throw new Error(data.error || 'Error fetching users');
+            }
+    
+        } catch (error) {
+            console.error('Error during getTipoIngreso:', error);
+            throw error;
+        }
+    }
+    
+    ,
+    
+    
     
     async getEmpresa() {
       try {

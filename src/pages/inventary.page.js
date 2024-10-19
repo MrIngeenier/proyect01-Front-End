@@ -4,7 +4,7 @@ import Inventary from "../components/Forms/Inventary/GetInventary";
 function PageInventary(){
     return(
         <div>
-            <ADDInventary/>
+            <ADDInventary/>{/* <Inventary/> */}
             <Inventary/>
         </div>
     );

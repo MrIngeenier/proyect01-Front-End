@@ -33,7 +33,7 @@ function ADDInventary() {
             if (response.length > 0) {
                 setFormData((prev) => ({
                     ...prev,
-                    descripcionLugar: response[0].id, // Establece el primer lugar como valor por defecto
+                    descripcionLugar: response[0].id
                 }));
             }
         } catch (error) {
@@ -41,14 +41,15 @@ function ADDInventary() {
         }
     };
 
-    const fetchPublico = async () => {
+    const fetchTipoIngreso = async () => {
         try {
-            const response = await inventaryServices.getPublico();
+            const response = await inventaryServices.getTipoIngreso();
             setPublico(response); // Asignar la respuesta al estado
+           // console.log("Tipo Ingreso:", JSON.stringify(publico, null, 2));
             if (response.length > 0) {
                 setFormData((prev) => ({
                     ...prev,
-                    tipoPublicoTipoZapato: response[0].id, // Establece el primer lugar como valor por defecto
+                    descripcionLugar: response[0].id
                 }));
             }
         } catch (error) {
@@ -165,16 +166,17 @@ function ADDInventary() {
     useEffect(() => {
         showJWT();
         fetchPlaces(); // Cargar lugares al montar el componente
-        fetchPublico();
         fetchEmpresas();
         fetchReferencia();
+        fetchTipoIngreso();
     }, []);
 
     const ButtonUpdate = () => {
-        fetchPlaces();
-        fetchPublico();
-        fetchEmpresas();
-        fetchReferencia();
+      //  fetchPlaces();
+       // fetchEmpresas();
+       // fetchReferencia();
+        fetchTipoIngreso();
+       
         //console.log(data);
         
     };
@@ -223,7 +225,7 @@ function ADDInventary() {
             Inventary
             <Grid container spacing={1}>
                 
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
                 <Controller
                     name="empresa"
                     control={control}
@@ -250,16 +252,17 @@ function ADDInventary() {
                                 <TextField
                                     {...params}
                                     label="Empresa"
+                                    style={{ color: 'white', backgroundColor: '#333' }}
                                     variant="outlined"
                                     fullWidth
-                                    InputLabelProps={{ style: { color: 'white' } }}
-                                    InputProps={{
-                                        ...params.InputProps,
-                                        style: {
-                                            color: 'white',
-                                            backgroundColor: '#333',
+                                    InputLabelProps={{ style: { color: 'white' } }} // Color de la etiqueta
+                                    sx={{
+                                        '& .MuiOutlinedInput-root .MuiOutlinedInput-input': {
+                                            color: 'white', // Cambia el color del texto
                                         },
                                     }}
+                            
+                                    
                                 />
                             )}
                         />
@@ -268,7 +271,7 @@ function ADDInventary() {
             </Grid>
 
 
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={3}>
                     <Controller
                         name="serialReferencia"
                         control={control}
@@ -279,6 +282,7 @@ function ADDInventary() {
                                 options={referencias} // Usa el objeto completo
                                 getOptionLabel={(option) => `${option.serial} / ${option.color}` || ""} // Muestra serial y color
                                 freeSolo // Permite escribir libremente
+                                style={{ color: 'white', backgroundColor: '#333' }}
                                 onChange={(event, newValue) => {
                                     const selectedId = newValue ? newValue.id : "";
                                     field.onChange(newValue); // Actualiza el valor con el objeto completo
@@ -299,14 +303,14 @@ function ADDInventary() {
                                         label="Referencia"
                                         variant="outlined"
                                         fullWidth
-                                        InputLabelProps={{ style: { color: 'white' } }}
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            style: {
-                                                color: 'white',
-                                                backgroundColor: '#333',
+                                        InputLabelProps={{ style: { color: 'white' } }} // Color de la etiqueta
+                                        sx={{
+                                            '& .MuiOutlinedInput-root .MuiOutlinedInput-input': {
+                                                color: 'white', // Cambia el color del texto
                                             },
                                         }}
+                                
+                                        
                                     />
                                 )}
                             />
@@ -321,7 +325,7 @@ function ADDInventary() {
                         variant="outlined"
                         name="talla"
                         value={formData.talla}
-                        
+                        style={{ color: 'white', backgroundColor: '#333' }}
                         onChange={(event) => {
                             const selectedValue = event.target.value;
                 
@@ -331,13 +335,9 @@ function ADDInventary() {
                             }));
                         }}
                         fullWidth
-                        InputLabelProps={{ style: { color: 'white' } }}
-                        InputProps={{
-                            style: {
-                                color: 'white',
-                                backgroundColor: '#333',
-                            }
-                        }}
+                        InputLabelProps={{ style: { color: 'white' } }} // Color de la etiqueta
+
+                        
                     />
                 </Grid>
 
@@ -348,6 +348,8 @@ function ADDInventary() {
                         variant="outlined"
                         name="cantidad"
                         value={formData.cantidad}
+                        style={{ color: 'white', backgroundColor: '#333' }}
+
                         onChange={(event) => {
                             const selectedValue = event.target.value;
 
@@ -357,13 +359,9 @@ function ADDInventary() {
                             }));
                         }}
                         fullWidth
-                        InputLabelProps={{ style: { color: 'white' } }}
-                        InputProps={{
-                            style: {
-                                color: 'white',
-                                backgroundColor: '#333',
-                            }
-                        }}
+                        InputLabelProps={{ style: { color: 'white' } }} // Color de la etiqueta
+
+                        
                     />
                 </Grid>
                 
@@ -383,16 +381,9 @@ function ADDInventary() {
                                 }));
                             }}
                             fullWidth
-                            InputLabelProps={{ style: { color: 'white' } }}
-                            InputProps={{
-                                style: {
-                                    color: 'white',
-                                    backgroundColor: '#333',
-                                }
-                            }}
+                            
                             label="Publico"
                             style={{ color: 'white', backgroundColor: '#333' }}
-                            inputProps={{ style: { color: 'white' } }}
                         >
                             {places.map((place) => (
                                 <MenuItem key={place.id} value={place.id}>
@@ -405,7 +396,7 @@ function ADDInventary() {
 
                
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={3}>
                     <FormControl fullWidth>
                         <InputLabel style={{ color: 'white' }}>Tipo</InputLabel>
                         <Select
@@ -423,13 +414,12 @@ function ADDInventary() {
                             }}
                             label="Lugar"
                             style={{ color: 'white', backgroundColor: '#333' }}
-                            inputProps={{ style: { color: 'white' } }}
-                        >
-                            {publico.map((publico) => (
-                                <MenuItem key={publico.id} value={publico.id}>
-                                    {publico.tipopublico + "/" + publico.descripcion}
-                                </MenuItem>
-                            ))}
+                        >{publico.map((place) => (
+                            <MenuItem key={place.id} value={place.id}>
+                                {place.valor+"/"+place.descripcion}
+                            </MenuItem>
+                        ))}
+                            
                         </Select>
                     </FormControl>
                 </Grid>

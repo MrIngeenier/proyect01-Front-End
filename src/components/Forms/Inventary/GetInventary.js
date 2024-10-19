@@ -129,6 +129,7 @@ function Inventary() {
 
             doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}38`,
                  80, 165);
+
             doc.rect(10, 170, 180, 20); 
             const qrDataUrl39 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+39, { errorCorrectionLevel: 'H' });
             doc.addImage(qrDataUrl39, 'PNG', 10,  170, 20, 20);
@@ -143,6 +144,20 @@ function Inventary() {
 
             doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}39`,
                  80, 195);
+
+                 const qrDataUrl40 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+39, { errorCorrectionLevel: 'H' });
+                 doc.addImage(qrDataUrl40, 'PNG', 10,  200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 30,  200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 50,  200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 70,  200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 90,  200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 110, 200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 130, 200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 150, 200, 20, 20);
+                 doc.addImage(qrDataUrl40, 'PNG', 170, 200, 20, 20);
+     
+                 doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'}39`,
+                      80, 215);
             // Guardar el PDF
             doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
         } catch (error) {
@@ -154,44 +169,45 @@ function Inventary() {
 
     return (
         <Container
-        maxWidth="lg"
-        sx={{
-            backgroundColor: '#121212',
-            color: 'white',
-            border: '2px solid #333',
-            borderRadius: '8px',
-            opacity: 0.9,
-            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
-            padding: '20px',
-        }}
-    >
-        <Box display="flex" alignItems="center" sx={{ padding: '20px 0px' }}>
-            <TextField
-                label="Buscar por Empresa, Referencia, Color o Lugar"
-                variant="outlined"
-                value={search}
-                onChange={handleSearchChange}
-                sx={{ width: '80%', margin: 'normal', height: '56px' }}
-                InputLabelProps={{ style: { color: 'white' } }}
-                InputProps={{
-                    style: {
-                        color: 'white',
-                        backgroundColor: '#333',
-                    },
-                }}
-            />
-            <Button
-                variant="outlined"
-                color='primary'
-                sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px', width: '20%' }}
-                onClick={fetchInventary}
-            >
-                ACTUALIZAR
-            </Button>
-        </Box>
-
-        {/* Contenedor de la tabla con barra de desplazamiento */}
-        <Box sx={{  maxHeight: { xs: '300px', sm: '400px', md: '500px' },
+            maxWidth="lg"
+            sx={{
+                backgroundColor: '#121212',
+                color: 'white',
+                border: '2px solid #333',
+                borderRadius: '8px',
+                opacity: 0.9,
+                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
+                padding: '20px',
+            }}
+        >
+            <Box display="flex" alignItems="center" sx={{ padding: '20px 0px' }}>
+                <TextField
+                    label="Buscar por Empresa, Referencia, Color o Lugar"
+                    variant="outlined"
+                    value={search}
+                    onChange={handleSearchChange}
+                    sx={{ width: '80%', margin: 'normal', height: '56px' }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{
+                        style: {
+                            color: 'white',
+                            backgroundColor: '#333',
+                        },
+                    }}
+                />
+                <Button
+                    variant="outlined"
+                    color='primary'
+                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px', width: '20%' }}
+                    onClick={fetchInventary}
+                >
+                    ACTUALIZAR
+                </Button>
+            </Box>
+    
+            {/* Contenedor de la tabla con barra de desplazamiento */}
+            <Box sx={{
+                maxHeight: { xs: '300px', sm: '400px', md: '500px' },
                 overflowY: 'auto',
                 maxWidth: {
                     xs: '100%',  // Ancho completo en pantallas extra pequeñas
@@ -204,56 +220,63 @@ function Inventary() {
                 color: 'white',
                 border: '2px solid #333',
                 borderRadius: '8px',
-                padding: '20px', }}> {/* Ajusta la altura máxima según sea necesario */}
-            <TableContainer component={Paper} sx={{ backgroundColor: '#333', borderRadius: '8px' }}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell sx={{ color: 'white' }}>ID</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Empresa</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Color</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Ubicación</TableCell>
-                            <TableCell sx={{ color: 'white' }}>34</TableCell>
-                            <TableCell sx={{ color: 'white' }}>35</TableCell>
-                            <TableCell sx={{ color: 'white' }}>36</TableCell>
-                            <TableCell sx={{ color: 'white' }}>37</TableCell>
-                            <TableCell sx={{ color: 'white' }}>38</TableCell>
-                            <TableCell sx={{ color: 'white' }}>39</TableCell>
-                            <TableCell sx={{ color: 'white' }}>40</TableCell>
-                            <TableCell sx={{ color: 'white' }}>Buttons</TableCell>
-
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredData.map((item) => (
-                            <TableRow key={item.idinventario}>
-                                <TableCell sx={{ color: 'white' }}>{item.idinventario}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.empresa}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.referencia}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.lugar}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t34 || 0}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t35 || 0}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t36 || 0}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t37 || 0}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t38 || 0}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t39 || 0}</TableCell>
-                                <TableCell sx={{ color: 'white' }}>{item.t40 || 0}</TableCell>
-                                <Box sx={{display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100px',  }}>
-                                    <Button variant="outlined" color="primary"sx={{borderColor: 'white',color: 'white',}} onClick={() => handlePdfClick(item)} >
-                                        PDF
-                                    </Button>
-                                </Box>
-
+                padding: '20px',
+            }}>
+                <TableContainer component={Paper} sx={{ backgroundColor: '#333', borderRadius: '8px' }}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell sx={{ color: 'white' }}>ID</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Empresa</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Color</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Ubicación</TableCell>
+                                <TableCell sx={{ color: 'white' }}>34</TableCell>
+                                <TableCell sx={{ color: 'white' }}>35</TableCell>
+                                <TableCell sx={{ color: 'white' }}>36</TableCell>
+                                <TableCell sx={{ color: 'white' }}>37</TableCell>
+                                <TableCell sx={{ color: 'white' }}>38</TableCell>
+                                <TableCell sx={{ color: 'white' }}>39</TableCell>
+                                <TableCell sx={{ color: 'white' }}>40</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Buttons</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
-    </Container>
+                        </TableHead>
+                        <TableBody>
+                            {filteredData.map((item) => (
+                                <TableRow key={item.idinventario}>
+                                    <TableCell sx={{ color: 'white' }}>{item.idinventario}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.empresa}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.referencia}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.lugar}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t34 || 0}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t35 || 0}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t36 || 0}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t37 || 0}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t38 || 0}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t39 || 0}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.t40 || 0}</TableCell>
+                                    <TableCell>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            <Button
+                                                variant="outlined"
+                                                color="primary"
+                                                sx={{ borderColor: 'white', color: 'white' }}
+                                                onClick={() => handlePdfClick(item)}
+                                            >
+                                                PDF
+                                            </Button>
+                                        </Box>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
+        </Container>
     );
+    
 }
 
 export default Inventary;
