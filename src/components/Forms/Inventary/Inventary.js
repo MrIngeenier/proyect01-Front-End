@@ -49,7 +49,7 @@ function ADDInventary() {
             if (response.length > 0) {
                 setFormData((prev) => ({
                     ...prev,
-                    descripcionLugar: response[0].id
+                    tipoPublicoTipoZapato: response[0].id
                 }));
             }
         } catch (error) {
@@ -90,17 +90,25 @@ function ADDInventary() {
         }
     };
 
-    
+    // tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla
     
 
     const FetchAddInventary = async (event) => {
         try {
            // console.log("Cantidad :", formData.cantidad);
             var idUser = formData.cantidad;
-            var cantidad = formData.idUsuario;    
+            var cantidad = formData.idUsuario; 
+            var tipo = formData.tipoPublicoTipoZapato;
+            var Lugar = formData.descripcionLugar;
+           
             // Llama al servicio pasando el objeto completo
-            const result = await inventaryServices.addInventary(formData.tipoPublicoTipoZapato,formData.serialReferencia,
-                formData.descripcionLugar,idUser,cantidad,formData.talla);
+            const result = await inventaryServices.addInventary(
+                Lugar,
+                formData.serialReferencia,
+                tipo,
+                idUser,
+                cantidad,
+                formData.talla);
             alert('Inventario agregado exitosamente');
             console.log('Resultado del inventario agregado:', result);
         } catch (error) {
@@ -207,7 +215,7 @@ function ADDInventary() {
         //showJWT();
         FetchAddInventary();
         FetchAddEmpresa();
-        fetchInventary();
+        //fetchInventary();
         console.log("Form Data:", formData); // Muestra el objeto completo
     };
 
@@ -280,7 +288,7 @@ function ADDInventary() {
                             <Autocomplete
                                 {...field}
                                 options={referencias} // Usa el objeto completo
-                                getOptionLabel={(option) => `${option.serial} / ${option.color}` || ""} // Muestra serial y color
+                                getOptionLabel={(option) => `${option.serial} / ${option.color} / ${option.tipopublico}` || ""} // Muestra serial y color
                                 freeSolo // Permite escribir libremente
                                 style={{ color: 'white', backgroundColor: '#333' }}
                                 onChange={(event, newValue) => {
@@ -294,7 +302,7 @@ function ADDInventary() {
                                 }}
                                 renderOption={(props, option) => (
                                     <li {...props} key={option.id}> 
-                                        {`${option.serial} / ${option.color}`}
+                                        {`${option.serial} / ${option.color} / ${option.tipopublico}`}
                                     </li>
                                 )}
                                 renderInput={(params) => (
@@ -374,7 +382,9 @@ function ADDInventary() {
                             name="tipoPublicoTipoZapato"
                             value={formData.tipoPublicoTipoZapato }
                             onChange={(event) => {
-                                const selectedId = event.target.value;    
+                                const selectedId = event.target.value;
+                                console.log("Selected ID Lugar:", selectedId);  // Verifica el valor seleccionado
+    
                                 setFormData((prevData) => ({
                                     ...prevData,
                                     tipoPublicoTipoZapato: selectedId, // Actualiza formData.talla con el selectedId
@@ -405,8 +415,6 @@ function ADDInventary() {
                             value={formData.descripcionLugar} 
                             onChange={(event) => {
                                 const selectedId = event.target.value;
-                              //  field.onChange(newValue); // Actualiza el valor con el objeto completo
-    
                                 setFormData((prevData) => ({
                                     ...prevData,
                                     descripcionLugar: selectedId, // Actualiza formData.talla con el selectedId

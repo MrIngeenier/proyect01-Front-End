@@ -164,7 +164,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/referencias/getData', {
+        const response = await fetch('http://localhost:10000/referencias/getDataRefZapato', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
