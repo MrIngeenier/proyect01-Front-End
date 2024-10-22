@@ -286,8 +286,31 @@ const inventaryServices = {
       }
     },
     
-
+    //nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla
+    async updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) {
+      try {
+        const token = localStorage.getItem('token');
     
+        const response = await fetch('http://localhost:10000/inventario/updateDataQR', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({ nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla }),
+        });
+    
+        const data = await response.json();
+        console.log("Response :" + data);
+    
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error actualizando usuario:', error);
+      }
+    },
   };
 
   

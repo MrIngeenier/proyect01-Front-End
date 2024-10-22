@@ -3,20 +3,39 @@ import { Box, Button, Typography } from '@mui/material';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
-
+import inventaryServices from '../../../service/inventary.services';
 
 const QrScanner = () => {
   const [result, setResult] = useState('No result');
   const [scanner, setScanner] = useState(null);
-
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [data, setData] = useState([]);
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
+
+  const fetchInventaryQR = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
+    try {
+      const response = await inventaryServices.updateDataQR(
+        nombreEmpresa,
+        referenciaSerial,
+        color,
+        ubicacionDescripcion,
+        talla
+      );
+
+      setData(response);
+      setSuccessMessage("Inventario actualizado con éxito.");
+      setSuccessOpen(true);
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+      setErrorMessage('Error al actualizar el inventario.');
+      setErrorOpen(true);
+    }
+  };
 
   const startScanning = () => {
     const html5QrcodeScanner = new Html5QrcodeScanner(
@@ -26,17 +45,33 @@ const QrScanner = () => {
     );
 
     html5QrcodeScanner.render(
-      (decodedText, decodedResult) => {
+      (decodedText) => {
         setResult(decodedText);
-        setSuccessMessage("QR code scanned successfully!");
+        setSuccessMessage("¡Código QR escaneado con éxito!");
         setSuccessOpen(true);
-        html5QrcodeScanner.clear(); 
+
+        // Dividir el texto escaneado usando el separador '/'
+        const qrData = decodedText.split('/');
+
+        // Validar que tenga el formato esperado
+        if (qrData.length === 5) {
+          const [nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla] = qrData;
+
+          // Llamar a la función para actualizar el inventario con los datos extraídos
+          fetchInventaryQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
+        } else {
+          console.error('Formato de código QR inválido:', decodedText);
+          setErrorMessage('El formato del código QR es inválido. Asegúrate de que tenga el formato empresa/referencia/color/ubicación/talla.');
+          setErrorOpen(true);
+        }
+
+        // Detener el escáner después de leer el código QR
+        html5QrcodeScanner.clear();
       },
       (error) => {
-        //console.error(error);
         const message = error.message.includes("NotFoundException")
-          ? "No QR code found. Please ensure the code is within the camera view and try again."
-          : "An unexpected error occurred. Please try again.";
+          ? "No se encontró un código QR. Asegúrate de que el código esté dentro del campo de la cámara e inténtalo nuevamente."
+          : "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";
         setErrorMessage(message);
         setErrorOpen(true);
       }
