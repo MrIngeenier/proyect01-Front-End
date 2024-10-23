@@ -229,6 +229,8 @@ function ADDInventary() {
             boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
             padding: '20px',
+            
+            
         }}>
             Inventary
             <Grid container spacing={1}>

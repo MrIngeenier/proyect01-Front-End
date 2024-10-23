@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, TextField, Button, Box, Grid, FormControl, InputLabel, Select, MenuItem  } from '@mui/material';
 import inventaryServices from '../../../../service/inventary.services';
+import GetRefencias from './getRefencias';
+
 
 function ADDReferences() {
     const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ function ADDReferences() {
 
     const [publico, setPublico] = useState([]); // Estado para almacenar publico
 // , ,descripcion,
+    const [isVisible, setIsVisible] = useState(false); // Estado para controlar la visibilidad
 
 
     const handleChange = (event) => {
@@ -52,6 +55,9 @@ function ADDReferences() {
         }
     };
 
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible); // Cambia el valor del estado entre true y false
+      };
 
 
     useEffect(() => {
@@ -77,7 +83,11 @@ function ADDReferences() {
             opacity: 0.9,
             boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
-            padding: '20px',
+            maxWidth: { xs: 'auto', sm: '80%', md: 'md' }, // Ajusta el ancho para diferentes tamaños
+            margin: { xs: '0 0 0 -20px', sm: 'auto' }, // Mueve el contenedor 20px a la izquierda en modo móvil
+            padding: { xs: '10px ', sm: '20px' }, // Mueve el contenedor 20px a la izquierda en modo móvil
+
+            //padding: '20px',
         }}>
             PRODUCTOS
             <Grid container spacing={1} sx={{display:'flex',justifyContent:'center', padding:'10px'}} >
@@ -102,7 +112,6 @@ function ADDReferences() {
                     />
                 </Grid>     
                 
-
                 <Grid item xs={12} sm={2}>
                     <TextField
                         label="Color"
@@ -121,7 +130,6 @@ function ADDReferences() {
                     />
                 </Grid>
                     
-               
                 <Grid item xs={12} sm={3}>
                     <TextField
                         label="Descripción"
@@ -161,19 +169,17 @@ function ADDReferences() {
                         </Select>
                     </FormControl>
                 </Grid>
-
-                {/* Otros campos... */}
                     
                 <Grid item xs={12}>
                     <Box display="flex" justifyContent="center" gap={2}>
-                        <Button variant="outlined" color='primary' onClick={ButtonADD} sx={{ borderColor: 'white', color: 'white' }}>
+                        <Button variant="outlined" color='primary' onClick={ButtonADD} sx={{ borderColor: 'white', color: 'white',fontSize: { xs: '10px', md: '80%' },width: { xs: '0px', sm: 'auto' }} }>
                             AGREGAR
                         </Button>
 
-                        <Button variant="outlined" color='primary' onClick={ButtonUpdate} sx={{ borderColor: 'white', color: 'white' }}>
+                        <Button variant="outlined" color='primary' onClick={ButtonUpdate} sx={{ borderColor: 'white', color: 'white',fontSize: { xs: '10px', md: '80' },width: { xs: '0px', sm: 'auto' } }}>
                             ACTUALIZAR
                         </Button>
-                        <Button variant="outlined" color='primary' onClick={ButtonUpdate} sx={{ borderColor: 'white', color: 'white' }}>
+                        <Button variant="outlined" color='primary' onClick={toggleVisibility} sx={{ borderColor: 'white', color: 'white',fontSize: { xs: '10px', md: '80' },width: { xs: '0px', sm: 'auto' }  }}>
                             MOSTRAR
                         </Button>
                     </Box>
@@ -181,6 +187,9 @@ function ADDReferences() {
 
                 
             </Grid>
+            {isVisible && (
+            <GetRefencias/> 
+            )}
         </Container>
     );
 }
