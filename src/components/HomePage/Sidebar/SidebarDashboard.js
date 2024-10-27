@@ -28,7 +28,8 @@ import BodyHomepage from '../Body/BodyHomePage';
 import QrScanner from '../Body/QrScanner';
 import SalesDashboard from '../Body/SalesDashboard';
 import PageInventary from '../../../pages/inventary.page';
-import ADDReferences from '../../Forms/Inventary/Referencias/referencias';
+//import ADDReferences from '../../Forms/Inventary/Referencias/referencias';
+import AllData from '../../../pages/AddData';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -127,7 +128,7 @@ export default function SidebarDashboard() {
   const handleProductosClick = () => {
     console.log('Botón Productos presionado');
     setTitle("PRODUCTOS");
-    setActiveComponent(() => ADDReferences);
+    setActiveComponent(() => AllData);
   };
 
   const handleInventariosClick = () => {

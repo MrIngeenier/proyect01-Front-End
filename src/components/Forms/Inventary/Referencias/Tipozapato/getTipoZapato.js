@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReferencesServices from "../../../../service/References.services";
+import tipopublicoServices from '../../../../../service/tipopublico.services';
 import {
     Button,Typography , Container, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
     Box
@@ -8,7 +8,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
 
-function GetRefencias() {
+function GetTipoZapato() {
 
     const [referencias, setReferencias] = useState([]); // Estado para almacenar referencias
     const [search, setSearch] = useState(''); // Estado para la búsqueda
@@ -21,7 +21,7 @@ function GetRefencias() {
 
     const fetchReferenciasZapatos = async () => {
         try {
-            const response = await ReferencesServices.getReferencia();
+            const response = await tipopublicoServices.getTipoPublico();
             setReferencias(response);
             setFilteredData(response); // Inicialmente, mostrar todos los datos
         } catch (error) {
@@ -30,16 +30,19 @@ function GetRefencias() {
     };
 
     // Filtrar referencias basado en el texto de búsqueda
-    useEffect(() => {
-        const filtered = referencias.filter(item =>
-            (item.id && item.id.toString().includes(search)) || // Convierte id a string
-            item.serial.toLowerCase().includes(search.toLowerCase()) ||
-            item.color.toLowerCase().includes(search.toLowerCase()) ||
-            item.descripcion.toLowerCase().includes(search.toLowerCase()) ||
-            item.tipopublico.toLowerCase().includes(search.toLowerCase())
-        );
-        setFilteredData(filtered);
-    }, [search, referencias]);
+    // Filtrar referencias basado en el texto de búsqueda
+        // Filtrar referencias basado en el texto de búsqueda
+        useEffect(() => {
+            const filtered = referencias.filter(item =>
+                (item.id && item.id.toString().includes(search)) || // Convierte id a string
+                (item.estilo && item.estilo.toLowerCase().includes(search.toLowerCase())) ||
+                (item.tipopublico && item.tipopublico.toLowerCase().includes(search.toLowerCase())) ||
+                (item.descripcion && item.descripcion.toLowerCase().includes(search.toLowerCase()))
+            );
+            setFilteredData(filtered);
+        }, [search, referencias]);
+
+
 
     const handleDelete = () => {
         console.log("Borrar acción");
@@ -70,7 +73,7 @@ function GetRefencias() {
         >
             <Box display="flex" alignItems="center" sx={{  padding: { xs: 0, sm: '20px' }}}  >
                 <TextField
-                    label="Buscar por Id, Empresa, Referencia, Color o Lugar"
+                    label="Buscar por ID,Estilo, Publico, Descipción."
                     variant="outlined"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)} // Actualiza el estado de búsqueda
@@ -110,10 +113,9 @@ function GetRefencias() {
                         <TableHead>
                             <TableRow>
                                 <TableCell sx={{ color: 'white' }}>ID</TableCell>
-                                <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
-                                <TableCell sx={{ color: 'white' }}>Color</TableCell>
-                                <TableCell sx={{ color: 'white' }}>Descripcion</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Estilo</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Publico</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Descripcion</TableCell>
                                 <TableCell sx={{ textAlign: 'center', color: 'white' }}>Acciones</TableCell>
                             </TableRow>
                         </TableHead>
@@ -121,10 +123,9 @@ function GetRefencias() {
                             {filteredData.map((item) => (
                                 <TableRow key={item.id}>
                                     <TableCell sx={{ color: 'white' }}>{item.id}</TableCell>
-                                    <TableCell sx={{ color: 'white' }}>{item.serial}</TableCell>
-                                    <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
-                                    <TableCell sx={{ color: 'white' }}>{item.descripcion}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.estilo}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.tipopublico}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.descripcion}</TableCell>
                                     <TableCell sx={{ textAlign: 'center', color: 'white' }}>
                                     <Box display="flex" justifyContent="center" alignItems='center' gap={2}>
                                         <Button
@@ -154,4 +155,4 @@ function GetRefencias() {
     );
 }
 
-export default GetRefencias;
+export default GetTipoZapato;
