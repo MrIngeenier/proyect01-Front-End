@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
+import VentasServices from '../../../service/ventas.services';
 
 const QrScanner = () => {
   const [result, setResult] = useState('No result');
@@ -13,9 +14,17 @@ const QrScanner = () => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
+
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
+  const token = localStorage.getItem('token');
+  const [formData, setFormData] = useState({
+    idUsuario: '',
+    estado: 'false',
+    serialReferencia: '1'
+  });
 
   const fetchInventaryQR = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
     try {
@@ -30,12 +39,50 @@ const QrScanner = () => {
       setData(response);
       setSuccessMessage("Inventario actualizado con éxito.");
       setSuccessOpen(true);
+     
     } catch (error) {
       console.error('Error fetching inventory:', error);
       setErrorMessage('Error al actualizar el inventario.');
       setErrorOpen(true);
     }
   };
+
+  const fetchAddVentas = async (idUsuario, estado, serialReferencia) => {
+    if (!serialReferencia || !idUsuario || estado == null) {
+        console.error('Algunos valores están faltando:', { serialReferencia, idUsuario, estado });
+        setErrorMessage('Datos incompletos para agregar venta.');
+        setErrorOpen(true);
+        return;
+    }
+    try {
+        const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado);
+        console.log(response);
+    } catch (error) {
+        console.error('Error registrando venta:', error);
+        setErrorMessage('Error al agregar venta.');
+        setErrorOpen(true);
+    }
+};
+
+const fetchGetIDReferences = async (color,serial,tipopublico) => {
+  if (!color || !serial || tipopublico == null) {
+      console.error('Algunos valores están faltando:', { color,serial,tipopublico });
+      setErrorMessage('Datos incompletos para tomar id referencia.');
+      setErrorOpen(true);
+      return;
+  }
+  try {
+      const response = await VentasServices.GetReferenciaID(color,serial,tipopublico);
+      //console.log(response);
+      setCount(response);
+  } catch (error) {
+      console.error('Error registrando para tomar id referencia:', error);
+      setErrorMessage('Error para tomar id referencia.');
+      setErrorOpen(true);
+  }
+};
+
+
 
   const startScanning = () => {
     const html5QrcodeScanner = new Html5QrcodeScanner(
@@ -54,11 +101,14 @@ const QrScanner = () => {
         const qrData = decodedText.split('/');
 
         // Validar que tenga el formato esperado
-        if (qrData.length === 5) {
-          const [nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla] = qrData;
-
+        if (qrData.length === 6) {
+          const [nombreEmpresa, serial, color, ubicacionDescripcion, talla,tipopublico] = qrData;
+          //console.log(qrData);
           // Llamar a la función para actualizar el inventario con los datos extraídos
-          fetchInventaryQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
+          fetchGetIDReferences(color,serial,tipopublico);
+          fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
+          fetchAddVentas(formData.idUsuario, formData.estado, count.id);
+        console.log(formData.idUsuario+"/", formData.estado,"/", count.id);
         } else {
           console.error('Formato de código QR inválido:', decodedText);
           setErrorMessage('El formato del código QR es inválido. Asegúrate de que tenga el formato empresa/referencia/color/ubicación/talla.');
@@ -85,6 +135,47 @@ const QrScanner = () => {
       scanner.clear();
     }
   };
+
+  function decodeJWT(token) {
+    if (!token) {
+        console.error("No token provided");
+        return null;
+    }
+
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+        console.error("Invalid token format");
+        return null;
+    }
+
+    const payload = parts[1];
+
+    // Decodificar la carga útil de base64 a un objeto JSON
+    try {
+        const decodedPayload = atob(payload);
+        const parsedPayload = JSON.parse(decodedPayload);
+        return parsedPayload;
+    } catch (error) {
+        console.error("Error decoding token payload:", error);
+        return null;
+    }
+  }
+  function showJWT() {
+      const myToken = token; // Asegúrate de que 'token' esté definido y tenga el valor correcto
+      //console.log("My token: " + myToken);
+      const decodedData = decodeJWT(myToken);
+      setFormData((prev) => ({
+          ...prev,
+          idUsuario: decodedData.userId 
+      }));
+     console.log("DecodeJWT:", decodedData.userId);
+  }
+
+  useEffect(() => {
+    showJWT();
+  }, []);
+
+  
 
   return (
     <Box sx={{ padding: 2, textAlign: 'center' }}>
