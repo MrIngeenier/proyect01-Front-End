@@ -21,6 +21,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import BuildIcon from '@mui/icons-material/Build';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
@@ -28,6 +29,7 @@ import BodyHomepage from '../Body/BodyHomePage';
 import QrScanner from '../Body/QrScanner';
 import SalesDashboard from '../Body/SalesDashboard';
 import PageInventary from '../../../pages/inventary.page';
+import GetVentas from '../../Forms/Sales/GetVentas';
 //import ADDReferences from '../../Forms/Inventary/Referencias/referencias';
 import AllData from '../../../pages/AddData';
 const drawerWidth = 240;
@@ -138,8 +140,10 @@ export default function SidebarDashboard() {
   };
 
   const handleHerramientasClick = () => {
-    console.log('Botón Herramientas presionado');
-    setTitle("HERRAMIENTAS");
+    //console.log('Botón Herramientas presionado');
+    setTitle("VENTAS");
+    setActiveComponent(() => GetVentas);
+
   };
 
   const handleQRClick = () => {
@@ -230,9 +234,9 @@ export default function SidebarDashboard() {
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton onClick={handleHerramientasClick} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
               <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
-                <BuildIcon />
+                <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary="Herramientas" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Ventas" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

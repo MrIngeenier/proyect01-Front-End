@@ -96,7 +96,7 @@ function Inventary() {
         // Generar el QR en base64
         try {
             if(item.publico === 'hombre'){
-                const qrDataUrl34 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+34+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl34 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${34}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 20, 180, 20);
                     doc.addImage(qrDataUrl34, 'PNG', 10,  20, 20, 20);
                     doc.addImage(qrDataUrl34, 'PNG', 30,  20, 20, 20);
@@ -110,7 +110,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/34`, 
                         80, 45);
 
-                    const qrDataUrl35 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+35+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl35 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${35}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 50, 180, 20);
                     doc.addImage(qrDataUrl35, 'PNG', 10,  50, 20, 20);
                     doc.addImage(qrDataUrl35, 'PNG', 30,  50, 20, 20);
@@ -124,7 +124,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/35`,
                         80, 75);
 
-                    const qrDataUrl36 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+36+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl36 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${36}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 80, 180, 20); 
                     doc.addImage(qrDataUrl36, 'PNG', 10,  80, 20, 20);
                     doc.addImage(qrDataUrl36, 'PNG', 30,  80, 20, 20);
@@ -138,7 +138,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}36`,
                         80, 105);
 
-                    const qrDataUrl37 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+37+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl37 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${37}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 110, 180, 20); 
                     doc.addImage(qrDataUrl37, 'PNG', 10,  110, 20, 20);
                     doc.addImage(qrDataUrl37, 'PNG', 30,  110, 20, 20);
@@ -152,7 +152,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}37`,
                         80, 135);
                         
-                    const qrDataUrl38 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+38+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl38 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${38}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 140, 180, 20); 
                     doc.addImage(qrDataUrl38, 'PNG', 10,  140, 20, 20);
                     doc.addImage(qrDataUrl38, 'PNG', 30,  140, 20, 20);
@@ -168,7 +168,7 @@ function Inventary() {
                         80, 165);
 
                     doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl39 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+'/'+39+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl39 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${39}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl39, 'PNG', 10,  170, 20, 20);
                     doc.addImage(qrDataUrl39, 'PNG', 30,  170, 20, 20);
                     doc.addImage(qrDataUrl39, 'PNG', 50,  170, 20, 20);
@@ -183,7 +183,7 @@ function Inventary() {
                         80, 195);
                         doc.rect(10, 200, 180, 20); 
 
-                    const qrDataUrl40 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+40+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl40 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${40}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl40, 'PNG', 10,  200, 20, 20);
                     doc.addImage(qrDataUrl40, 'PNG', 30,  200, 20, 20);
                     doc.addImage(qrDataUrl40, 'PNG', 50,  200, 20, 20);
@@ -198,7 +198,7 @@ function Inventary() {
                         80, 225);
                         doc.rect(10, 230, 180, 20); 
 
-                    const qrDataUrl41 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+41+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl41 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${41}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl41, 'PNG', 10,  230, 20, 20);
                     doc.addImage(qrDataUrl41, 'PNG', 30,  230, 20, 20);
                     doc.addImage(qrDataUrl41, 'PNG', 50,  230, 20, 20);
@@ -213,7 +213,7 @@ function Inventary() {
                         80, 255);
                         doc.rect(10, 260, 180, 20); 
                         
-                        const qrDataUrl42 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+42+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl42 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${42}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                         doc.addImage(qrDataUrl42, 'PNG', 10,  260, 20, 20);
                         doc.addImage(qrDataUrl42, 'PNG', 30,  260, 20, 20);
                         doc.addImage(qrDataUrl42, 'PNG', 50,  260, 20, 20);
@@ -229,7 +229,7 @@ function Inventary() {
 
                             doc.addPage(); 
 
-                    const qrDataUrl43 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+43+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl43 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${43}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 20, 180, 20);
                     doc.addImage(qrDataUrl43, 'PNG', 10,  20, 20, 20);
                     doc.addImage(qrDataUrl43, 'PNG', 30,  20, 20, 20);
@@ -246,7 +246,7 @@ function Inventary() {
             //doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
             }
             if(item.publico === 'mujer' ){
-                const qrDataUrl34 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+34+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl34 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${34}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 20, 180, 20);
                     doc.addImage(qrDataUrl34, 'PNG', 10,  20, 20, 20);
                     doc.addImage(qrDataUrl34, 'PNG', 30,  20, 20, 20);
@@ -260,7 +260,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/34`, 
                         80, 45);
 
-                    const qrDataUrl35 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+35+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl35 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${35}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 50, 180, 20);
                     doc.addImage(qrDataUrl35, 'PNG', 10,  50, 20, 20);
                     doc.addImage(qrDataUrl35, 'PNG', 30,  50, 20, 20);
@@ -274,7 +274,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/35`,
                         80, 75);
 
-                    const qrDataUrl36 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+36+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl36 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${36}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 80, 180, 20); 
                     doc.addImage(qrDataUrl36, 'PNG', 10,  80, 20, 20);
                     doc.addImage(qrDataUrl36, 'PNG', 30,  80, 20, 20);
@@ -288,7 +288,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}36`,
                         80, 105);
 
-                    const qrDataUrl37 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+37+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl37 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${37}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 110, 180, 20); 
                     doc.addImage(qrDataUrl37, 'PNG', 10,  110, 20, 20);
                     doc.addImage(qrDataUrl37, 'PNG', 30,  110, 20, 20);
@@ -302,7 +302,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}37`,
                         80, 135);
                         
-                    const qrDataUrl38 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+38+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl38 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${38}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 140, 180, 20); 
                     doc.addImage(qrDataUrl38, 'PNG', 10,  140, 20, 20);
                     doc.addImage(qrDataUrl38, 'PNG', 30,  140, 20, 20);
@@ -318,7 +318,7 @@ function Inventary() {
                         80, 165);
 
                     doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl39 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+'/'+39+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl39 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${39}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl39, 'PNG', 10,  170, 20, 20);
                     doc.addImage(qrDataUrl39, 'PNG', 30,  170, 20, 20);
                     doc.addImage(qrDataUrl39, 'PNG', 50,  170, 20, 20);
@@ -333,7 +333,7 @@ function Inventary() {
                         80, 195);
                         doc.rect(10, 200, 180, 20); 
 
-                    const qrDataUrl40 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+40+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl40 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${40}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl40, 'PNG', 10,  200, 20, 20);
                     doc.addImage(qrDataUrl40, 'PNG', 30,  200, 20, 20);
                     doc.addImage(qrDataUrl40, 'PNG', 50,  200, 20, 20);
@@ -350,7 +350,7 @@ function Inventary() {
                    
                         doc.rect(10, 230, 180, 20); 
                         
-                        const qrDataUrl42 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+41+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                        const qrDataUrl42 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${41}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                         doc.addImage(qrDataUrl42, 'PNG', 10,  230, 20, 20);
                         doc.addImage(qrDataUrl42, 'PNG', 30,  230, 20, 20);
                         doc.addImage(qrDataUrl42, 'PNG', 50,  230, 20, 20);
@@ -367,7 +367,7 @@ function Inventary() {
             //doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
             }
             if(item.publico === 'niña'){
-                const qrDataUrl21 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+21+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                const qrDataUrl21 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${21}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 20, 180, 20);
                     doc.addImage(qrDataUrl21, 'PNG', 10,  20, 20, 20);
                     doc.addImage(qrDataUrl21, 'PNG', 30,  20, 20, 20);
@@ -381,7 +381,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/21`, 
                         80, 45);
 
-                    const qrDataUrl22 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+22+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl22 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${22}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 50, 180, 20);
                     doc.addImage(qrDataUrl22, 'PNG', 10,  50, 20, 20);
                     doc.addImage(qrDataUrl22, 'PNG', 30,  50, 20, 20);
@@ -395,7 +395,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/22`,
                         80, 75);
 
-                    const qrDataUrl23 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+23+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl23 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${23}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 80, 180, 20); 
                     doc.addImage(qrDataUrl23, 'PNG', 10,  80, 20, 20);
                     doc.addImage(qrDataUrl23, 'PNG', 30,  80, 20, 20);
@@ -409,7 +409,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}23`,
                         80, 105);
 
-                    const qrDataUrl24 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+24+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl24 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${24}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 110, 180, 20); 
                     doc.addImage(qrDataUrl24, 'PNG', 10,  110, 20, 20);
                     doc.addImage(qrDataUrl24, 'PNG', 30,  110, 20, 20);
@@ -423,7 +423,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}24`,
                         80, 135);
                         
-                    const qrDataUrl25 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+25+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl25 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${25}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 140, 180, 20); 
                     doc.addImage(qrDataUrl25, 'PNG', 10,  140, 20, 20);
                     doc.addImage(qrDataUrl25, 'PNG', 30,  140, 20, 20);
@@ -439,7 +439,7 @@ function Inventary() {
                         80, 165);
 
                     doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl26 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+26+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl26 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${26}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl26, 'PNG', 10,  170, 20, 20);
                     doc.addImage(qrDataUrl26, 'PNG', 30,  170, 20, 20);
                     doc.addImage(qrDataUrl26, 'PNG', 50,  170, 20, 20);
@@ -454,7 +454,7 @@ function Inventary() {
                         80, 195);
                         doc.rect(10, 200, 180, 20); 
 
-                    const qrDataUrl27 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+27+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl27 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${27}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl27, 'PNG', 10,  200, 20, 20);
                     doc.addImage(qrDataUrl27, 'PNG', 30,  200, 20, 20);
                     doc.addImage(qrDataUrl27, 'PNG', 50,  200, 20, 20);
@@ -469,7 +469,7 @@ function Inventary() {
                         80, 225);
                         doc.rect(10, 230, 180, 20); 
 
-                    const qrDataUrl28 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+28+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl28 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${28}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl28, 'PNG', 10,  230, 20, 20);
                     doc.addImage(qrDataUrl28, 'PNG', 30,  230, 20, 20);
                     doc.addImage(qrDataUrl28, 'PNG', 50,  230, 20, 20);
@@ -484,7 +484,7 @@ function Inventary() {
                         80, 255);
                         doc.rect(10, 260, 180, 20); 
                         
-                        const qrDataUrl29 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+29+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                        const qrDataUrl29 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${29}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                         doc.addImage(qrDataUrl29, 'PNG', 10,  260, 20, 20);
                         doc.addImage(qrDataUrl29, 'PNG', 30,  260, 20, 20);
                         doc.addImage(qrDataUrl29, 'PNG', 50,  260, 20, 20);
@@ -500,7 +500,7 @@ function Inventary() {
 
                             doc.addPage(); 
 
-                    const qrDataUrl30 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+30+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl30 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${30}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 20, 180, 20);
                     doc.addImage(qrDataUrl30, 'PNG', 10,  20, 20, 20);
                     doc.addImage(qrDataUrl30, 'PNG', 30,  20, 20, 20);
@@ -514,7 +514,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/30`, 
                         80, 45);
 
-                    const qrDataUrl31 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+31+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl31 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${31}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 50, 180, 20);
                     doc.addImage(qrDataUrl31, 'PNG', 10,  50, 20, 20);
                     doc.addImage(qrDataUrl31, 'PNG', 30,  50, 20, 20);
@@ -528,7 +528,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/31`,
                         80, 75);
 
-                    const qrDataUrl32 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+32+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl32 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${32}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 80, 180, 20); 
                     doc.addImage(qrDataUrl32, 'PNG', 10,  80, 20, 20);
                     doc.addImage(qrDataUrl32, 'PNG', 30,  80, 20, 20);
@@ -542,7 +542,7 @@ function Inventary() {
                     doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}32`,
                         80, 105);
 
-                    const qrDataUrl33 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+33+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl33 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${33}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 110, 180, 20); 
                     doc.addImage(qrDataUrl33, 'PNG', 10,  110, 20, 20);
                     doc.addImage(qrDataUrl33, 'PNG', 30,  110, 20, 20);
@@ -557,7 +557,7 @@ function Inventary() {
                         80, 135);
 
 
-                    const qrDataUrl34 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'+34+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl34 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${34}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.rect(10, 140, 180, 20); 
                     doc.addImage(qrDataUrl34, 'PNG', 10,  140, 20, 20);
                     doc.addImage(qrDataUrl34, 'PNG', 30,  140, 20, 20);
@@ -573,7 +573,7 @@ function Inventary() {
                         80, 165);
 
                     doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl35 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+'/'+35+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl35 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${35}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl35, 'PNG', 10,  170, 20, 20);
                     doc.addImage(qrDataUrl35, 'PNG', 30,  170, 20, 20);
                     doc.addImage(qrDataUrl35, 'PNG', 50,  170, 20, 20);
@@ -588,7 +588,7 @@ function Inventary() {
                         80, 195);
                         doc.rect(10, 200, 180, 20); 
 
-                    const qrDataUrl36 = await QRCode.toDataURL(item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+36+'/'+item.publico, { errorCorrectionLevel: 'H' });
+                    const qrDataUrl36 = await QRCode.toDataURL(`${item.empresa}'/'${item.referencia}'/'${item.color}'/'${item.lugar}'/'${36}'/'${item.publico}`, { errorCorrectionLevel: 'H' });
                     doc.addImage(qrDataUrl36, 'PNG', 10,  200, 20, 20);
                     doc.addImage(qrDataUrl36, 'PNG', 30,  200, 20, 20);
                     doc.addImage(qrDataUrl36, 'PNG', 50,  200, 20, 20);

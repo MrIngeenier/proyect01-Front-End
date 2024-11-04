@@ -3,24 +3,21 @@ import { Container, TextField, Button, Typography, Grid, FormControl, InputLabel
 import publicServices from '../../../service/public.services';
 
 const UpdateUsers = () => {
-  const [nombreusuario, setName] = useState('');
   const [newName, setNewName] = useState(localStorage.getItem('userName'));
   const [newPassword, setNewPassword] = useState('');
   const [newType, setNewType] = useState('');
   const [newActive, setNewActive] = useState('1'); // Inicializa 'newActive' como 1 (Activo)
 
-  // Inicializa el estado 'nombreusuario' con el valor de localStorage cuando el componente se monta
   useEffect(() => {
     const userId = localStorage.getItem('userName');
     if (userId) {
-      setName(userId);
+      setNewName(userId);
     }
   }, []); // El array vacío asegura que el efecto se ejecute solo una vez
 
   const handleUpdate = async (event) => {
     event.preventDefault();
 
-    // Validación simple
     if (!newName || !newPassword || !newType) {
       alert('Por favor completa todos los campos');
       return;
@@ -29,10 +26,9 @@ const UpdateUsers = () => {
     try {
       const userData = JSON.parse(localStorage.getItem('userData'));
       const nombreusuario = userData.name;
-      console.log(nombreusuario)
+      console.log(nombreusuario);
       await publicServices.updateUser(nombreusuario, newName, newPassword, newType, newActive);
       alert('Usuario actualizado exitosamente');
-      setName('');
       setNewName('');
       setNewPassword('');
       setNewType('');
