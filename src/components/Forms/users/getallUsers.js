@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Container, TextField, Button, Typography, Table, TableBody, TableCell, TableHead, TableRow, Paper, Dialog, DialogContent, DialogActions } from '@mui/material';
 import publicServices from '../../../service/public.services';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -61,6 +61,10 @@ function Getallusers() {
     const handleCloseDialogUpdate = () => {
         setOpenDialogUpdate(false);
     };
+
+    useEffect(() => {
+        fetchUsers();
+      }, []);
 
     return (
         <Container style={{ padding: 0, textAlign: 'center' }}>
