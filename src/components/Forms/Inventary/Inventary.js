@@ -426,7 +426,7 @@ function ADDInventary() {
                             style={{ color: 'white', backgroundColor: '#333' }}
                         >{publico.map((place) => (
                             <MenuItem key={place.id} value={place.id}>
-                                {place.valor+"/"+place.descripcion}
+                                {place.descripcion}
                             </MenuItem>
                         ))}
                             

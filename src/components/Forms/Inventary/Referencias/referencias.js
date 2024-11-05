@@ -132,7 +132,7 @@ function ADDReferences() {
                     
                 <Grid item xs={12} sm={3}>
                     <TextField
-                        label="Descripción"
+                        label="Valor"
                         variant="outlined"
                         name="descripcion"
                         value={formData.descripcion}

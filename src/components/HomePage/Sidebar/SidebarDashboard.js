@@ -20,8 +20,8 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import BuildIcon from '@mui/icons-material/Build';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CropFreeIcon from '@mui/icons-material/CropFree';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
@@ -30,6 +30,7 @@ import QrScanner from '../Body/QrScanner';
 import SalesDashboard from '../Body/SalesDashboard';
 import PageInventary from '../../../pages/inventary.page';
 import GetVentas from '../../Forms/Sales/GetVentas';
+import QrScannerSalida from '../Body/QrScannerSalida';
 //import ADDReferences from '../../Forms/Inventary/Referencias/referencias';
 import AllData from '../../../pages/AddData';
 const drawerWidth = 240;
@@ -116,30 +117,30 @@ export default function SidebarDashboard() {
 
   // Funciones para manejar los clics en cada botón
   const handlePrincipalClick = () => {
-    console.log('Botón Principal presionado');
+    //console.log('Botón Principal presionado');
     setTitle("PRINCIPAL");
     setActiveComponent(() => SalesDashboard);
   };
 
   const handleUsuarioClick = () => {
-    console.log('Botón Usuario presionado');
+    //console.log('Botón Usuario presionado');
     setTitle("USUARIO");
     setActiveComponent(() => BodyHomepage);
   };
 
   const handleProductosClick = () => {
-    console.log('Botón Productos presionado');
+    //console.log('Botón Productos presionado');
     setTitle("PRODUCTOS");
     setActiveComponent(() => AllData);
   };
 
   const handleInventariosClick = () => {
-    console.log('Botón Inventarios presionado');
+    //console.log('Botón Inventarios presionado');
     setTitle("INVENTARIO");
     setActiveComponent(() => PageInventary);
   };
 
-  const handleHerramientasClick = () => {
+  const handleVentasClick = () => {
     //console.log('Botón Herramientas presionado');
     setTitle("VENTAS");
     setActiveComponent(() => GetVentas);
@@ -147,9 +148,16 @@ export default function SidebarDashboard() {
   };
 
   const handleQRClick = () => {
-    console.log('Botón QR presionado');
+    //console.log('Botón QR presionado');
     setTitle("SCANNER QR");
     setActiveComponent(() => QrScanner);
+    
+  };
+
+  const handleQRClick2 = () => {
+    //console.log('Botón QR presionado');
+    setTitle("SCANNER QR");
+    setActiveComponent(() => QrScannerSalida);
     
   };
 
@@ -228,11 +236,19 @@ export default function SidebarDashboard() {
               <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
                 <QrCodeScannerIcon />
               </ListItemIcon>
-              <ListItemText primary="Scanner" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Scanner/Venta" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
-            <ListItemButton onClick={handleHerramientasClick} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+            <ListItemButton onClick={handleQRClick2} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+              <CropFreeIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+                <QrCodeScannerIcon />
+              </CropFreeIcon>
+              <ListItemText primary="Scanner/Salida" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton onClick={handleVentasClick} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
               <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
                 <ShoppingCartIcon />
               </ListItemIcon>

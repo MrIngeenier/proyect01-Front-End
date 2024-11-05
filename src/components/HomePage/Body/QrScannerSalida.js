@@ -6,7 +6,7 @@ import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
 import VentasServices from '../../../service/ventas.services';
 
-const QrScanner = () => {
+const QrScannerSalida = () => {
   const [result, setResult] = useState('No result');
   const [scanner, setScanner] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -14,8 +14,6 @@ const QrScanner = () => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [count, setCount] = useState(0);
-  const [validador, setValidador]= useState(true);
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
@@ -39,55 +37,13 @@ const QrScanner = () => {
       setData(response);
       setSuccessMessage("Inventario actualizado con éxito.");
       setSuccessOpen(true);
-      setErrorOpen(true);
      
     } catch (error) {
       console.error('Error fetching inventory:', error);
-      setErrorMessage('Error al actualizar el inventario.');
+     // setErrorMessage('Error al actualizar el inventario.');
       setErrorOpen(false);
     }
   };
-
-  const fetchAddVentas = async (idUsuario, estado, serialReferencia) => {
-   // console.log("Datos"+idUsuarioestado, serialReferencia,)
-    if (!serialReferencia || !idUsuario || estado == null) {
-        console.error('Algunos valores están faltando:', { serialReferencia, idUsuario, estado });
-        setErrorMessage('Datos incompletos para agregar venta.');
-        setErrorOpen(true);
-        return;
-    }
-    try {
-        const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado);
-        console.log(response);
-        setValidador(true);
-        
-    } catch (error) {
-        console.error('Error registrando venta:', error);
-        setErrorMessage('Error al agregar venta.');
-        setErrorOpen(true);
-        setValidador(false);
-    }
-};
-
-const fetchGetIDReferences = async (color,serial,tipopublico) => {
-  if (!color || !serial || tipopublico == null) {
-      console.error('Algunos valores están faltando:', { color,serial,tipopublico });
-      setErrorMessage('Datos incompletos para tomar id referencia.');
-      setErrorOpen(true);
-      return;
-  }
-  try {
-      const response = await VentasServices.GetReferenciaID(color,serial,tipopublico);
-      setCount(response);
-      
-     // console.log("ID :"+count.id); // Here take ID from References
-  } catch (error) {
-      console.error('Error registrando para tomar id referencia:', error);
-      setErrorMessage('Error para tomar id referencia.');
-      setErrorOpen(true);
-      
-  }
-};
 
 
 
@@ -110,20 +66,12 @@ const fetchGetIDReferences = async (color,serial,tipopublico) => {
         // Validar que tenga el formato esperado
         if (qrData.length === 6) {
           const [nombreEmpresa, serial, color, ubicacionDescripcion, talla,tipopublico] = qrData;
-          console.log(qrData);
-          // Llamar a la función para actualizar el inventario con los datos extraídos
-          fetchGetIDReferences(color,serial,tipopublico);
-          fetchAddVentas(count.id , formData.estado, formData.idUsuario);
-          if(validador){
+          //console.log(qrData);
+          
             fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
-          }
+          
           
 
-        console.log(count.id+"/", formData.estado,"/", formData.idUsuario);
-        } else {
-          console.error('Formato de código QR inválido:', decodedText);
-          setErrorMessage('El formato del código QR es inválido. Asegúrate de que tenga el formato empresa/referencia/color/ubicación/talla.');
-          setErrorOpen(true);
         }
 
         // Detener el escáner después de leer el código QR
@@ -191,7 +139,7 @@ const fetchGetIDReferences = async (color,serial,tipopublico) => {
   return (
     <Box sx={{ padding: 2, textAlign: 'center' }}>
       <Typography variant="h6" gutterBottom>
-        Escanea el código QR - QR con registro
+        QR Sin Registro
       </Typography>
       <Box id="qr-reader" sx={{ margin: 'auto', width: '40%', height: '40%' }}></Box>
       <Button
@@ -219,4 +167,4 @@ const fetchGetIDReferences = async (color,serial,tipopublico) => {
   );
 };
 
-export default QrScanner;
+export default QrScannerSalida;

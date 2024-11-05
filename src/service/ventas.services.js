@@ -6,7 +6,7 @@ const VentasServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/getData', {
+        const response = await fetch('http://localhost:10000/ventas/getFullData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
