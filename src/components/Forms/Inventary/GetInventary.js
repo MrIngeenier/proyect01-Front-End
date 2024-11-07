@@ -75,7 +75,7 @@ function Inventary() {
 
             setData(response); // Asignar la respuesta al estado
             setFilteredData(response); // Inicializar también filteredData
-            console.log(response);
+            //console.log(response);
         } catch (error) {
             console.error('Error fetching inventory:', error);
         }

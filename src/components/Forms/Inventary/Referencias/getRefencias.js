@@ -41,14 +41,12 @@ function GetRefencias() {
         setFilteredData(filtered);
     }, [search, referencias]);
 
-    const handleDelete = () => {
-        console.log("Borrar acción");
-        // Lógica para borrar
-      };
+    const handleDelete = (userId) => {
+        console.log(`Delete user with ID: ${userId}`);
+    };
     
-      const handleUpdate = () => {
-        console.log("Actualizar acción");
-        // Lógica para actualizar
+      const handleUpdate = (userId) => {
+        console.log(`Update user with ID: ${userId}`);
       };
 
     return (
@@ -112,7 +110,7 @@ function GetRefencias() {
                                 <TableCell sx={{ color: 'white' }}>ID</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Color</TableCell>
-                                <TableCell sx={{ color: 'white' }}>Descripcion</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Valor</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Publico</TableCell>
                                 <TableCell sx={{ textAlign: 'center', color: 'white' }}>Acciones</TableCell>
                             </TableRow>
@@ -130,7 +128,7 @@ function GetRefencias() {
                                         <Button
                                             variant="contained"
                                             color="error"
-                                            onClick={handleDelete}
+                                            onClick={() => handleDelete(item.id)}
                                         >
                                             <DeleteIcon sx={{width:'60%'}}/>
                                         </Button>
@@ -138,7 +136,7 @@ function GetRefencias() {
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                            onClick={handleUpdate}
+                                            onClick={() => handleUpdate(item.id)}
                                         >
                                             <UpdateIcon sx={{width:'60%'}}/>
                                         </Button>

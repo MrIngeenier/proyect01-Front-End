@@ -89,7 +89,7 @@ function ADDReferences() {
 
             //padding: '20px',
         }}>
-            PRODUCTOS
+            REFERENCIAS
             <Grid container spacing={1} sx={{display:'flex',justifyContent:'center', padding:'10px'}} >
                 
         

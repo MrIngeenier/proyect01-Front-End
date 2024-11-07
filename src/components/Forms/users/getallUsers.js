@@ -5,19 +5,35 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UpdateIcon from '@mui/icons-material/Update';
 import RegisterUsersForm from './registerUsers.from';
 import UpdateUsers from './updateUsers';
-
+import ErrorAlert from '../../Alerts/ErrorAlert';
+import SuccessAlert from '../../Alerts/SuccesAlert';
 
 function Getallusers() {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
     const [openDialogUpdate, setOpenDialogUpdate] = useState(false);
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    
 
     const fetchUsers = async () => {
         try {
             const response = await publicServices.getUsers();
             setUsers(response);
+            if(Response){
+                setSuccessMessage("Obtención de usuarios con éxito.");
+                setSuccessOpen(true);
+            }else{
+                setErrorMessage('Error obtención de usuarios.');
+                setErrorOpen(true);
+            }
+           
         } catch (error) {
+            setErrorMessage('Error obtención de usuarios.');
+            setErrorOpen(true);
             console.error('Error fetching users:', error);
         }
     };
@@ -30,8 +46,24 @@ function Getallusers() {
         (user.nombreusuario || '').toLowerCase().includes(search.toLowerCase())
     );
 
-    const handleDelete = (userId) => {
-        console.log(`Delete user with ID: ${userId}`);
+    const handleDelete = async (idusuarios,nombreusuario) => {
+       // console.log(idusuarios+nombreusuario)
+        try {
+            const response = await publicServices.deleteUsers(idusuarios,nombreusuario);
+            //console.log(response);
+            if(response){
+                setSuccessMessage("Obtención de usuarios con éxito.");
+                setSuccessOpen(true);
+            }else{
+                setErrorMessage('Error obtención de usuarios.');
+                setErrorOpen(true);
+            }
+        } catch (error) {
+            setErrorMessage('Error obtención de usuarios.');
+            setErrorOpen(true);
+            console.log('Error Delete user',error);
+        }
+        //console.log(`Delete user with ID: ${userId}`);
     };
 
     const handleUpdate = (userId, userName, userType, userActive) => {
@@ -61,6 +93,9 @@ function Getallusers() {
     const handleCloseDialogUpdate = () => {
         setOpenDialogUpdate(false);
     };
+
+    const handleErrorClose = () => setErrorOpen(false);
+  const handleSuccessClose = () => setSuccessOpen(false);
 
     useEffect(() => {
         fetchUsers();
@@ -117,7 +152,7 @@ function Getallusers() {
 
 
                                 <TableCell>
-                                    <Button variant="contained" color="error" onClick={() => handleDelete(user.idusuarios)} style={{ marginRight: 8 }}>
+                                    <Button variant="contained" color="error" onClick={() => handleDelete(user.idusuarios,user.nombreusuario)} style={{ marginRight: 8 }}>
                                         <DeleteForeverIcon />
                                     </Button>
                                     <Button variant="contained" color="success" onClick={() => handleUpdate(user.idusuarios,user.nombreusuario,user.fk_idrol,user.activo)}>
@@ -151,6 +186,8 @@ function Getallusers() {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
+            <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
         </Container>
     );
 }

@@ -28,7 +28,7 @@ function Principal() {
 
     try {
       const data = await publicServices.login(name, password);
-      //console.log('Login successful:', data);
+      console.log('Login successful:', data);
       localStorage.setItem('token', data.body.token);
       //console.log(data.body.token);
       //console.log(localStorage.getItem('token'));

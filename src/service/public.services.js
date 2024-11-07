@@ -29,7 +29,7 @@ const loginServices = {
     async getUsers() {
       try {
         const token = localStorage.getItem('token'); 
-        console.log(token);
+        //console.log(token);
         const response = await fetch('http://localhost:10000/users/users', {
           method: 'GET',
           headers: {
@@ -80,6 +80,30 @@ const loginServices = {
         console.error('Error registrando usuario:', error);
       }
     },
+
+    async deleteUsers(idusuarios, nombreusuario) {
+      try {
+          const token = localStorage.getItem('token'); 
+          const response = await fetch('http://localhost:10000/users/deleteUser', {
+              method: 'DELETE',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token,
+              },
+              body: JSON.stringify({ idusuarios, nombreusuario })  // Usamos `idusuarios` como en el backend
+          });
+  
+          const data = await response.json();
+          if (!response.ok) {
+              throw new Error(data.message || 'Error desconocido');
+          }
+          return data;
+      } catch (error) {
+          console.error('Error eliminando usuario:', error);
+          throw error;  // Para que el error se propague
+      }
+  },
+  
 
     async updateUser(nombreusuario, newName, newPassword, newType, newActive) {
       try {
