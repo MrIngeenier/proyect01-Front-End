@@ -9,8 +9,14 @@ import UpdateIcon from '@mui/icons-material/Update';
 
 function GetVentas() {
     const [referencias, setReferencias] = useState([]); // Estado para almacenar referencias
-    const [search, setSearch] = useState(''); // Estado para la búsqueda
     const [filteredData, setFilteredData] = useState([]); // Estado para los datos filtrados
+
+    // Estados para cada campo de búsqueda
+    const [searchId, setSearchId] = useState('');
+    const [searchFecha, setSearchFecha] = useState('');
+    const [searchUsuario, setSearchUsuario] = useState('');
+    const [searchReferencia, setSearchReferencia] = useState('');
+    const [searchColor, setSearchColor] = useState('');
 
     useEffect(() => {
         fetchReferenciasZapatos();
@@ -25,23 +31,6 @@ function GetVentas() {
             console.error('Error fetching TipoZapato:', error);
         }
     };
-
-    // Filtrar referencias basado en el texto de búsqueda
-    useEffect(() => {
-        if (search.trim() === '') {
-            setFilteredData(referencias); // Mostrar todos los datos si la búsqueda está vacía
-        } else {
-            const filtered = referencias.filter(item =>
-                (item.id && item.id.toString().includes(search)) ||
-                (item.descripcion && item.descripcion.toLowerCase().includes(search.toLowerCase())) ||
-                (item.valor && item.valor.toLowerCase().includes(search.toLowerCase()))
-            );
-            setFilteredData(filtered);
-        }
-    }, [search, referencias]);
-    
-    
-
     const groupByDate = (data) => {
         return data.reduce((acc, item) => {
             const date = new Date(item.fecha).toLocaleDateString();
@@ -81,45 +70,94 @@ function GetVentas() {
             console.error('Error updating status:', error);
         }
     };
-    
+
+    // Filtrar referencias basado en los campos de búsqueda
+    useEffect(() => {
+        const filtered = referencias.filter(item => 
+            (searchId === '' || item.idventas.toString().includes(searchId)) &&
+            (searchFecha === '' || new Date(item.fecha).toLocaleDateString().includes(searchFecha)) &&
+            (searchUsuario === '' || item.nombreusuario.toLowerCase().includes(searchUsuario.toLowerCase())) &&
+            (searchReferencia === '' || item.serial.toLowerCase().includes(searchReferencia.toLowerCase())) &&
+            (searchColor === '' || item.color.toLowerCase().includes(searchColor.toLowerCase()))
+        );
+        setFilteredData(filtered);
+    }, [searchId, searchFecha, searchUsuario, searchReferencia, searchColor, referencias]);
+
     return (
         <Container sx={{ backgroundColor: '#121212', color: 'white', border: '2px solid #333', borderRadius: '8px', opacity: 0.9, maxWidth: 'auto', padding: '20px' }}>
-            <Box display="flex" alignItems="center" sx={{ padding: '20px' }}>
+            <Box display="flex" gap={2} sx={{ padding: '20px' }}>
+                {/* Campos de búsqueda individuales */}
                 <TextField
-                    label="Buscar por Id, Descripcion o Valor"
+                    label="Buscar por ID"
                     variant="outlined"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    sx={{ width: '80%', margin: 'normal', height: '56px' }}
+                    value={searchId}
+                    onChange={(e) => setSearchId(e.target.value)}
+                    sx={{ width: '100%', backgroundColor: '#333' }}
                     InputLabelProps={{ style: { color: 'white' } }}
-                    InputProps={{ style: { color: 'white', backgroundColor: '#333' } }}
+                    InputProps={{ style: { color: 'white' } }}
                 />
-                <Button variant="outlined" color='primary' sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px', width: '20%' }} onClick={fetchReferenciasZapatos}>
+                <TextField
+                    label="Buscar por Fecha"
+                    variant="outlined"
+                    value={searchFecha}
+                    onChange={(e) => setSearchFecha(e.target.value)}
+                    placeholder="dd/mm/yyyy"
+                    sx={{ width: '100%', backgroundColor: '#333' }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                />
+                <TextField
+                    label="Buscar por Usuario"
+                    variant="outlined"
+                    value={searchUsuario}
+                    onChange={(e) => setSearchUsuario(e.target.value)}
+                    sx={{ width: '100%', backgroundColor: '#333' }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                />
+                <TextField
+                    label="Buscar por Referencia"
+                    variant="outlined"
+                    value={searchReferencia}
+                    onChange={(e) => setSearchReferencia(e.target.value)}
+                    sx={{ width: '100%', backgroundColor: '#333' }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                />
+                <TextField
+                    label="Buscar por Color"
+                    variant="outlined"
+                    value={searchColor}
+                    onChange={(e) => setSearchColor(e.target.value)}
+                    sx={{ width: '100%', backgroundColor: '#333' }}
+                    InputLabelProps={{ style: { color: 'white' } }}
+                    InputProps={{ style: { color: 'white' } }}
+                />
+                <Button variant="outlined" color='primary' sx={{ borderColor: 'white', color: 'white', height: '56px' }} onClick={fetchReferenciasZapatos}>
                     <Typography sx={{ fontSize: { xs: '10px', sm: 'auto' } }}>ACTUALIZAR</Typography>
                 </Button>
             </Box>
 
-            {Object.entries(groupedData).map(([date, ventas]) => (
+            {/* Tabla agrupada por fecha */}
+            {Object.entries(groupByDate(filteredData)).map(([date, ventas]) => (
                 <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#333' }}>
-                    <Box sx={{ display: 'flex',justifyContent: 'space-around' }}>  
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
                         <Typography variant="h6" sx={{ color: 'white' }}>Fecha: {date}</Typography>
                         <Typography variant="h6" sx={{ color: 'white' }}>
                             Total: {ventas.reduce((sum, item) => sum + parseFloat(item.valor) || 0, 0)}
                         </Typography>
                     </Box>
-                   
-                   
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell sx={{ color: 'white' }}>ID</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Usuario</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Empresa</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Color</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Valor</TableCell>
-
                                 <TableCell sx={{ color: 'white' }}>Estado</TableCell>
-                                <TableCell sx={{ color: 'white',textAlign: 'center' }}>Fecha</TableCell>
+                                <TableCell sx={{ color: 'white', textAlign: 'center' }}>Fecha</TableCell>
                                 <TableCell sx={{ textAlign: 'center', color: 'white' }}>Acciones</TableCell>
                             </TableRow>
                         </TableHead>
@@ -127,23 +165,23 @@ function GetVentas() {
                             {ventas.map((item) => (
                                 <TableRow key={item.idventas}>
                                     <TableCell sx={{ color: 'white' }}>{item.idventas}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.nombreusuario}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.nombre}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.serial}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.valor}</TableCell>
                                     <TableCell>
-                                    <Button
-                                        variant="contained"
-                                        color={item.estado ? 'success' : 'error'}
-                                        onClick={() => handleToggleStatus(item.idventas)}
-                       
-                                    >
-                                        {item.estado ? 'ON' : 'OFF'}
-                                    </Button>
-                                </TableCell>
-                                    <TableCell sx={{ color: 'white',textAlign: 'center' }}>
+                                        <Button
+                                            variant="contained"
+                                            color={item.estado ? 'success' : 'error'}
+                                            onClick={() => handleToggleStatus(item.idventas)}
+                                        >
+                                            {item.estado ? 'ON' : 'OFF'}
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell sx={{ color: 'white', textAlign: 'center' }}>
                                         {new Date(new Date(item.fecha).getTime() - 5 * 60 * 60 * 1000).toLocaleString()}
-                                    </TableCell>                                    
+                                    </TableCell>
                                     <TableCell sx={{ textAlign: 'center', color: 'white' }}>
                                         <Box display="flex" justifyContent="center" alignItems='center' gap={2}>
                                             <Button variant="contained" color="error" onClick={() => handleDelete(item.idventas)}>

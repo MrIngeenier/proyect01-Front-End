@@ -41,7 +41,7 @@ const QrScanner = () => {
 
   const fetchAddVentas = async (idUsuario, estado, serialReferencia) => {
     if (!serialReferencia || !idUsuario || estado == null) {
-      console.error('Algunos valores están faltando:', { serialReferencia, idUsuario, estado });
+      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado });
       setErrorMessage('Datos incompletos para agregar venta.');
       setErrorOpen(true);
       return;
