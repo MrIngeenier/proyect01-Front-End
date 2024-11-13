@@ -42,10 +42,25 @@ function GetVentas() {
         }, {});
     };
 
-    const handleDelete = (id) => {
-        console.log("Borrar acción para ID:", id);
-        // Lógica para borrar
+    const handleDelete = async (id) => {
+        try {
+            if (id === null || id === 0) {
+                console.log("ID no válido:", id);
+                return; // Salir de la función si el ID no es válido
+            }
+   
+            console.log("Borrar acción para ID:", id);
+   
+            // Llamar al servicio de eliminación
+            const response = await VentasServices.deleteVentas(id);
+            console.log(response);
+            // Llamar a la función para actualizar los datos
+            fetchReferenciasZapatos();
+        } catch (error) {
+            console.error('Error Delete Venta:', error);
+        }
     };
+   
     
     const handleUpdate = (id) => {
         console.log("Actualizar acción para ID:", id);
@@ -84,8 +99,17 @@ function GetVentas() {
     }, [searchId, searchFecha, searchUsuario, searchReferencia, searchColor, referencias]);
 
     return (
-        <Container sx={{ backgroundColor: '#121212', color: 'white', border: '2px solid #333', borderRadius: '8px', opacity: 0.9, maxWidth: 'auto', padding: '20px' }}>
-            <Box display="flex" gap={2} sx={{ padding: '20px' }}>
+        <Container sx={{ 
+            backgroundColor: '#121212', 
+            color: 'white', 
+            border: '2px solid #333',
+            borderRadius: '8px', 
+            opacity: 0.9, 
+            maxWidth: 'auto', 
+            padding: '20px'
+             }}>
+                
+            <Box display="flex" gap={2} sx={{ padding: '20px'}}>
                 {/* Campos de búsqueda individuales */}
                 <TextField
                     label="Buscar por ID"

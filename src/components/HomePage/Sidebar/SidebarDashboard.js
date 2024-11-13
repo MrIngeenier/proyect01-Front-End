@@ -170,10 +170,11 @@ export default function SidebarDashboard() {
   const RenderedComponent = activeComponent ? React.createElement(activeComponent) : null;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex'}}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      {/*  <AppBar position="fixed" open={open} sx={{display: { xs: 'none', md: 'flex' } }}> */}
+      <AppBar position="fixed" open={open} >
+        <Toolbar  >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -189,16 +190,17 @@ export default function SidebarDashboard() {
           <Typography variant="h6" noWrap component="div">
             {title}
           </Typography>
-        </Toolbar>
+        </Toolbar >
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      {/*  <Drawer variant="permanent" open={open} sx={{display: { xs: 'none', md: 'flex' } }} > */}
+      <Drawer variant="permanent" open={open}  >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List >
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton onClick={handlePrincipalClick} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
               <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>

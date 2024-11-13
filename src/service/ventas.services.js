@@ -106,6 +106,32 @@ const VentasServices = {
       } catch (error) {
         console.error('Error actualizando usuario:', error);
       }
+    },
+    async deleteVentas(idventas) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/ventas/DeleteData', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({idventas}),
+        });
+
+        const data = await response.json(); 
+        console.log("Data:", JSON.stringify(data, null, 2));  // Formato legible con 2 espacios de indentación
+        console.log("Response"+response.status);
+        console.log("Response Headers:", response.headers);  // Los encabezados de la respuesta
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
     }
     
     
