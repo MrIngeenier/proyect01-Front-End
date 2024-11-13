@@ -33,6 +33,11 @@ import GetVentas from '../../Forms/Sales/GetVentas';
 import QrScannerSalida from '../Body/QrScannerSalida';
 //import ADDReferences from '../../Forms/Inventary/Referencias/referencias';
 import AllData from '../../../pages/AddData';
+
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -105,6 +110,7 @@ export default function SidebarDashboard() {
   const [title, setTitle] = React.useState("System");
   const [activeComponent, setActiveComponent] = React.useState(null);
   const navigate = useNavigate(); // Hook useNavigate dentro del componente
+  const [value, setValue] = React.useState(0); // Estado para BottomNavigation
 
 
   const handleDrawerOpen = () => {
@@ -171,9 +177,80 @@ export default function SidebarDashboard() {
 
   return (
     <Box sx={{ display: 'flex'}}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        sx={{
+          width: '100%',
+          position: 'fixed',
+          justifyContent:'space-between',
+          overflowX: 'auto',
+          backgroundColor: '#333',  // Estilo oscuro
+          color: 'white',            // Color del texto y los íconos
+          bottom: 0,
+          left: 0,
+          zIndex: 1300,
+          display: {  md: 'none' }  // Ocultar en pantallas sm y mayores
+
+        }}
+      >
+      <BottomNavigationAction 
+        label="Principal"
+        sx={{color:'white'}} 
+        icon={<HomeIcon />} 
+        onClick={handlePrincipalClick}
+      />
+      <BottomNavigationAction 
+        label="Usuarios" 
+        sx={{color:'white'}}
+        icon={<PersonIcon  /> } 
+        onClick={handleUsuarioClick}
+      />
+      <BottomNavigationAction 
+        label="Productos"
+        sx={{color:'white'}} 
+        icon={<InventoryIcon />} 
+        onClick={handleProductosClick}
+      />
+      <BottomNavigationAction 
+        label="Inventario"
+        sx={{color:'white'}} 
+        icon={<ShoppingCartIcon />} 
+        onClick={handleInventariosClick}
+      />
+      <BottomNavigationAction 
+        label="Ventas"
+        sx={{color:'white'}} 
+        icon={<ProductionQuantityLimitsIcon />} 
+        onClick={handleVentasClick}
+      />
+      <BottomNavigationAction 
+        label="Scanner/Salida"
+        sx={{color:'white'}} 
+        icon={<CropFreeIcon />} 
+        onClick={handleQRClick2}
+      />
+      <BottomNavigationAction 
+        label="Scanner/Venta"
+        sx={{color:'white'}} 
+        icon={<QrCodeScannerIcon />} 
+        onClick={handleQRClick}
+      />
+      
+      <BottomNavigationAction 
+        label="Logout"
+        sx={{color:'white'}} 
+        icon={<ExitToAppIcon />} 
+        onClick={handleSalidaClick}
+      />
+    </BottomNavigation>
       <CssBaseline />
-      {/*  <AppBar position="fixed" open={open} sx={{display: { xs: 'none', md: 'flex' } }}> */}
-      <AppBar position="fixed" open={open} >
+      
+        <AppBar position="fixed" open={open} sx={{display: { xs: 'none', md: 'flex' } }}> 
+      
         <Toolbar  >
           <IconButton
             color="inherit"
@@ -192,8 +269,7 @@ export default function SidebarDashboard() {
           </Typography>
         </Toolbar >
       </AppBar>
-      {/*  <Drawer variant="permanent" open={open} sx={{display: { xs: 'none', md: 'flex' } }} > */}
-      <Drawer variant="permanent" open={open}  >
+      <Drawer variant="permanent" open={open}  sx={{display: { xs: 'none', md: 'flex' } }} >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -270,11 +346,18 @@ export default function SidebarDashboard() {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, display: { xs: 'none'} }}>
         <DrawerHeader />
         
         {RenderedComponent}
       </Box>
+      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
+        <DrawerHeader />
+        
+        {RenderedComponent}
+      </Box>
+
+      
     </Box>
   );
 }
