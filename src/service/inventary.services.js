@@ -127,11 +127,32 @@ const inventaryServices = {
             console.error('Error during getTipoIngreso:', error);
             throw error;
         }
-    }
+    },
     
-    ,
-    
-    
+    async searchQR(empresa, serial, color, lugar, publico) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('http://localhost:10000/inventario/searchQR', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ empresa, serial, color, lugar, publico }),
+        });
+
+        const data = await response.json(); 
+        //console.log(data);
+        //console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
+    },
     
     async getEmpresa() {
       try {

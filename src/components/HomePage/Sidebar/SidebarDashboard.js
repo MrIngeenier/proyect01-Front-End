@@ -36,7 +36,7 @@ import AllData from '../../../pages/AddData';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-
+import QrScannerSearch from '../Body/QrScannerSearch';
 
 const drawerWidth = 240;
 
@@ -162,8 +162,15 @@ export default function SidebarDashboard() {
 
   const handleQRClick2 = () => {
     //console.log('Botón QR presionado');
-    setTitle("SCANNER QR");
+    setTitle("SCANNER QR EXIT");
     setActiveComponent(() => QrScannerSalida);
+    
+  };
+
+  const handleQRSearch = () => {
+    //console.log('Botón QR presionado');
+    setTitle("SCANNER QR SEARCH");
+    setActiveComponent(() => QrScannerSearch);
     
   };
 
@@ -228,13 +235,19 @@ export default function SidebarDashboard() {
         onClick={handleVentasClick}
       />
       <BottomNavigationAction 
-        label="Scanner/Salida"
+        label="QRSalida"
         sx={{color:'white'}} 
         icon={<CropFreeIcon />} 
         onClick={handleQRClick2}
       />
       <BottomNavigationAction 
-        label="Scanner/Venta"
+        label="QRBusqueda"
+        sx={{color:'white'}} 
+        icon={<CropFreeIcon />} 
+        onClick={handleQRSearch}
+      />
+      <BottomNavigationAction 
+        label="QRVenta"
         sx={{color:'white'}} 
         icon={<QrCodeScannerIcon />} 
         onClick={handleQRClick}
@@ -323,6 +336,14 @@ export default function SidebarDashboard() {
                 <QrCodeScannerIcon />
               </CropFreeIcon>
               <ListItemText primary="Scanner/Salida" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton onClick={handleQRSearch} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+              <CropFreeIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+                <QrCodeScannerIcon />
+              </CropFreeIcon>
+              <ListItemText primary="Scanner/Busqueda" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
