@@ -346,12 +346,13 @@ export default function SidebarDashboard() {
           </ListItem>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, display: { xs: 'none'} }}>
+      
+      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
         <DrawerHeader />
         
         {RenderedComponent}
       </Box>
-      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
+      <Box component="main2" sx={{ flexGrow: 1, p: 3, display: { xs: 'none'} }}>
         <DrawerHeader />
         
         {RenderedComponent}
