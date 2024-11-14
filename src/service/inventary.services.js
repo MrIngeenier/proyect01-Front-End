@@ -133,7 +133,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/inventario/searchQR', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/searchQR', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/empresas/data', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/empresas/data', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/referencias/getDataRefZapato', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/getDataRefZapato', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -212,7 +212,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/referencias/addData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/inventario/addData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -261,7 +261,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/empresas/addData/empresaReferencia', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/empresas/addData/empresaReferencia', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -286,7 +286,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/inventario/AllData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/AllData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -312,7 +312,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token');
     
-        const response = await fetch('http://localhost:10000/inventario/updateDataQR', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/updateDataQR', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ const ReferencesServices = {
         try {
           const token = localStorage.getItem('token'); 
           //console.log(token);
-          const response = await fetch('http://localhost:10000/referencias/getDataRefZapato', {
+          const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/getDataRefZapato', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ const ReferencesServices = {
       try {
         const token = localStorage.getItem('token'); 
         console.log(token);
-        const response = await fetch('http://localhost:10000/users/newUser', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/users/newUser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const ReferencesServices = {
         const token = localStorage.getItem('token');
         console.log(nombreusuario, newName, newPassword, newType, newActive);
     
-        const response = await fetch('http://localhost:10000/users/updateUser', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/users/updateUser', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ const VentasServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/getFullData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/getFullData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const VentasServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/addData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const VentasServices = {
         try {
           const token = localStorage.getItem('token'); 
           //console.log(token);
-          const response = await fetch('http://localhost:10000/referencias/getDataID', {
+          const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/getDataID', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const VentasServices = {
         const token = localStorage.getItem('token');
         console.log("Venta Actualizada :"+idventas, fk_referencia,fk_idusuarios,estado);
     
-        const response = await fetch('http://localhost:10000/ventas/updateData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/updateData', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const VentasServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/DeleteData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/DeleteData', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
