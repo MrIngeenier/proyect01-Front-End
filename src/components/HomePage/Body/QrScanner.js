@@ -39,16 +39,16 @@ const QrScanner = () => {
     }
   };
 
-  const fetchAddVentas = async (idUsuario, estado, serialReferencia) => {
-    if (!serialReferencia || !idUsuario || estado == null) {
+  const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar) => {
+    if (!serialReferencia || !idUsuario || estado == null || lugar == null) {
       
-      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado });
+      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar });
       setErrorMessage('Datos incompletos para agregar venta.');
       setErrorOpen(true);
       return;
     }
     try {
-      const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado);
+      const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar);
       setValidador(true);
     } catch (error) {
       console.error('Error registrando venta:', error);
@@ -93,12 +93,12 @@ const QrScanner = () => {
 
     if (qrData.length === 6) {
       const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrData;
-
+      console.log(qrData);
       fetchGetIDReferences(color, serial, tipopublico);
       
       // Asegúrate de que el idUsuario se haya configurado correctamente antes de llamar a fetchAddVentas
       if (formData.idUsuario) {
-        fetchAddVentas(formData.idUsuario, formData.estado, formData.serialReferencia);
+        fetchAddVentas(formData.idUsuario, formData.estado, formData.serialReferencia,ubicacionDescripcion);
         if (validador) {
           fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
         }

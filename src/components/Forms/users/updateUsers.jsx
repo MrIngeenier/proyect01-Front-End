@@ -73,9 +73,13 @@ const UpdateUsers = () => {
               onChange={(e) => setNewType(e.target.value)}
               label="Nuevo tipo"
             >
-              <MenuItem value="1">1</MenuItem>
-              <MenuItem value="2">2</MenuItem>
-              <MenuItem value="3">3</MenuItem>
+              <MenuItem value="1">Admin General</MenuItem>
+                <MenuItem value="2">Cajera</MenuItem>
+                <MenuItem value="3">Vendedora</MenuItem>
+                <MenuItem value="4">Cajera 2</MenuItem>
+                <MenuItem value="5">Vendedora 2</MenuItem>
+                <MenuItem value="6">Bodeguero</MenuItem>
+                <MenuItem value="7">Bodeguero 2</MenuItem>
             </Select>
           </FormControl>
         </Grid>

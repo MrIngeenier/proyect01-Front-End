@@ -7,7 +7,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
 
-function GetVentas() {
+function GetVentasCasher() {
     const [referencias, setReferencias] = useState([]); // Estado para almacenar referencias
     const [filteredData, setFilteredData] = useState([]); // Estado para los datos filtrados
 
@@ -24,7 +24,7 @@ function GetVentas() {
 
     const fetchReferenciasZapatos = async () => {
         try {
-            const response = await VentasServices.getVentas();
+            const response = await VentasServices.getVentas14();
             setReferencias(response);
             setFilteredData(response); // Inicialmente, mostrar todos los datos
         } catch (error) {
@@ -105,11 +105,12 @@ function GetVentas() {
             border: '2px solid #333',
             borderRadius: '8px', 
             opacity: 0.9, 
-            maxWidth: 'auto', 
-            padding: '20px'
+           
+            padding: '20px',
+            maxWidth: '500px'
              }}>
                 
-            <Box display="flex" gap={2} sx={{ padding: '20px'}}>
+            <Box display="flex" gap={2} sx={{ padding: '5px', flexDirection: { xs: 'column', sm: 'row' }}}>
                 {/* Campos de búsqueda individuales */}
                 <TextField
                     label="Buscar por ID"
@@ -161,7 +162,13 @@ function GetVentas() {
                     <Typography sx={{ fontSize: { xs: '10px', sm: 'auto' } }}>ACTUALIZAR</Typography>
                 </Button>
             </Box>
-
+            <Box
+                sx={{
+                overflow: 'auto', // Permite el desplazamiento
+                maxHeight: '400px', // Altura máxima del contenedor
+                marginTop: '20px', // Espaciado superior
+                }}
+            >
             {/* Tabla agrupada por fecha */}
             {Object.entries(groupByDate(filteredData)).map(([date, ventas]) => (
                 <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#333' }}>
@@ -224,8 +231,9 @@ function GetVentas() {
                     </Table>
                 </Paper>
             ))}
+            </Box>
         </Container>
     );
 }
 
-export default GetVentas;
+export default GetVentasCasher;

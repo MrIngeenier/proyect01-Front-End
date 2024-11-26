@@ -28,11 +28,36 @@ function Principal() {
 
     try {
       const data = await publicServices.login(name, password);
-      console.log('Login successful:', data);
+      //console.log('Login successful:', data); // -- Ver datos del Login --
+      //console.log('Login Role :', data.body.Role);
+      var Role = data.body.Role 
       localStorage.setItem('token', data.body.token);
+      switch (Role) {
+        case 1:
+            console.log("Role: admin");
+            navigate('/admin');
+            break;
+        case 2:
+            console.log("Role: casher");
+            navigate('/casher');
+
+            break;
+        case 3:
+            console.log("Role: sales");
+            navigate('/sales');
+
+            break;
+        case 4:
+            console.log("Role: sales");
+            navigate('/casher2');
+
+            break;
+        default:
+            console.warn(`Unknown Role: ${Role}`);
+    }
       //console.log(data.body.token);
       //console.log(localStorage.getItem('token'));
-      navigate('/dash'); // Guarda el token si es necesario
+       // Guarda el token si es necesario
     } catch (error) {
       //console.error('Login failed:', error.message);
       alert('Login failed: Invalid credentials. Please check your username and password.');

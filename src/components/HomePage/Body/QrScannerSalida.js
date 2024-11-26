@@ -4,7 +4,7 @@ import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
-import VentasServices from '../../../service/ventas.services';
+//import VentasServices from '../../../service/ventas.services';
 
 const QrScannerSalida = () => {
   const [result, setResult] = useState('No result');

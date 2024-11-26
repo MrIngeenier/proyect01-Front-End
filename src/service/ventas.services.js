@@ -29,10 +29,37 @@ const VentasServices = {
       }
     },
 
+    async getVentas14() {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);http://localhost:10000/ventas/getFullData14
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/getFullData14', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+        
+        const data = await response.json();
+
+        //console.log(data.body);
+  
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error fetching users');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
+
     
 
     //
-    async addVentas(fk_referencia,fk_idusuarios,estado) {
+    async addVentas(fk_referencia,fk_idusuarios,estado,lugar) {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
@@ -42,7 +69,7 @@ const VentasServices = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ token,
           },
-          body: JSON.stringify({fk_referencia,fk_idusuarios,estado}),
+          body: JSON.stringify({fk_referencia,fk_idusuarios,estado,lugar}),
         });
 
         const data = await response.json(); 

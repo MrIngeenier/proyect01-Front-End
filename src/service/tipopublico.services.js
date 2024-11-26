@@ -37,7 +37,7 @@ const tipopublicoServices = {
      async addTipoPublico(estilo, tipopublico, descripcion) {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:10000/tipozapato/addData', {
+            const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/tipozapato/addData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -31,7 +31,7 @@ const loginServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/users/login', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/users/users', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

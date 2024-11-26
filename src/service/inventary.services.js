@@ -4,7 +4,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/place/users', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/place/users', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/place/NewUsers', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/place/NewUsers', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const inventaryServices = {
         const token = localStorage.getItem('token');
         //console.log(nombreusuario, newName, newPassword, newType, newActive);
     
-        const response = await fetch('http://localhost:10000/place/updatePlace', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/place/updatePlace', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const inventaryServices = {
         try {
           const token = localStorage.getItem('token'); 
           //console.log(token);
-          const response = await fetch('http://localhost:10000/tipozapato/getData', {
+          const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/tipozapato/getData', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const inventaryServices = {
       async getTipoIngreso() {
         try {
             const token = localStorage.getItem('token'); 
-            const response = await fetch('http://localhost:10000/tipoingreso/getData', {
+            const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/tipoingreso/getData', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -287,6 +287,31 @@ const inventaryServices = {
         const token = localStorage.getItem('token'); 
         //console.log(token);
         const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/AllData', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+          
+        const data = await response.json();
+    
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error Get all Data shoes');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
+
+    async getInventaryCasher() {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/Data14', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
