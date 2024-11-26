@@ -102,7 +102,7 @@ function Getallusers() {
       }, []);
 
     return (
-        <Container style={{ padding: 0, textAlign: 'center' }}>
+        <Container style={{ padding: 0, textAlign: 'center' }} sx={{maxWidth: { xs: '300px', sm:'700px', md:'1000px' }}}>
             <Typography variant="h5" gutterBottom>Lista de Usuarios</Typography>
             <TextField
                 label="Buscar por nombre"

@@ -619,7 +619,7 @@ function Inventary() {
 
     return (
         <Container
-            maxWidth="lg"
+            
             sx={{
                 backgroundColor: '#121212',
                 color: 'white',
@@ -627,6 +627,7 @@ function Inventary() {
                 borderRadius: '8px',
                 opacity: 0.9,
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
+                maxWidth: { xs: '350px', sm:'700px', md:'1000px'},
                 padding: '20px',
             }}
         >
@@ -648,7 +649,7 @@ function Inventary() {
                 <Button
                     variant="outlined"
                     color='primary'
-                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px', width: '20%' }}
+                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px'}}
                     onClick={fetchInventary}
                 >
                     ACTUALIZAR

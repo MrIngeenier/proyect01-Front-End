@@ -628,17 +628,18 @@ function GetInventaryCasher() {
                 opacity: 0.9,
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
                 padding: '20px',
-                maxWidth: '500px' // Define tu propio ancho máximo
+                maxWidth: { xs: '350px', sm:'700px', md:'1000px'},
+                // Define tu propio ancho máximo
 
             }}
         >
-            <Box display="flex" alignItems="center" sx={{ padding: '20px 0px' }} >
+            <Box display="flex" alignItems="center"  sx={{ padding: '10px 0px'  }}  >
                 <TextField
                     label="Buscar por Empresa, Referencia, Color o Lugar"
                     variant="outlined"
                     value={search}
                     onChange={handleSearchChange}
-                    sx={{ width: '80%', margin: 'normal', height: '56px' }}
+                    sx={{ width: '84%', margin: 'normal', height: '56px' }}
                     InputLabelProps={{ style: { color: 'white' } }}
                     InputProps={{
                         style: {
@@ -650,20 +651,20 @@ function GetInventaryCasher() {
                 <Button
                     variant="outlined"
                     color='primary'
-                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px', width: '20%' }}
+                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px' }}
                     onClick={fetchInventary}
                 >
                     ACTUALIZAR
                 </Button>
             </Box>
     
-            <Box display="flex" sx={{ padding: '20px 0px' }}>
+            <Box display="flex" gap={1} sx={{ padding: '20px 0px', flexDirection: { xs: 'column', sm: 'row' } }}>
                 <TextField
                     label="Empresa"
                     variant="outlined"
                     name="empresa"
                     onChange={handleFilterChange}
-                    sx={{ width: '25%', margin: '0 8px' }}
+                    sx={{  margin: '0 8px' }}
                     InputLabelProps={{ style: { color: 'white' } }}
                     InputProps={{
                         style: {
@@ -677,7 +678,7 @@ function GetInventaryCasher() {
                     variant="outlined"
                     name="referencia"
                     onChange={handleFilterChange}
-                    sx={{ width: '25%', margin: '0 8px' }}
+                    sx={{ margin: '0 8px' }}
                     InputLabelProps={{ style: { color: 'white' } }}
                     InputProps={{
                         style: {
@@ -691,7 +692,7 @@ function GetInventaryCasher() {
                     variant="outlined"
                     name="color"
                     onChange={handleFilterChange}
-                    sx={{ width: '25%', margin: '0 8px' }}
+                    sx={{  margin: '0 8px' }}
                     InputLabelProps={{ style: { color: 'white' } }}
                     InputProps={{
                         style: {
@@ -705,7 +706,7 @@ function GetInventaryCasher() {
                     variant="outlined"
                     name="lugar"
                     onChange={handleFilterChange}
-                    sx={{ width: '25%', margin: '0 8px' }}
+                    sx={{ width: '%', margin: '0 8px' }}
                     InputLabelProps={{ style: { color: 'white' } }}
                     InputProps={{
                         style: {

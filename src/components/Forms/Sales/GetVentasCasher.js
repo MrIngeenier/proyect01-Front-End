@@ -67,7 +67,7 @@ function GetVentasCasher() {
         // Lógica para actualizar
     };
 
-    const groupedData = groupByDate(filteredData);
+    //const groupedData = groupByDate(filteredData);
     const handleToggleStatus = async (id) => {
         console.log("Estado acción para ID:", id);
 
@@ -105,15 +105,15 @@ function GetVentasCasher() {
             border: '2px solid #333',
             borderRadius: '8px', 
             opacity: 0.9, 
-           
+            maxWidth: { xs: '350px', sm:'700px', md:'1000px' },
             padding: '20px',
-            maxWidth: '500px'
+           // maxWidth: '350px'
              }}>
                 
             <Box display="flex" gap={2} sx={{ padding: '5px', flexDirection: { xs: 'column', sm: 'row' }}}>
                 {/* Campos de búsqueda individuales */}
                 <TextField
-                    label="Buscar por ID"
+                    label="ID"
                     variant="outlined"
                     value={searchId}
                     onChange={(e) => setSearchId(e.target.value)}
@@ -122,7 +122,7 @@ function GetVentasCasher() {
                     InputProps={{ style: { color: 'white' } }}
                 />
                 <TextField
-                    label="Buscar por Fecha"
+                    label="Fecha"
                     variant="outlined"
                     value={searchFecha}
                     onChange={(e) => setSearchFecha(e.target.value)}
@@ -132,7 +132,7 @@ function GetVentasCasher() {
                     InputProps={{ style: { color: 'white' } }}
                 />
                 <TextField
-                    label="Buscar por Usuario"
+                    label="Usuario"
                     variant="outlined"
                     value={searchUsuario}
                     onChange={(e) => setSearchUsuario(e.target.value)}
@@ -141,7 +141,7 @@ function GetVentasCasher() {
                     InputProps={{ style: { color: 'white' } }}
                 />
                 <TextField
-                    label="Buscar por Referencia"
+                    label="Referencia"
                     variant="outlined"
                     value={searchReferencia}
                     onChange={(e) => setSearchReferencia(e.target.value)}
@@ -150,7 +150,7 @@ function GetVentasCasher() {
                     InputProps={{ style: { color: 'white' } }}
                 />
                 <TextField
-                    label="Buscar por Color"
+                    label="Color"
                     variant="outlined"
                     value={searchColor}
                     onChange={(e) => setSearchColor(e.target.value)}
@@ -171,8 +171,8 @@ function GetVentasCasher() {
             >
             {/* Tabla agrupada por fecha */}
             {Object.entries(groupByDate(filteredData)).map(([date, ventas]) => (
-                <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#333' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#121212' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around'  }}>
                         <Typography variant="h6" sx={{ color: 'white' }}>Fecha: {date}</Typography>
                         <Typography variant="h6" sx={{ color: 'white' }}>
                             Total: {ventas.reduce((sum, item) => sum + parseFloat(item.valor) || 0, 0)}

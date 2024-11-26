@@ -67,7 +67,7 @@ function GetVentas() {
         // Lógica para actualizar
     };
 
-    const groupedData = groupByDate(filteredData);
+   // const groupedData = groupByDate(filteredData);
     const handleToggleStatus = async (id) => {
         console.log("Estado acción para ID:", id);
 
@@ -105,11 +105,11 @@ function GetVentas() {
             border: '2px solid #333',
             borderRadius: '8px', 
             opacity: 0.9, 
-            maxWidth: 'auto', 
-            padding: '20px'
+            padding: '10px',
+            maxWidth: { xs: '350px', sm:'700px', md:'900px',lg:'1200px'}
              }}>
                 
-            <Box display="flex" gap={2} sx={{ padding: '20px'}}>
+            <Box display="flex" gap={2} sx={{ padding: '5px', flexDirection: { xs: 'column', sm: 'row' }}}>
                 {/* Campos de búsqueda individuales */}
                 <TextField
                     label="Buscar por ID"
@@ -161,11 +161,18 @@ function GetVentas() {
                     <Typography sx={{ fontSize: { xs: '10px', sm: 'auto' } }}>ACTUALIZAR</Typography>
                 </Button>
             </Box>
-
+            <Box
+                sx={{
+                overflow: 'auto', // Permite el desplazamiento
+                maxHeight: '400px', // Altura máxima del contenedor
+                marginTop: '20px', // Espaciado superior
+                
+                }}
+            >
             {/* Tabla agrupada por fecha */}
             {Object.entries(groupByDate(filteredData)).map(([date, ventas]) => (
-                <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#333' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#121212' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }} >
                         <Typography variant="h6" sx={{ color: 'white' }}>Fecha: {date}</Typography>
                         <Typography variant="h6" sx={{ color: 'white' }}>
                             Total: {ventas.reduce((sum, item) => sum + parseFloat(item.valor) || 0, 0)}
@@ -224,6 +231,7 @@ function GetVentas() {
                     </Table>
                 </Paper>
             ))}
+            </Box>
         </Container>
     );
 }
