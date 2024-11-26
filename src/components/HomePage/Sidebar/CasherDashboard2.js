@@ -24,8 +24,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import QrScanner from '../Body/QrScanner';
-import PageInventary from '../../../pages/inventary.page';
-import GetVentas from '../../Forms/Sales/GetVentas';
+import GetInventaryCasher2 from '../../Forms/Inventary/GetInventaryCasher2';
+import GetVentasCasher2 from '../../Forms/Sales/GetVentasCasher2';
 import QrScannerSalida from '../Body/QrScannerSalida';
 import QrScannerSearch from '../Body/QrScannerSearch';
 
@@ -119,13 +119,13 @@ export default function CasherDashboard2() {
   const handleInventariosClick = () => {
     //console.log('Botón Inventarios presionado');
     setTitle("INVENTARIO");
-    setActiveComponent(() => PageInventary);
+    setActiveComponent(() => GetInventaryCasher2);
   };
 
   const handleVentasClick = () => {
     //console.log('Botón Herramientas presionado');
     setTitle("VENTAS");
-    setActiveComponent(() => GetVentas);
+    setActiveComponent(() => GetVentasCasher2);
 
   };
 

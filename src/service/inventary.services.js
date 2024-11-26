@@ -331,6 +331,31 @@ const inventaryServices = {
         throw error;
       }
     },
+
+    async getInventaryCasher2() {
+      try {
+        const token = localStorage.getItem('token');
+        //console.log(token);
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/DataCenter', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+          
+        const data = await response.json();
+    
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error Get all Data shoes');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
     
     //nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla
     async updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) {

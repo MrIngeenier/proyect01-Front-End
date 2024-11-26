@@ -56,6 +56,33 @@ const VentasServices = {
       }
     },
 
+    async getVentasCentro() {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);http://localhost:10000/ventas/getFullData14
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/getFullDataCenter', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token, 
+          },
+        });
+        
+        const data = await response.json();
+
+        //console.log(data.body);
+  
+        if (response.ok) {
+          return data.body; // Devuelve la respuesta del ping
+        } else {
+          throw new Error(data.error || 'Error fetching users');
+        }
+      } catch (error) {
+        console.error('Error during get all users:', error);
+        throw error;
+      }
+    },
+
     
 
     //
