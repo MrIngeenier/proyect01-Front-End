@@ -1,17 +1,25 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, TextField, Button, Typography, Box, Avatar, CssBaseline, Grid, Link } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import publicServices from '../service/public.services';
-
+import LoadingScreen from '../utils/LoadingSceen';
+import ErrorAlert from '../components/Alerts/ErrorAlert';
+import SuccessAlert from '../components/Alerts/SuccesAlert';
 const theme = createTheme();
 
 function Principal() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook useNavigate dentro del componente
+  const [isLoading, setIsLoading] = useState(false); // Estado para la pantalla de carga
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const handleErrorClose = () => setErrorOpen(false);
+  const handleSuccessClose = () => setSuccessOpen(false);
 
   const handleEmailChange = (e) => {
     setName(e.target.value);
@@ -23,64 +31,59 @@ function Principal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log('Email:', name);
-    //console.log('Password:', password);
+    setIsLoading(true); // Mostrar pantalla de carga
 
     try {
       const data = await publicServices.login(name, password);
-      //console.log('Login successful:', data); // -- Ver datos del Login --
-      //console.log('Login Role :', data.body.Role);
-      var Role = data.body.Role 
+      const Role = data.body.Role;
       localStorage.setItem('token', data.body.token);
+      setSuccessMessage("¡Hola !"+name);
+      setSuccessOpen(true);
       switch (Role) {
         case 1:
-            console.log("Role: admin");
-            navigate('/admin');
-            break;
+          navigate('/admin');
+          break;
         case 2:
-            console.log("Role: casher");
-            navigate('/casher');
-
-            break;
+          navigate('/casher');
+          break;
         case 3:
-            console.log("Role: sales");
-            navigate('/sales');
-
-            break;
+          navigate('/sales');
+          break;
         case 4:
-            console.log("Role: sales");
-            navigate('/casher2');
-
-            break;
+          navigate('/casher2');
+          break;
         default:
-            console.warn(`Unknown Role: ${Role}`);
-    }
-      //console.log(data.body.token);
-      //console.log(localStorage.getItem('token'));
-       // Guarda el token si es necesario
+          console.warn(`Unknown Role: ${Role}`);
+      }
     } catch (error) {
-      //console.error('Login failed:', error.message);
-      alert('Login failed: Invalid credentials. Please check your username and password.');
-
+      setErrorMessage('El usuario o contraseña esta mal. Por favor, inténtalo de nuevo.');
+      setErrorOpen(true);    } finally {
+      setIsLoading(false); // Ocultar pantalla de carga
     }
-};
+  };
 
+  if (isLoading) {
+    return <LoadingScreen />; // Renderizar pantalla de carga si `isLoading` es true
+  }
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" sx={{
-        bgcolor: '#d2d1d1',  // Color de fondo gris
-        color: '#333',       // Color del texto
-        padding: 4,          // Espaciado interno
-        borderRadius: 4,     // Bordes redondeados
-        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Sombra
-        display: 'flex', 
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '80vh',
-        marginTop: '5%'
-      }}>
+      <Container
+        component="main"
+        sx={{
+          bgcolor: '#d2d1d1',
+          color: '#333',
+          padding: 4,
+          borderRadius: 4,
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          maxWidth: { xs: '300px', sm:'700px', md:'700px' },
+          marginTop: '5%',
+        }}
+      >
         <CssBaseline />
         <Box
           sx={{
@@ -121,12 +124,7 @@ function Principal() {
               value={password}
               onChange={handlePasswordChange}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
             <Grid container>
@@ -144,6 +142,8 @@ function Principal() {
           </Box>
         </Box>
       </Container>
+      <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
+      <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
     </ThemeProvider>
   );
 }
