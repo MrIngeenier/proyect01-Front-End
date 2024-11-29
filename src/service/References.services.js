@@ -44,8 +44,8 @@ const ReferencesServices = {
         });
 
         const data = await response.json(); 
-        console.log(data);
-        console.log(response);
+        //console.log(data);
+        //console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
@@ -58,7 +58,7 @@ const ReferencesServices = {
     async updateUser(nombreusuario, newName, newPassword, newType, newActive) {
       try {
         const token = localStorage.getItem('token');
-        console.log(nombreusuario, newName, newPassword, newType, newActive);
+       // console.log(nombreusuario, newName, newPassword, newType, newActive);
     
         const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/users/updateUser', {
           method: 'PUT',
@@ -70,7 +70,7 @@ const ReferencesServices = {
         });
     
         const data = await response.json();
-        console.log("Response :" + data);
+       // console.log("Response :" + data);
     
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
@@ -78,6 +78,31 @@ const ReferencesServices = {
         return data;
       } catch (error) {
         console.error('Error actualizando usuario:', error);
+      }
+    },
+
+    async deleteData(id) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/deleteData', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ id }),
+        });
+
+        const data = await response.json(); 
+        //console.log(data);
+        //console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
       }
     }
     

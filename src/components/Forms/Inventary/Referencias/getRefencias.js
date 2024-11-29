@@ -29,6 +29,14 @@ function GetRefencias() {
         }
     };
 
+    const fetchDeleteReference = async (id) => {
+        try {
+            const response = await ReferencesServices.deleteData(id);
+            console.log(response);
+        } catch (error) {
+            console.error('Error fetching References:', error);
+        }
+    };
     // Filtrar referencias basado en el texto de búsqueda
     useEffect(() => {
         const filtered = referencias.filter(item =>
@@ -43,6 +51,8 @@ function GetRefencias() {
 
     const handleDelete = (userId) => {
         console.log(`Delete user with ID: ${userId}`);
+        var id = userId;
+        fetchDeleteReference(id);
     };
     
       const handleUpdate = (userId) => {
@@ -58,15 +68,12 @@ function GetRefencias() {
                 borderRadius: '8px',
                 opacity: 0.9,
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
-                //padding: '20px',
-                maxWidth: { xs: 'auto', sm: 'auto', md: 'md' }, // Ajusta el ancho para diferentes tamaños
-
-                padding: { xs: '4px', sm: 0 }, // Mueve el container 20px a la izquierda en modo móvil
-
+                padding: { xs: '4px', sm: 0 },
+                maxWidth: { xs: '300px', sm:'700px', md:'1000px' },
             }}                
 
         >
-            <Box display="flex" alignItems="center" sx={{  padding: { xs: 0, sm: '20px' }}}  >
+            <Box  >
                 <TextField
                     label="Buscar por Id, Empresa, Referencia, Color o Lugar"
                     variant="outlined"

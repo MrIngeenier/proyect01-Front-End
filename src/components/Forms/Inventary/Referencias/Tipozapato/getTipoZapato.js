@@ -63,11 +63,8 @@ function GetTipoZapato() {
                 borderRadius: '8px',
                 opacity: 0.9,
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
-                //padding: '20px',
-                maxWidth: { xs: 'auto', sm: 'auto', md: 'md' }, // Ajusta el ancho para diferentes tamaños
-
-                padding: { xs: '4px', sm: 0 }, // Mueve el container 20px a la izquierda en modo móvil
-
+                padding: { xs: '4px', sm: 0 },
+                maxWidth: { xs: '300px', sm:'700px', md:'1000px' },
             }}                
 
         >

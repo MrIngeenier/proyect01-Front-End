@@ -83,11 +83,8 @@ function ADDReferences() {
             opacity: 0.9,
             boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(10px)',
-            maxWidth: { xs: 'auto', sm: '80%', md: 'md' }, // Ajusta el ancho para diferentes tamaños
-            margin: { xs: '0 0 0 -20px', sm: 'auto' }, // Mueve el contenedor 20px a la izquierda en modo móvil
-            padding: { xs: '10px ', sm: '20px' }, // Mueve el contenedor 20px a la izquierda en modo móvil
-
-            //padding: '20px',
+            padding: { xs: '10px ', sm: '20px' },
+            marginTop:{ xs: '-50px ', sm: '0px' }
         }}>
             REFERENCIAS
             <Grid container spacing={1} sx={{display:'flex',justifyContent:'center', padding:'10px'}} >

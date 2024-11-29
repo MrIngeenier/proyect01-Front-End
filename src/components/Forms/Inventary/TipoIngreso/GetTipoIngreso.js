@@ -59,8 +59,8 @@ function GetTipoIngreso() {
                 borderRadius: '8px',
                 opacity: 0.9,
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
-                maxWidth: { xs: 'auto', sm: 'auto', md: 'md' },
                 padding: { xs: '4px', sm: 0 },
+                maxWidth: { xs: '300px', sm:'700px', md:'1000px' },
             }}                
         >
             <Box display="flex" alignItems="center" sx={{ padding: { xs: 0, sm: '20px' }}} >
