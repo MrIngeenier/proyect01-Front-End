@@ -94,7 +94,6 @@ const QrScannerSearch = () => {
             lg: '50%', // Para pantallas extra grandes
           },
           margin: {
-            xs: '0 auto',
             lg: '0 auto', // Para pantallas extra grandes
           },
           marginTop: {
@@ -119,76 +118,81 @@ const QrScannerSearch = () => {
 
       {data && (
         <TableContainer component={Paper} sx={{ backgroundColor: '#333',    display: 'flex', 
-          justifyContent: 'center', borderRadius: '8px', justifyContent: 'center', overflowX: 'auto',
-          width:{ xs: '240px',lg:'1000px' },
+          justifyContent: 'center', 
+          borderRadius: '8px',
+           justifyContent: 'center',
+            overflowX: 'auto',
+          width:{ xs: '250px',md:'900px',lg:'1000px' },
           marginLeft:{ lg:'-150px' },  
           }}>          
-          <Table size="small" sx={{ tableLayout: 'fixed', width: { xs: '400%', md: '100%' } }}>
+          <Table size="small" sx={{ tableLayout: 'fixed'}}>
             <TableHead>
-              <TableRow>
-                <TableCell sx={{ color: 'white', width: '8%' }}>Empresa</TableCell>
-                <TableCell sx={{ color: 'white', width: '8%' }}>Referencia</TableCell>
-                <TableCell sx={{ color: 'white', width: '6%' }}>Color</TableCell>
-                <TableCell sx={{ color: 'white', width: '6%' }}>Lugar</TableCell>
-                <TableCell sx={{ color: 'white', width: '6%' }}>Público</TableCell>
-                <TableCell sx={{ color: 'white', width: '4%' }}>Estado</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>21</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>22</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>23</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>24</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>25</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>26</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>27</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>28</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>29</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>30</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>31</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>32</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>33</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>34</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>35</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>36</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>37</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>38</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>39</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>40</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>41</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>42</TableCell>
-                <TableCell sx={{ color: 'white', width: '3%' }}>43</TableCell>
+              <TableRow >
+              <TableCell sx={{ color: 'white', width:{xs:'1100px', md:'0%', lg:'0%'} }}> </TableCell>
+                <TableCell sx={{ color: 'white', width:{xs:'100px',md:'50%', lg:'50%'} }}>Empresa</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'100px', md:'60%', lg:'60%'} }}>Referencia</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'100px', md:'50%', lg:'50%'}  }}>Color</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'100px', md:'50%', lg:'50%'}  }}>Lugar</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'100px', md:'50%', lg:'50%'}  }}>Público</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'100px', md:'50%', lg:'50%'}  }}>Estado</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>21</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>22</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>23</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>24</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>25</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>26</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>27</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>28</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>29</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>30</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>31</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>32</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>33</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>34</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'}  }}>35</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>36</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>37</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>38</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>39</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>40</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>41</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>42</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%', lg:'20%'} }}>43</TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
               <TableRow>
-                <TableCell sx={{ color: 'white' }}>{data.empresa}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.referencia}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.color}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.lugar}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.publico}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.estado}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t21}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t22}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t23}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t24}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t25}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t26}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t27}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t28}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t29}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t30}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t31}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t32}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t33}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t34}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t35}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t36}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t37}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t38}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t39}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t40}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t41}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t42}</TableCell>
-                <TableCell sx={{ color: 'white' }}>{data.t43}</TableCell>
+              <TableCell sx={{ color: 'white',width:{xs:'1000px', md:'0%'} }}> </TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'60px', md:'20%'} }}>{data.empresa}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'60px', md:'40%'} }}>{data.referencia}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'60px', md:'20%'}  }}>{data.color}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'60px', md:'20%'}}}>{data.lugar}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'60px', md:'20%'}}}>{data.publico}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'60px', md:'20%'}}}>{data.estado}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t21}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t22}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t23}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t24}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t25}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t26}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t27}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t28}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t29}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t30}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t31}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t32}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t33}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t34}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t35}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t36}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t37}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t38}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t39}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t40}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t41}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t42}</TableCell>
+                <TableCell sx={{ color: 'white',width:{xs:'10px', md:'20%'}}}>{data.t43}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
