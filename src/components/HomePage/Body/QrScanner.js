@@ -76,7 +76,25 @@ const QrScanner = () => {
   };
 
   const startScanning = () => {
-    const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 500 }, false);
+    const windowWidth = window.innerWidth;
+    let qrboxSize;
+    //console.log('Ancho Pantalla'+windowWidth);
+    if (windowWidth <= 500) {
+      // Móvil
+      qrboxSize = { width: 150, height: 150 };
+      console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
+    }
+    if (windowWidth > 500 && windowWidth <= 1024) {
+      // Móvil
+      qrboxSize = { width: 600, height: 500 };
+      console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
+    }  if(windowWidth > 1024 ) {
+      qrboxSize = { width: 450, height: 400 };
+    }
+    const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", 
+      { fps: 10, qrbox: qrboxSize, // Tamaño del área de escaneo
+    },
+       false);
     html5QrcodeScanner.render(
       (decodedText) => handleScanSuccess(decodedText, html5QrcodeScanner),
       handleScanError
@@ -161,7 +179,7 @@ const QrScanner = () => {
         ...prev,
         idUsuario: decodedData.userId || ''  // Asegúrate de que userId esté disponible
       }));
-      console.log("DecodeJWT:", decodedData.userId);
+      //console.log("DecodeJWT:", decodedData.userId);
     } else {
       console.error("No se pudo decodificar el JWT o no contiene userId.");
     }
@@ -172,11 +190,32 @@ const QrScanner = () => {
   }, []);
 
   return (
-    <Box sx={{ padding: 2, textAlign: 'center' }}>
-      <Typography variant="h6" gutterBottom>
+<Box
+  sx={{
+    padding: 2,
+    textAlign: 'center',
+  /*  backgroundColor: {
+      xs: 'red', // Para pantallas extra pequeñas
+      sm: 'blue', // Para pantallas pequeñas
+      md: 'green', // Para pantallas medianas
+      lg: 'purple', // Para pantallas grandes
+      xl: 'orange', // Para pantallas extra grandes
+    }*/
+
+    width: {
+      lg: '50%', // Para pantallas extra grandes
+    },
+    margin: {
+      lg: '0 auto', // Para pantallas extra grandes
+    },
+    marginTop: {
+      lg: '-20px', // Para pantallas extra grandes
+    },
+  }}
+>      <Typography variant="h6" gutterBottom>
         Escanea el código QR
       </Typography>
-      <Box id="qr-reader" sx={{ margin: 'auto', width: '40%', height: '40%' }}></Box>
+      <Box id="qr-reader" sx={{ margin: 'auto' }}></Box>
       <Button
         variant="contained"
         color="primary"

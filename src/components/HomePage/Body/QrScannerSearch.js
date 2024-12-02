@@ -18,7 +18,24 @@ const QrScannerSearch = () => {
   const handleSuccessClose = () => setSuccessOpen(false);
 
   const startScanning = () => {
-    const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 500 }, false);
+
+    const windowWidth = window.innerWidth;
+    let qrboxSize;
+    //console.log('Ancho Pantalla'+windowWidth);
+    if (windowWidth <= 500) {
+      // Móvil
+      qrboxSize = { width: 150, height: 150 };
+      //console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
+    }
+    if (windowWidth > 500 && windowWidth <= 1024) {
+      // Móvil
+      qrboxSize = { width: 600, height: 500 };
+      //console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
+    }  if(windowWidth > 1024 ) {
+      qrboxSize = { width: 450, height: 400 };
+    }
+
+    const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: qrboxSize }, false);
 
     const fetchInventary = async (empresa, serial, color, lugar, publico) => {
       try {
@@ -65,12 +82,31 @@ const QrScannerSearch = () => {
     }
   };
 
+  
+
   return (
-    <Box sx={{ padding: 2, textAlign: 'center' }}>
+      <Box
+        sx={{
+          padding: 2,
+          textAlign: 'center',
+          width: {
+            xs: '240px',
+            lg: '50%', // Para pantallas extra grandes
+          },
+          margin: {
+            xs: '0 auto',
+            lg: '0 auto', // Para pantallas extra grandes
+          },
+          marginTop: {
+            lg: '-20px', // Para pantallas extra grandes
+          },
+          
+        }}
+      >      
       <Typography variant="h6" gutterBottom>
         QR Busqueda
       </Typography>
-      <Box id="qr-reader" sx={{ margin: 'auto', width: '40%', height: '40%' }}></Box>
+      <Box id="qr-reader" sx={{ margin: 'auto'}}></Box>
       <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={startScanning}>
         Iniciar Escaneo
       </Button>
@@ -82,11 +118,15 @@ const QrScannerSearch = () => {
       </Typography>
 
       {data && (
-        <TableContainer component={Paper} sx={{ backgroundColor: '#333', borderRadius: '8px', justifyContent: 'center', overflowX: 'auto', width: 'auto' }}>
+        <TableContainer component={Paper} sx={{ backgroundColor: '#333',    display: 'flex', 
+          justifyContent: 'center', borderRadius: '8px', justifyContent: 'center', overflowX: 'auto',
+          width:{ xs: '240px',lg:'1000px' },
+          marginLeft:{ lg:'-150px' },  
+          }}>          
           <Table size="small" sx={{ tableLayout: 'fixed', width: { xs: '400%', md: '100%' } }}>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ color: 'white', width: '6%' }}>Empresa</TableCell>
+                <TableCell sx={{ color: 'white', width: '8%' }}>Empresa</TableCell>
                 <TableCell sx={{ color: 'white', width: '8%' }}>Referencia</TableCell>
                 <TableCell sx={{ color: 'white', width: '6%' }}>Color</TableCell>
                 <TableCell sx={{ color: 'white', width: '6%' }}>Lugar</TableCell>
