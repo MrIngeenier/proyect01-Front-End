@@ -1,98 +1,104 @@
 import React, { useState } from 'react';
-import { Html5Qrcode } from 'html5-qrcode';
-import { Button, Slider, Typography, Box } from '@mui/material';
+import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Button, Box, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 
 const QrScannerSearch = () => {
   const [result, setResult] = useState('No result');
   const [scanner, setScanner] = useState(null);
-  const [streamTrack, setStreamTrack] = useState(null); // Track para aplicar zoom
-  const [zoomLevel, setZoomLevel] = useState(1); // Nivel de zoom inicial
+  const [zoom, setZoom] = useState(1); // Nivel de zoom inicial
 
   const startScanning = () => {
-    const html5Qrcode = new Html5Qrcode("qr-reader");
+    const windowWidth = window.innerWidth;
+    let qrboxSize;
 
-    html5Qrcode.start(
-      { facingMode: "environment" },
-      {
-        fps: 10,
-        qrbox: { width: 300, height: 300 },
-      },
+    if (windowWidth <= 500) {
+      qrboxSize = { width: 150, height: 150 };
+    } else if (windowWidth > 500 && windowWidth <= 1024) {
+      qrboxSize = { width: 600, height: 500 };
+    } else {
+      qrboxSize = { width: 450, height: 400 };
+    }
+
+    const html5QrcodeScanner = new Html5QrcodeScanner(
+      "qr-reader",
+      { fps: 10, qrbox: qrboxSize, aspectRatio: 1.0 },
+      false
+    );
+
+    html5QrcodeScanner.render(
       (decodedText) => {
         setResult(decodedText);
-        html5Qrcode.stop();
+        html5QrcodeScanner.clear(); // Detener el escáner tras leer el código
       },
       (error) => {
-        console.error("Error escaneando el código QR:", error);
+        //console.error("Error durante el escaneo:", error);
       }
-    )
-      .then(() => {
-        // Obtener el MediaStreamTrack para manejar restricciones
-        const videoElement = html5Qrcode.getVideoElement();
-        const track = videoElement?.srcObject?.getVideoTracks()?.[0];
-        if (track) {
-          setStreamTrack(track);
-        }
-      })
-      .catch((error) => {
-        console.error("Error iniciando el escaneo:", error);
-      });
+    );
 
-    setScanner(html5Qrcode); // Guardar la instancia
+    // Configurar el zoom seleccionado
+    if (html5QrcodeScanner.html5Qrcode) {
+      html5QrcodeScanner.html5Qrcode.applyVideoConstraints({
+        advanced: [{ zoom }],
+      });
+    }
+
+    setScanner(html5QrcodeScanner);
   };
 
   const stopScanning = () => {
     if (scanner) {
-      scanner.stop().then(() => {
-        setScanner(null);
-        setStreamTrack(null);
-      });
-    }
-  };
-
-  const handleZoomChange = (event, newValue) => {
-    setZoomLevel(newValue);
-
-    if (streamTrack) {
-      const constraints = {
-        advanced: [{ zoom: newValue }],
-      };
-
-      streamTrack
-        .applyConstraints(constraints)
-        .catch((error) => {
-          console.error("Error aplicando zoom:", error);
-        });
+      scanner.clear();
     }
   };
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box
+      sx={{
+        padding: 2,
+        textAlign: 'center',
+        margin: '0 auto',
+        width: { xs: '240px', lg: '50%' },
+      }}
+    >
       <Typography variant="h6" gutterBottom>
-        QR Busqueda
+        QR Búsqueda
       </Typography>
-      <Box id="qr-reader" sx={{ margin: 'auto', width: 300, height: 300 }}></Box>
-      <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={startScanning}>
+
+      <Box id="qr-reader" sx={{ margin: 'auto' }}></Box>
+
+      <FormControl sx={{ minWidth: 120, marginTop: 2 }}>
+        <InputLabel id="zoom-select-label">Zoom</InputLabel>
+        <Select
+          labelId="zoom-select-label"
+          value={zoom}
+          onChange={(e) => setZoom(Number(e.target.value))}
+        >
+          <MenuItem value={1}>x1</MenuItem>
+          <MenuItem value={2}>x2</MenuItem>
+          <MenuItem value={5}>x5</MenuItem>
+        </Select>
+      </FormControl>
+
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ marginTop: 2 }}
+        onClick={startScanning}
+      >
         Iniciar Escaneo
       </Button>
-      <Button variant="contained" color="secondary" sx={{ marginTop: 2 }} onClick={stopScanning}>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ marginTop: 2 }}
+        onClick={stopScanning}
+      >
         Detener Escaneo
       </Button>
+
       <Typography variant="body1" sx={{ marginTop: 2 }}>
         Resultado: {result}
       </Typography>
-
-      {/* Slider para el zoom */}
-      <Box sx={{ marginTop: 3 }}>
-        <Typography>Zoom</Typography>
-        <Slider
-          value={zoomLevel}
-          onChange={handleZoomChange}
-          min={1}
-          max={5} // Ajusta según lo que soporte tu cámara
-          step={0.1}
-          valueLabelDisplay="auto"
-        />
-      </Box>
     </Box>
   );
 };
