@@ -18,7 +18,7 @@ const QrScannerSearch = () => {
   const [successOpen, setSuccessOpen] = useState(false);
   const [data, setData] = useState(null); // Cambiado a null, ya que solo es un solo objeto
   const [zoomOptions, setZoomOptions] = useState([]); // Para almacenar las opciones de zoom
-  const [zoom, setZoom] = useState(2); // Valor inicial del zoom
+  const [zoom, setZoom] = useState(4); // Valor inicial del zoom
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
@@ -167,7 +167,7 @@ const QrScannerSearch = () => {
            justifyContent: 'center',
             overflowX: 'auto',
           width:{ xs: '250px',md:'900px',lg:'1000px' },
-          marginLeft:{ lg:'-150px' },  
+          
           }}>          
           <Table size="small" sx={{ tableLayout: 'fixed'}}>
             <TableHead>
