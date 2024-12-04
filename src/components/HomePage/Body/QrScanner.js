@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
@@ -25,6 +25,8 @@ const QrScanner = () => {
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
+  const [zoom, setZoom] = useState(2); // Valor inicial del zoom
+
 
   const fetchInventaryQR = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
     try {
@@ -91,10 +93,26 @@ const QrScanner = () => {
     }  if(windowWidth > 1024 ) {
       qrboxSize = { width: 450, height: 400 };
     }
-    const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", 
-      { fps: 10, qrbox: qrboxSize, // Tamaño del área de escaneo
-    },
-       false);
+    //const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", 
+      //{ fps: 10, qrbox: qrboxSize, // Tamaño del área de escaneo
+    //},
+       //false);
+
+       const html5QrcodeScanner = new Html5QrcodeScanner(
+        'qr-reader',
+        {
+          fps: 20,
+          qrbox: qrboxSize,
+          videoConstraints: {
+            facingMode: 'environment',
+            width: { ideal: 1000 },
+            height: { ideal: 720 },
+            aspectRatio: { ideal: 1.77 },
+            advanced: [{ zoom: zoom }],
+          },
+        },
+        false
+      );
     html5QrcodeScanner.render(
       (decodedText) => handleScanSuccess(decodedText, html5QrcodeScanner),
       handleScanError
@@ -185,32 +203,22 @@ const QrScanner = () => {
     }
   };
 
+  const handleZoomChange = (event) => {
+    setZoom(event.target.value);
+    if (scanner) {
+      scanner.clear();
+      startScanning(); // Reiniciar el escaneo con el nuevo zoom
+    }
+  };
+
   useEffect(() => {
     showJWT();
   }, []);
 
   return (
 <Box
-  sx={{
-    padding: 2,
-    textAlign: 'center',
-  /*  backgroundColor: {
-      xs: 'red', // Para pantallas extra pequeñas
-      sm: 'blue', // Para pantallas pequeñas
-      md: 'green', // Para pantallas medianas
-      lg: 'purple', // Para pantallas grandes
-      xl: 'orange', // Para pantallas extra grandes
-    }*/
-
-    width: {
-      lg: '50%', // Para pantallas extra grandes
-    },
-    margin: {
-      lg: '0 auto', // Para pantallas extra grandes
-    },
-    marginTop: {
-      lg: '-20px', // Para pantallas extra grandes
-    },
+  sx={{padding: 2,textAlign: 'center',
+    width: {lg: '50%'},margin: {lg: '0 auto', },marginTop: {lg: '-20px'},
   }}
 >      <Typography variant="h6" gutterBottom>
         Escanea el código QR
@@ -235,6 +243,18 @@ const QrScanner = () => {
       <Typography variant="body1" sx={{ marginTop: 2 }}>
         Resultado: {result}
       </Typography>
+
+      <FormControl fullWidth sx={{ marginTop: 2 }}>
+        <InputLabel>Zoom</InputLabel>
+        <Select value={zoom} onChange={handleZoomChange}>
+          <MenuItem value={2}>2x</MenuItem>
+          <MenuItem value={4}>4x</MenuItem>
+          <MenuItem value={6}>6x</MenuItem>
+          <MenuItem value={8}>8x</MenuItem>
+          <MenuItem value={10}>10x</MenuItem>
+        </Select>
+      </FormControl>
+
       <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
       <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
     </Box>

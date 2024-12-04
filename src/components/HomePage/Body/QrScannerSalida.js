@@ -1,10 +1,11 @@
 import React, { useState,useEffect } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+//import { Box, Button, Typography } from '@mui/material';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
 //import VentasServices from '../../../service/ventas.services';
+import { Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 const QrScannerSalida = () => {
   const [result, setResult] = useState('No result');
@@ -14,6 +15,7 @@ const QrScannerSalida = () => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [zoom, setZoom] = useState(2); // Valor inicial del zoom
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
@@ -46,7 +48,13 @@ const QrScannerSalida = () => {
   };
 
  
-
+  const handleZoomChange = (event) => {
+    setZoom(event.target.value);
+    if (scanner) {
+      scanner.clear();
+      startScanning(); // Reiniciar el escaneo con el nuevo zoom
+    }
+  };
 
   const startScanning = () => {
 
@@ -66,9 +74,21 @@ const QrScannerSalida = () => {
     if(windowWidth > 1024 ) {
       qrboxSize = { width: 450, height: 400 };
     }
+    //const html5QrcodeScanner = new Html5QrcodeScanner("qr-reader",{ fps: 10, qrbox: qrboxSize },false);
+
     const html5QrcodeScanner = new Html5QrcodeScanner(
-      "qr-reader",
-      { fps: 10, qrbox: qrboxSize },
+      'qr-reader',
+      {
+        fps: 20,
+        qrbox: qrboxSize,
+        videoConstraints: {
+          facingMode: 'environment',
+          width: { ideal: 1000 },
+          height: { ideal: 720 },
+          aspectRatio: { ideal: 1.77 },
+          advanced: [{ zoom: zoom }],
+        },
+      },
       false
     );
 
@@ -196,6 +216,18 @@ const QrScannerSalida = () => {
       <Typography variant="body1" sx={{ marginTop: 2 }}>
         Resultado: {result}
       </Typography>
+      
+      <FormControl fullWidth sx={{ marginTop: 2 }}>
+        <InputLabel>Zoom</InputLabel>
+        <Select value={zoom} onChange={handleZoomChange}>
+          <MenuItem value={2}>2x</MenuItem>
+          <MenuItem value={4}>4x</MenuItem>
+          <MenuItem value={6}>6x</MenuItem>
+          <MenuItem value={8}>8x</MenuItem>
+          <MenuItem value={10}>10x</MenuItem>
+        </Select>
+      </FormControl>
+
       <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
       <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
     </Box>
