@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import inventaryServices from '../../../service/inventary.services';
-
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 
@@ -17,39 +16,16 @@ const QrScannerSearch = () => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [data, setData] = useState(null); // Cambiado a null, ya que solo es un solo objeto
-  const [zoomOptions, setZoomOptions] = useState([]); // Para almacenar las opciones de zoom
-  const [zoom, setZoom] = useState(4); // Valor inicial del zoom
+  const [zoom, setZoom] = useState(2); // Valor inicial del zoom
 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
 
   // Función para obtener las capacidades de la cámara y los valores de zoom disponibles
-  const getCameraZoomCapabilities = async () => {
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoDevices = devices.filter(device => device.kind === 'videoinput');
-
-      // Intentamos obtener las capacidades de zoom de la primera cámara disponible
-      if (videoDevices.length > 0) {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoDevices[0].deviceId } });
-        const track = stream.getVideoTracks()[0];
-        const capabilities = track.getCapabilities();
-
-        if (capabilities.zoom) {
-          const zoomLevels = [capabilities.zoom.min, capabilities.zoom.max, capabilities.zoom.step];
-          setZoomOptions(zoomLevels); // Asigna los niveles de zoom
-        }
-
-        // Detenemos el stream después de obtener las capacidades
-        track.stop();
-      }
-    } catch (error) {
-      console.error('Error al obtener las capacidades de la cámara:', error);
-    }
-  };
+  
 
   useEffect(() => {
-    getCameraZoomCapabilities(); // Cargar las capacidades de la cámara al iniciar el componente
+    //getCameraZoomCapabilities(); // Cargar las capacidades de la cámara al iniciar el componente
   }, []);
 
   const startScanning = () => {
@@ -132,7 +108,7 @@ const QrScannerSearch = () => {
   };
 
   return (
-    <Box sx={{ padding: 2, textAlign: 'center', width: { xs: '240px', lg: '50%' }, margin: { lg: '0 auto' }, marginTop: { lg: '-20px' } }}>
+    <Box sx={{ padding: 2, textAlign: 'center', width: { xs: '240px', lg: '50%' }, margin: '0 auto' , marginTop: { lg: '-20px' } }}>
       <Typography variant="h6" gutterBottom>
         QR Busqueda
       </Typography>
@@ -147,25 +123,22 @@ const QrScannerSearch = () => {
         Resultado: {result}
       </Typography>
 
-      {zoomOptions.length > 0 && (
-        <FormControl fullWidth sx={{ marginTop: 2 }}>
-          <InputLabel>Zoom</InputLabel>
-          <Select value={zoom} onChange={handleZoomChange}>
-            {zoomOptions.map((zoomValue, index) => (
-              <MenuItem key={index} value={zoomValue}>
-                {zoomValue}x
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
+      <FormControl fullWidth sx={{ marginTop: 2 }}>
+        <InputLabel>Zoom</InputLabel>
+        <Select value={zoom} onChange={handleZoomChange}>
+          <MenuItem value={2}>2x</MenuItem>
+          <MenuItem value={4}>4x</MenuItem>
+          <MenuItem value={6}>6x</MenuItem>
+          <MenuItem value={8}>8x</MenuItem>
+          <MenuItem value={10}>10x</MenuItem>
+        </Select>
+      </FormControl>
 
-{data && (
+        {data && (
         <TableContainer component={Paper} sx={{ backgroundColor: '#333',    display: 'flex', 
           justifyContent: 'center', 
           borderRadius: '8px',
-           justifyContent: 'center',
-            overflowX: 'auto',
+          overflowX: 'auto',
           width:{ xs: '250px',md:'900px',lg:'1000px' },
           
           }}>          
