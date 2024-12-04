@@ -28,6 +28,7 @@ const QrScannerSearch = () => {
         fps: 20,
         qrbox: qrboxSize,
         videoConstraints: {
+          facingMode: "environment",
           width: { ideal: 1000 },
           height: { ideal: 720 },
           aspectRatio: { ideal: 1.77 },
