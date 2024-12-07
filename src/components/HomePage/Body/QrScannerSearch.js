@@ -99,6 +99,8 @@ const QrScannerSearch = () => {
     }
   };
 
+  
+
   const handleZoomChange = (event) => {
     setZoom(event.target.value);
     if (scanner) {

@@ -5,8 +5,10 @@ import {
 } from '@mui/material';
 import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
-
+import { encryptText } from '../../../utils/Encript';
 import inventaryServices from '../../../service/inventary.services';
+
+
 
 function Inventary() {
     const [search, setSearch] = useState('');
@@ -18,6 +20,7 @@ function Inventary() {
         fetchInventary();
     }, []);
 
+    // Busqueda segun el filtro de datos
     const applyFilters = (searchValue, filters) => {
         let filtered = data; // Aquí asumes que ya tienes `data` cargado con los datos originales
     
@@ -56,6 +59,7 @@ function Inventary() {
         setFilteredData(filtered); // Actualizas `filteredData` con los resultados filtrados
     };
     
+    // Toma de datos segun el filtro
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
         setFilters((prevFilters) => {
@@ -87,524 +91,452 @@ function Inventary() {
         applyFilters(value, filters); // Aplica búsqueda y filtros
     };
     
-
+    // Generador de QR
     const handlePdfClick = async (item) => {
         const doc = new jsPDF();
         doc.setFontSize(12);
         doc.setLineWidth(0.5);
        
+       
 
         // Generar el QR en base64
         try {
-            if(item.publico === 'hombre'){
-                const qrDataUrl34 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 20, 180, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 10,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 30,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 50,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 70,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 90,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 110, 20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 130, 20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 150, 20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 170, 20, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/34`, 
-                        80, 45);
+            if(item.publico === 'hombre' || item.publico === 'mujer' ){
+                const qrText = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${item.publico}`;
+                const qrText33 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}`;
+                const qrText34 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`;
+                const qrText35 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`;
+                const qrText36 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`;
+                const qrText37 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${37}/${item.publico}`;
+                const qrText38 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${38}/${item.publico}`;
+                const qrText39 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${39}/${item.publico}`;
+                const qrText40 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${40}/${item.publico}`;
+                const qrText41 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${41}/${item.publico}`;
+                const qrText42 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${42}/${item.publico}`;
+                const qrText43 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${43}/${item.publico}`;
 
-                const qrDataUrl35 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 50, 180, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 10,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 30,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 50,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 70,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 90,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 110, 50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 130, 50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 150, 50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 170, 50, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/35`,
-                        80, 75);
+                const encryptedQrText33 = encryptText(qrText33);
+                const encryptedQrText34 = encryptText(qrText34);
+                const encryptedQrText35 = encryptText(qrText35);
+                const encryptedQrText36 = encryptText(qrText36);
+                const encryptedQrText37 = encryptText(qrText37);
+                const encryptedQrText38 = encryptText(qrText38);
+                const encryptedQrText39 = encryptText(qrText39);
+                const encryptedQrText40 = encryptText(qrText40);
+                const encryptedQrText41 = encryptText(qrText41);
+                const encryptedQrText42 = encryptText(qrText42);
+                const encryptedQrText43 = encryptText(qrText43);
 
-                const qrDataUrl36 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 80, 180, 20); 
-                    doc.addImage(qrDataUrl36, 'PNG', 10,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 30,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 50,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 70,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 90,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 110, 80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 130, 80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 150, 80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 170, 80, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}36`,
-                        80, 105);
+                const qrDataUrl33 = await QRCode.toDataURL(encryptedQrText33, { errorCorrectionLevel: 'H' });
+                const qrDataUrl34 = await QRCode.toDataURL(encryptedQrText34, { errorCorrectionLevel: 'H' });
+                const qrDataUrl35 = await QRCode.toDataURL(encryptedQrText35, { errorCorrectionLevel: 'H' });
+                const qrDataUrl36 = await QRCode.toDataURL(encryptedQrText36, { errorCorrectionLevel: 'H' });       
+                const qrDataUrl37 = await QRCode.toDataURL(encryptedQrText37, { errorCorrectionLevel: 'H' });   
+                const qrDataUrl38 = await QRCode.toDataURL(encryptedQrText38, { errorCorrectionLevel: 'H' });        
+                const qrDataUrl39 = await QRCode.toDataURL(encryptedQrText39, { errorCorrectionLevel: 'H' });
+                const qrDataUrl40 = await QRCode.toDataURL(encryptedQrText40, { errorCorrectionLevel: 'H' });
+                const qrDataUrl41 = await QRCode.toDataURL(encryptedQrText41, { errorCorrectionLevel: 'H' });
+                const qrDataUrl42 = await QRCode.toDataURL(encryptedQrText42, { errorCorrectionLevel: 'H' });
+                const qrDataUrl43 = await QRCode.toDataURL(encryptedQrText43, { errorCorrectionLevel: 'H' });
+                
+                const increment = 23; // Incremento en la posición Y
+                let startY = 20;
+                for (let i = 33; i <= 43; i++) {
+                    doc.text(`/${i}`, 195, startY);
+                    startY += increment; // Aumenta la posición Y para el siguiente número
+                }
 
-                const qrDataUrl37 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${37}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 110, 180, 20); 
-                    doc.addImage(qrDataUrl37, 'PNG', 10,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 30,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 50,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 70,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 90,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 110, 110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 130, 110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 150, 110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 170, 110, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}37`,
-                        80, 135);
-                        
-                const qrDataUrl38 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${38}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 140, 180, 20); 
-                    doc.addImage(qrDataUrl38, 'PNG', 10,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 30,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 50,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 70,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 90,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 110, 140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 130, 140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 150, 140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 170, 140, 20, 20);
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.rect(10, 10, 180, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 10,  10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 30,  10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 50,  10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 70,  10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 90,  10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 110, 10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 130, 10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 150, 10, 20, 20);
+                    doc.addImage(qrDataUrl33, 'PNG', 170, 10, 20, 20);
+                    doc.text(qrText, 70, 290); 
 
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}38`,
-                        80, 165);
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.rect(10, 33, 180, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 10,  33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 30,  33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 50,  33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 70,  33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 90,  33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 110, 33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 130, 33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 150, 33, 20, 20);
+                    doc.addImage(qrDataUrl34, 'PNG', 170, 33, 20, 20);
+                
+                    doc.rect(10, 56, 180, 20); 
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.addImage(qrDataUrl35, 'PNG', 10,  56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 30,  56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 50,  56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 70,  56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 90,  56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 110, 56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 130, 56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 150, 56, 20, 20);
+                    doc.addImage(qrDataUrl35, 'PNG', 170, 56, 20, 20);
+                
+                    doc.rect(10, 79, 180, 20); 
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.addImage(qrDataUrl36, 'PNG', 10,  79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 30,  79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 50,  79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 70,  79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 90,  79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 110, 79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 130, 79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 150, 79, 20, 20);
+                    doc.addImage(qrDataUrl36, 'PNG', 170, 79, 20, 20);
 
-                    doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl39 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${39}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl39, 'PNG', 10,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 30,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 50,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 70,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 90,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 110, 170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 130, 170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 150, 170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 170, 170, 20, 20);
+                    doc.rect(10, 102, 180, 20);
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.addImage(qrDataUrl37, 'PNG', 10,  102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 30,  102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 50,  102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 70,  102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 90,  102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 110, 102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 130, 102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 150, 102, 20, 20);
+                    doc.addImage(qrDataUrl37, 'PNG', 170, 102, 20, 20);
 
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}39`,
-                        80, 195);
-                        doc.rect(10, 200, 180, 20); 
-
-                const qrDataUrl40 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${40}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl40, 'PNG', 10,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 30,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 50,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 70,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 90,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 110, 200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 130, 200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 150, 200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 170, 200, 20, 20);
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.rect(10, 125, 180, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 10,  125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 30,  125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 50,  125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 70,  125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 90,  125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 110, 125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 130, 125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 150, 125, 20, 20);
+                    doc.addImage(qrDataUrl38, 'PNG', 170, 125, 20, 20);
+                
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.rect(10, 148, 180, 20); 
+                    doc.addImage(qrDataUrl39, 'PNG', 10,  148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 30,  148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 50,  148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 70,  148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 90,  148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 110, 148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 130, 148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 150, 148, 20, 20);
+                    doc.addImage(qrDataUrl39, 'PNG', 170, 148, 20, 20);
         
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}40`,
-                        80, 225);
-                        doc.rect(10, 230, 180, 20); 
-
-                const qrDataUrl41 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${41}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl41, 'PNG', 10,  230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 30,  230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 50,  230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 70,  230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 90,  230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 110, 230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 130, 230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 150, 230, 20, 20);
-                    doc.addImage(qrDataUrl41, 'PNG', 170, 230, 20, 20);
-        
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}41`,
-                        80, 255);
-                        doc.rect(10, 260, 180, 20); 
-                        
-                const qrDataUrl42 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${42}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                        doc.addImage(qrDataUrl42, 'PNG', 10,  260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 30,  260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 50,  260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 70,  260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 90,  260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 110, 260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 130, 260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 150, 260, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 170, 260, 20, 20);
+                    // Horizontal - Vertical x Ancho x Alto
+                    doc.rect(10, 171, 180, 20); 
+                    doc.addImage(qrDataUrl40, 'PNG', 10,  171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 30,  171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 50,  171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 70,  171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 90,  171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 110, 171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 130, 171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 150, 171, 20, 20);
+                    doc.addImage(qrDataUrl40, 'PNG', 170, 171, 20, 20);
+                
+                    doc.rect(10, 194, 180, 20); 
+                    doc.addImage(qrDataUrl41, 'PNG', 10,  194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 30,  194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 50,  194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 70,  194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 90,  194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 110, 194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 130, 194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 150, 194, 20, 20);
+                    doc.addImage(qrDataUrl41, 'PNG', 170, 194, 20, 20);
             
-                        doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}42`,
-                            80, 285);
 
-                            doc.addPage(); 
+                    doc.rect(10, 217, 180, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 10,  217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 30,  217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 50,  217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 70,  217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 90,  217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 110, 217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 130, 217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 150, 217, 20, 20);
+                    doc.addImage(qrDataUrl42, 'PNG', 170, 217, 20, 20);
 
-                    const qrDataUrl43 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${43}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 20, 180, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 10,  20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 30,  20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 50,  20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 70,  20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 90,  20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 110, 20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 130, 20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 150, 20, 20, 20);
-                    doc.addImage(qrDataUrl43, 'PNG', 170, 20, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/43`, 
-                        80, 45);
+                    doc.rect(10, 240, 180, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 10,  240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 30,  240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 50,  240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 70,  240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 90,  240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 110, 240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 130, 240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 150, 240, 20, 20);
+                    doc.addImage(qrDataUrl43, 'PNG', 170, 240, 20, 20);
             // Guardar el PDF
             //doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
             }
-            if(item.publico === 'mujer' ){
-                const qrDataUrl34 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 20, 180, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 10,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 30,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 50,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 70,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 90,  20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 110, 20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 130, 20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 150, 20, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 170, 20, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/34`, 
-                        80, 45);
-
-                    const qrDataUrl35 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 50, 180, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 10,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 30,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 50,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 70,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 90,  50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 110, 50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 130, 50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 150, 50, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 170, 50, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/35`,
-                        80, 75);
-
-                    const qrDataUrl36 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 80, 180, 20); 
-                    doc.addImage(qrDataUrl36, 'PNG', 10,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 30,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 50,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 70,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 90,  80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 110, 80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 130, 80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 150, 80, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 170, 80, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}36`,
-                        80, 105);
-
-                    const qrDataUrl37 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${37}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 110, 180, 20); 
-                    doc.addImage(qrDataUrl37, 'PNG', 10,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 30,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 50,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 70,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 90,  110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 110, 110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 130, 110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 150, 110, 20, 20);
-                    doc.addImage(qrDataUrl37, 'PNG', 170, 110, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}37`,
-                        80, 135);
-                        
-                    const qrDataUrl38 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${38}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 140, 180, 20); 
-                    doc.addImage(qrDataUrl38, 'PNG', 10,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 30,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 50,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 70,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 90,  140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 110, 140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 130, 140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 150, 140, 20, 20);
-                    doc.addImage(qrDataUrl38, 'PNG', 170, 140, 20, 20);
-
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}38`,
-                        80, 165);
-
-                    doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl39 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${39}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl39, 'PNG', 10,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 30,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 50,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 70,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 90,  170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 110, 170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 130, 170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 150, 170, 20, 20);
-                    doc.addImage(qrDataUrl39, 'PNG', 170, 170, 20, 20);
-
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}39`,
-                        80, 195);
-                        doc.rect(10, 200, 180, 20); 
-
-                    const qrDataUrl40 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${40}/${item.publico}`, { errorCorrectionLevel: 'H' });;
-                    doc.addImage(qrDataUrl40, 'PNG', 10,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 30,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 50,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 70,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 90,  200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 110, 200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 130, 200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 150, 200, 20, 20);
-                    doc.addImage(qrDataUrl40, 'PNG', 170, 200, 20, 20);
-        
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}40`,
-                        80, 225);
-
-                   
-                        doc.rect(10, 230, 180, 20); 
-                        
-                        const qrDataUrl42 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${41}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                        doc.addImage(qrDataUrl42, 'PNG', 10,  230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 30,  230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 50,  230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 70,  230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 90,  230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 110, 230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 130, 230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 150, 230, 20, 20);
-                        doc.addImage(qrDataUrl42, 'PNG', 170, 230, 20, 20);
-            
-                        doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}41`,
-                            80, 255);
-            // Guardar el PDF
-            //doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color}.pdf`);
-            }
+           
             if(item.publico === 'niña'){
-                const qrDataUrl21 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${21}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 20, 180, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 10,  20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 30,  20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 50,  20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 70,  20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 90,  20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 110, 20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 130, 20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 150, 20, 20, 20);
-                    doc.addImage(qrDataUrl21, 'PNG', 170, 20, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/21`, 
-                        80, 45);
 
-                    const qrDataUrl22 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${22}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 50, 180, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 10,  50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 30,  50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 50,  50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 70,  50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 90,  50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 110, 50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 130, 50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 150, 50, 20, 20);
-                    doc.addImage(qrDataUrl22, 'PNG', 170, 50, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/22`,
-                        80, 75);
+                const qrText = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${item.publico}`;
+                const qrText21 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${21}/${item.publico}`;
+                const qrText22 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${22}/${item.publico}`;
+                const qrText23 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${23}/${item.publico}`;
+                const qrText24 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${24}/${item.publico}`;
+                const qrText25 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${25}/${item.publico}`;
+                const qrText26 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${26}/${item.publico}`;
+                const qrText27 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${27}/${item.publico}`;
+                const qrText28 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${28}/${item.publico}`;
+                const qrText29 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${29}/${item.publico}`;
+                const qrText30 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${30}/${item.publico}`;
+                const qrText31 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${31}/${item.publico}`;
+                const qrText32 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${32}/${item.publico}`;
+                const qrText33 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}`;
+                const qrText34 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`;
+                const qrText35 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`;
+                const qrText36 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`;
 
-                    const qrDataUrl23 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${23}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 80, 180, 20); 
-                    doc.addImage(qrDataUrl23, 'PNG', 10,  80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 30,  80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 50,  80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 70,  80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 90,  80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 110, 80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 130, 80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 150, 80, 20, 20);
-                    doc.addImage(qrDataUrl23, 'PNG', 170, 80, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}23`,
-                        80, 105);
+                const encryptedQrText21 = encryptText(qrText21);
+                const encryptedQrText22 = encryptText(qrText22);
+                const encryptedQrText23 = encryptText(qrText23);
+                const encryptedQrText24 = encryptText(qrText24);
+                const encryptedQrText25 = encryptText(qrText25);
+                const encryptedQrText26 = encryptText(qrText26);
+                const encryptedQrText27 = encryptText(qrText27);
+                const encryptedQrText28 = encryptText(qrText28);
+                const encryptedQrText29 = encryptText(qrText29);
+                const encryptedQrText30 = encryptText(qrText30);
+                const encryptedQrText31 = encryptText(qrText31);
+                const encryptedQrText32 = encryptText(qrText32);
+                const encryptedQrText33 = encryptText(qrText33);
+                const encryptedQrText34 = encryptText(qrText34);
+                const encryptedQrText35 = encryptText(qrText35);
+                const encryptedQrText36 = encryptText(qrText36);
+                
+                const qrDataUrl21 = await QRCode.toDataURL(encryptedQrText21, { errorCorrectionLevel: 'H' });   
+                const qrDataUrl22 = await QRCode.toDataURL(encryptedQrText22, { errorCorrectionLevel: 'H' });        
+                const qrDataUrl23 = await QRCode.toDataURL(encryptedQrText23, { errorCorrectionLevel: 'H' });
+                const qrDataUrl24 = await QRCode.toDataURL(encryptedQrText24, { errorCorrectionLevel: 'H' });
+                const qrDataUrl25 = await QRCode.toDataURL(encryptedQrText25, { errorCorrectionLevel: 'H' });
+                const qrDataUrl26 = await QRCode.toDataURL(encryptedQrText26, { errorCorrectionLevel: 'H' });
+                const qrDataUrl27 = await QRCode.toDataURL(encryptedQrText27, { errorCorrectionLevel: 'H' });
+                const qrDataUrl28 = await QRCode.toDataURL(encryptedQrText28, { errorCorrectionLevel: 'H' });
+                const qrDataUrl29 = await QRCode.toDataURL(encryptedQrText29, { errorCorrectionLevel: 'H' });
+                const qrDataUrl30 = await QRCode.toDataURL(encryptedQrText30, { errorCorrectionLevel: 'H' });
+                const qrDataUrl31 = await QRCode.toDataURL(encryptedQrText31, { errorCorrectionLevel: 'H' });
+                const qrDataUrl32 = await QRCode.toDataURL(encryptedQrText32, { errorCorrectionLevel: 'H' });
+                const qrDataUrl33 = await QRCode.toDataURL(encryptedQrText33, { errorCorrectionLevel: 'H' });
+                const qrDataUrl34 = await QRCode.toDataURL(encryptedQrText34, { errorCorrectionLevel: 'H' });
+                const qrDataUrl35 = await QRCode.toDataURL(encryptedQrText35, { errorCorrectionLevel: 'H' });
+                const qrDataUrl36 = await QRCode.toDataURL(encryptedQrText36, { errorCorrectionLevel: 'H' });       
+                
 
-                    const qrDataUrl24 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${24}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 110, 180, 20); 
-                    doc.addImage(qrDataUrl24, 'PNG', 10,  110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 30,  110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 50,  110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 70,  110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 90,  110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 110, 110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 130, 110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 150, 110, 20, 20);
-                    doc.addImage(qrDataUrl24, 'PNG', 170, 110, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}24`,
-                        80, 135);
-                        
-                    const qrDataUrl25 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${25}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 140, 180, 20); 
-                    doc.addImage(qrDataUrl25, 'PNG', 10,  140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 30,  140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 50,  140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 70,  140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 90,  140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 110, 140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 130, 140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 150, 140, 20, 20);
-                    doc.addImage(qrDataUrl25, 'PNG', 170, 140, 20, 20);
+                const increment = 23; // Incremento en la posición Y
+                let startY = 20;
+                for (let i = 21; i <= 32; i++) {
+                    doc.text(`/${i}`, 195, startY);
+                    startY += increment; // Aumenta la posición Y para el siguiente número
+                }
+                doc.rect(10, 10, 180, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 10,  10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 30,  10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 50,  10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 70,  10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 90,  10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 110, 10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 130, 10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 150, 10, 20, 20);
+                doc.addImage(qrDataUrl21, 'PNG', 170, 10, 20, 20);
+                doc.text(qrText, 70, 290); 
 
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}25`,
-                        80, 165);
-
-                    doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl26 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${26}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl26, 'PNG', 10,  170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 30,  170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 50,  170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 70,  170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 90,  170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 110, 170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 130, 170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 150, 170, 20, 20);
-                    doc.addImage(qrDataUrl26, 'PNG', 170, 170, 20, 20);
-
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}26`,
-                        80, 195);
-                        doc.rect(10, 200, 180, 20); 
-
-                    const qrDataUrl27 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${27}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl27, 'PNG', 10,  200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 30,  200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 50,  200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 70,  200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 90,  200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 110, 200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 130, 200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 150, 200, 20, 20);
-                    doc.addImage(qrDataUrl27, 'PNG', 170, 200, 20, 20);
-        
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}27`,
-                        80, 225);
-                        doc.rect(10, 230, 180, 20); 
-
-                    const qrDataUrl28 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${28}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl28, 'PNG', 10,  230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 30,  230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 50,  230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 70,  230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 90,  230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 110, 230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 130, 230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 150, 230, 20, 20);
-                    doc.addImage(qrDataUrl28, 'PNG', 170, 230, 20, 20);
-        
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}28`,
-                        80, 255);
-                        doc.rect(10, 260, 180, 20); 
-                        
-                        const qrDataUrl29 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${29}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                        doc.addImage(qrDataUrl29, 'PNG', 10,  260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 30,  260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 50,  260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 70,  260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 90,  260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 110, 260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 130, 260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 150, 260, 20, 20);
-                        doc.addImage(qrDataUrl29, 'PNG', 170, 260, 20, 20);
+                // Horizontal - Vertical x Ancho x Alto
+                doc.rect(10, 33, 180, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 10,  33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 30,  33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 50,  33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 70,  33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 90,  33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 110, 33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 130, 33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 150, 33, 20, 20);
+                doc.addImage(qrDataUrl22, 'PNG', 170, 33, 20, 20);
             
-                        doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}29`,
-                            80, 285);
+                doc.rect(10, 56, 180, 20); 
+                // Horizontal - Vertical x Ancho x Alto
+                doc.addImage(qrDataUrl23, 'PNG', 10,  56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 30,  56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 50,  56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 70,  56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 90,  56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 110, 56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 130, 56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 150, 56, 20, 20);
+                doc.addImage(qrDataUrl23, 'PNG', 170, 56, 20, 20);
+            
+                doc.rect(10, 79, 180, 20); 
+                // Horizontal - Vertical x Ancho x Alto
+                doc.addImage(qrDataUrl24, 'PNG', 10,  79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 30,  79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 50,  79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 70,  79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 90,  79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 110, 79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 130, 79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 150, 79, 20, 20);
+                doc.addImage(qrDataUrl24, 'PNG', 170, 79, 20, 20);
 
-                            doc.addPage(); 
+                doc.rect(10, 102, 180, 20);
+                // Horizontal - Vertical x Ancho x Alto
+                doc.addImage(qrDataUrl25, 'PNG', 10,  102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 30,  102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 50,  102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 70,  102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 90,  102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 110, 102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 130, 102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 150, 102, 20, 20);
+                doc.addImage(qrDataUrl25, 'PNG', 170, 102, 20, 20);
 
-                    const qrDataUrl30 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${30}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 20, 180, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 10,  20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 30,  20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 50,  20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 70,  20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 90,  20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 110, 20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 130, 20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 150, 20, 20, 20);
-                    doc.addImage(qrDataUrl30, 'PNG', 170, 20, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/30`, 
-                        80, 45);
-
-                    const qrDataUrl31 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${31}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 50, 180, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 10,  50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 30,  50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 50,  50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 70,  50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 90,  50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 110, 50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 130, 50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 150, 50, 20, 20);
-                    doc.addImage(qrDataUrl31, 'PNG', 170, 50, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico}/31`,
-                        80, 75);
-
-                    const qrDataUrl32 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${32}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 80, 180, 20); 
-                    doc.addImage(qrDataUrl32, 'PNG', 10,  80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 30,  80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 50,  80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 70,  80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 90,  80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 110, 80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 130, 80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 150, 80, 20, 20);
-                    doc.addImage(qrDataUrl32, 'PNG', 170, 80, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}32`,
-                        80, 105);
-
-                    const qrDataUrl33 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 110, 180, 20); 
-                    doc.addImage(qrDataUrl33, 'PNG', 10,  110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 30,  110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 50,  110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 70,  110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 90,  110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 110, 110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 130, 110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 150, 110, 20, 20);
-                    doc.addImage(qrDataUrl33, 'PNG', 170, 110, 20, 20);
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}33`,
-                        80, 135);
-
-
-                    const qrDataUrl34 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.rect(10, 140, 180, 20); 
-                    doc.addImage(qrDataUrl34, 'PNG', 10,  140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 30,  140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 50,  140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 70,  140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 90,  140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 110, 140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 130, 140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 150, 140, 20, 20);
-                    doc.addImage(qrDataUrl34, 'PNG', 170, 140, 20, 20);
-
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}34`,
-                        80, 165);
-
-                    doc.rect(10, 170, 180, 20); 
-                    const qrDataUrl35 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl35, 'PNG', 10,  170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 30,  170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 50,  170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 70,  170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 90,  170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 110, 170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 130, 170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 150, 170, 20, 20);
-                    doc.addImage(qrDataUrl35, 'PNG', 170, 170, 20, 20);
-
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}35`,
-                        80, 195);
-                        doc.rect(10, 200, 180, 20); 
-
-                    const qrDataUrl36 = await QRCode.toDataURL(`${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`, { errorCorrectionLevel: 'H' });
-                    doc.addImage(qrDataUrl36, 'PNG', 10,  200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 30,  200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 50,  200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 70,  200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 90,  200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 110, 200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 130, 200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 150, 200, 20, 20);
-                    doc.addImage(qrDataUrl36, 'PNG', 170, 200, 20, 20);
+                // Horizontal - Vertical x Ancho x Alto
+                doc.rect(10, 125, 180, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 10,  125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 30,  125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 50,  125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 70,  125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 90,  125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 110, 125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 130, 125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 150, 125, 20, 20);
+                doc.addImage(qrDataUrl26, 'PNG', 170, 125, 20, 20);
+            
+                // Horizontal - Vertical x Ancho x Alto
+                doc.rect(10, 148, 180, 20); 
+                doc.addImage(qrDataUrl27, 'PNG', 10,  148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 30,  148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 50,  148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 70,  148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 90,  148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 110, 148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 130, 148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 150, 148, 20, 20);
+                doc.addImage(qrDataUrl27, 'PNG', 170, 148, 20, 20);
+    
+                // Horizontal - Vertical x Ancho x Alto
+                doc.rect(10, 171, 180, 20); 
+                doc.addImage(qrDataUrl28, 'PNG', 10,  171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 30,  171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 50,  171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 70,  171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 90,  171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 110, 171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 130, 171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 150, 171, 20, 20);
+                doc.addImage(qrDataUrl28, 'PNG', 170, 171, 20, 20);
+            
+                doc.rect(10, 194, 180, 20); 
+                doc.addImage(qrDataUrl29, 'PNG', 10,  194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 30,  194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 50,  194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 70,  194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 90,  194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 110, 194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 130, 194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 150, 194, 20, 20);
+                doc.addImage(qrDataUrl29, 'PNG', 170, 194, 20, 20);
         
-                    doc.text(`${item.empresa+'/'+item.referencia+'/'+item.color+'/'+item.lugar+'/'+item.publico+'/'}36`,
-                        80, 225);
-                        
-            // Guardar el PDF
-           // doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color+' '+item.publico}.pdf`);
+
+                doc.rect(10, 217, 180, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 10,  217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 30,  217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 50,  217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 70,  217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 90,  217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 110, 217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 130, 217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 150, 217, 20, 20);
+                doc.addImage(qrDataUrl30, 'PNG', 170, 217, 20, 20);
+
+                doc.rect(10, 240, 180, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 10,  240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 30,  240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 50,  240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 70,  240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 90,  240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 110, 240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 130, 240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 150, 240, 20, 20);
+                doc.addImage(qrDataUrl31, 'PNG', 170, 240, 20, 20);
+
+                doc.rect(10, 263, 180, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 10,  263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 30,  263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 50,  263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 70,  263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 90,  263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 110, 263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 130, 263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 150, 263, 20, 20);
+                doc.addImage(qrDataUrl32, 'PNG', 170, 263, 20, 20);
+                
+                doc.addPage(); // ----------- NEW PAGE -----------------
+
+                const increment2 = 23; // Incremento en la posición Y
+                let startY2 = 20;
+                for (let i = 33; i <= 36; i++) {
+                    doc.text(`/${i}`, 195, startY2);
+                    startY2 += increment2; // Aumenta la posición Y para el siguiente número
+                }
+                doc.rect(10, 10, 180, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 10,  10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 30,  10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 50,  10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 70,  10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 90,  10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 110, 10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 130, 10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 150, 10, 20, 20);
+                doc.addImage(qrDataUrl33, 'PNG', 170, 10, 20, 20);
+                doc.text(qrText, 70, 290); 
+
+                // Horizontal - Vertical x Ancho x Alto
+                doc.rect(10, 33, 180, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 10,  33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 30,  33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 50,  33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 70,  33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 90,  33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 110, 33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 130, 33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 150, 33, 20, 20);
+                doc.addImage(qrDataUrl34, 'PNG', 170, 33, 20, 20);
+            
+                doc.rect(10, 56, 180, 20); 
+                // Horizontal - Vertical x Ancho x Alto
+                doc.addImage(qrDataUrl35, 'PNG', 10,  56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 30,  56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 50,  56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 70,  56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 90,  56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 110, 56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 130, 56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 150, 56, 20, 20);
+                doc.addImage(qrDataUrl35, 'PNG', 170, 56, 20, 20);
+            
+                doc.rect(10, 79, 180, 20); 
+                // Horizontal - Vertical x Ancho x Alto
+                doc.addImage(qrDataUrl36, 'PNG', 10,  79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 30,  79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 50,  79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 70,  79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 90,  79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 110, 79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 130, 79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 150, 79, 20, 20);
+                doc.addImage(qrDataUrl36, 'PNG', 170, 79, 20, 20);
             }
 
             doc.save(`QR_${item.empresa+' '+item.referencia+' '+item.color+' '+item.publico}.pdf`);
@@ -614,7 +546,6 @@ function Inventary() {
             console.error('Error generating QR code:', error);
         }
     };
-
     
 
     return (
