@@ -4,8 +4,8 @@ import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
-//import VentasServices from '../../../service/ventas.services';
 import { Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { decryptText } from '../../../utils/Encript';
 
 const QrScannerSalida = () => {
   const [result, setResult] = useState('No result');
@@ -98,10 +98,8 @@ const QrScannerSalida = () => {
         setSuccessMessage("¡Código QR escaneado con éxito!");
         setSuccessOpen(true);
 
-        // Dividir el texto escaneado usando el separador '/'
-        const qrData = decodedText.split('/').map(item => item.replace(/^'|'$/g, '').trim());
-
-        // Validar que tenga el formato esperado
+        const decrypt = decryptText(decodedText);
+        const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
         if (qrData.length === 6) {
           const [nombreEmpresa, serial, color, ubicacionDescripcion, talla,tipopublico] = qrData;
           //console.log(qrData);

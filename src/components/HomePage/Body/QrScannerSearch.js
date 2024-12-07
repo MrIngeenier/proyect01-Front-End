@@ -3,7 +3,7 @@ import { Html5QrcodeScanner } from 'html5-qrcode';
 import inventaryServices from '../../../service/inventary.services';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
-
+import { decryptText } from '../../../utils/Encript';
 
 
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
@@ -70,8 +70,8 @@ const QrScannerSearch = () => {
         setResult(decodedText);
         setSuccessMessage('¡Código QR escaneado con éxito!');
         setSuccessOpen(true);
-
-        const qrData = decodedText.split('/').map((item) => item.replace(/^'|'$/g, '').trim());
+        const decrypt = decryptText(decodedText);
+        const qrData = decrypt.split('/').map((item) => item.replace(/^'|'$/g, '').trim());
 
         if (qrData.length === 6) {
           const [empresa, serial, color, lugar, talla, publico] = qrData;

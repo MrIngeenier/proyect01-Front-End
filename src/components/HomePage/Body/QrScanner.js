@@ -5,6 +5,7 @@ import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
 import VentasServices from '../../../service/ventas.services';
+import { decryptText } from '../../../utils/Encript';
 
 const QrScanner = () => {
   const [result, setResult] = useState('No result');
@@ -124,8 +125,9 @@ const QrScanner = () => {
     setResult(decodedText);
     setSuccessMessage("¡Código QR escaneado con éxito!");
     setSuccessOpen(true);
+    const decrypt = decryptText(decodedText);
 
-    const qrData = decodedText.split('/').map(item => item.replace(/^'|'$/g, '').trim());
+    const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
 
     if (qrData.length === 6) {
       const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrData;
