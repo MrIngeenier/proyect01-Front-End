@@ -372,6 +372,31 @@ const inventaryServices = {
         });
     
         const data = await response.json();
+        //console.log("Response :" + data);
+    
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error actualizando usuario:', error);
+      }
+    },
+
+    async DeleteInventary(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, tipoZapato) {
+      try {
+        const token = localStorage.getItem('token');
+    
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/DeleteInvetary', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({ nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, tipoZapato }),
+        });
+    
+        const data = await response.json();
         console.log("Response :" + data);
     
         if (!response.ok) {

@@ -1,20 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Button,Container, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    Box
+    Button,Container, TextField, Table, TableBody, TableCell, TableContainer, 
+    TableHead, TableRow, Paper,
+    Box,Dialog, DialogContent, DialogActions 
 } from '@mui/material';
+
+
+
 import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
 import { encryptText } from '../../../utils/Encript';
 import inventaryServices from '../../../service/inventary.services';
-
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import SuccessAlert from '../../Alerts/SuccesAlert';
+import ErrorAlert from '../../Alerts/ErrorAlert';
 
 function Inventary() {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [filters, setFilters] = useState([]);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [openDialogUpdate, setOpenDialogUpdate] = useState(false);
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
+    const handleErrorClose = () => setErrorOpen(false);
+    const handleSuccessClose = () => setSuccessOpen(false);
+
+  
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+    const handleCloseDialogUpdate = () => {
+        setOpenDialogUpdate(false);
+    };
 
     useEffect(() => {
         fetchInventary();
@@ -97,8 +121,6 @@ function Inventary() {
         doc.setFontSize(12);
         doc.setLineWidth(0.5);
        
-       
-
         // Generar el QR en base64
         try {
             if(item.publico === 'hombre' || item.publico === 'mujer' ){
@@ -543,11 +565,29 @@ function Inventary() {
 
             
         } catch (error) {
-            console.error('Error generating QR code:', error);
+            setErrorMessage('Error generating QR code:'+ error);
+            setErrorOpen(true);
         }
     };
     
+    const handleDelete = async (item) => {
+    try {
+        await inventaryServices.DeleteInventary(item.empresa,item.referencia,item.color,item.lugar,item.publico);
+        //console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
 
+        setSuccessMessage(
+            "Éxito Borrando.\n" +
+            "Empresa: [" + item.empresa + "]" + 
+            "Ref: [" + item.referencia + "]" +
+            "Color: [" + item.color+"]"
+        );
+        setSuccessOpen(true);
+        fetchInventary();
+    } catch (error) {
+        setErrorMessage('Error Delete Inventary:'+ error);
+        setErrorOpen(true);
+    }
+    };
     return (
         <Container
             
@@ -739,6 +779,14 @@ function Inventary() {
                                         >
                                             PDF
                                         </Button>
+                                        <Button
+                                            variant="outlined"
+                                            color="secondary"
+                                            sx={{ borderColor: 'white', color: 'white' }}
+                                            onClick={() => handleDelete(item)}
+                                        >
+                                            <DeleteForeverIcon />
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -746,6 +794,27 @@ function Inventary() {
                     </Table>
                 </TableContainer>
             </Box>
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+                <DialogContent>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Cancelar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={openDialogUpdate} onClose={handleCloseDialogUpdate}>
+                <DialogContent>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialogUpdate} color="primary">
+                        Cancelar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
+            <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
         </Container>
     );
     
