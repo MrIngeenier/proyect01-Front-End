@@ -577,8 +577,8 @@ function Inventary() {
 
         setSuccessMessage(
             "Éxito Borrando.\n" +
-            "Empresa: [" + item.empresa + "]" + 
-            "Ref: [" + item.referencia + "]" +
+            "Empresa: [" + item.empresa + "] " + 
+            "Ref: [" + item.referencia + "] " +
             "Color: [" + item.color+"]"
         );
         setSuccessOpen(true);
@@ -600,6 +600,8 @@ function Inventary() {
                 boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.7)',
                 maxWidth: { xs: '350px', sm:'700px', md:'1000px'},
                 padding: '20px',
+                marginBottom: { xs: '100px'},
+                
             }}
         >
             <Box display="flex" alignItems="center" sx={{ padding: '20px 0px' }}>
@@ -814,7 +816,7 @@ function Inventary() {
                 </DialogActions>
             </Dialog>
             <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
-            <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
+            <ErrorAlert  open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
         </Container>
     );
     

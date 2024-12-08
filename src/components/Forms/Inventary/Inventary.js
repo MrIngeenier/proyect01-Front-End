@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, TextField, Button, Box, Grid, FormControl, InputLabel, Select, MenuItem,Autocomplete  } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import inventaryServices from '../../../service/inventary.services';
-
+//import { color } from 'chart.js/helpers';
+import ErrorAlert from '../../Alerts/ErrorAlert';
+import SuccessAlert from '../../Alerts/SuccesAlert';
 
 function ADDInventary() {
     const [formData, setFormData] = useState({
@@ -23,8 +25,12 @@ function ADDInventary() {
     const token = localStorage.getItem('token');
 
     const { control } = useForm(); // Inicializa useForm
-    
-
+     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [successOpen, setSuccessOpen] = useState(false);
+    const handleErrorClose = () => setErrorOpen(false);
+    const handleSuccessClose = () => setSuccessOpen(false);
     const fetchPlaces = async () => {
         try {
             const response = await inventaryServices.getPlaces();
@@ -109,8 +115,9 @@ function ADDInventary() {
                 idUser,
                 cantidad,
                 formData.talla);
-            alert('Inventario agregado exitosamente');
-            console.log('Resultado del inventario agregado:', result);
+            setSuccessMessage("Inventario agregado exitosamente.");
+            setSuccessOpen(true);
+            
         } catch (error) {
             console.error('Error agregando inventario:', error);
             alert('Error al agregar inventario');
@@ -123,11 +130,11 @@ function ADDInventary() {
             
             // Llama al servicio pasando el objeto completo {empresaid, referenciaid}
             const result = await inventaryServices.addEmpresaRef(formData.empresa,formData.serialReferencia);
-            alert('Empresa Referencia agregado exitosamente');
-            console.log('Resultado del inventario agregado:', result);
+           // alert('Empresa Referencia agregado exitosamente');
+            console.log('Agregado al [INVENTARIO]:', result);
         } catch (error) {
-            console.error('Error agregando inventario:', error);
-            alert('Error al agregar inventario');
+            setErrorMessage('Error - No se puede agregado al [INVENTARIO].');
+            setErrorOpen(true);
         }
     };
     
@@ -189,7 +196,7 @@ function ADDInventary() {
         
     };
 
-    const fetchInventary = async () => {
+    /*const fetchInventary = async () => {
         try {
             const response = await inventaryServices.getInventary();
             console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
@@ -198,7 +205,7 @@ function ADDInventary() {
         } catch (error) {
             console.error('Error fetching inventory:', error);
         }
-    };
+    };*/
     //const ButtonADD = () => {
       //  event.preventDefault();
         //showJWT();
@@ -330,50 +337,53 @@ function ADDInventary() {
 
                     
                 <Grid item xs={12} sm={1}>
-                    <TextField
-                        label="Talla"
-                        variant="outlined"
-                        name="talla"
-                        value={formData.talla}
-                        style={{ color: 'white', backgroundColor: '#333' }}
-                        onChange={(event) => {
-                            const selectedValue = event.target.value;
-                
-                            setFormData((prevData) => ({
-                                ...prevData,
-                                talla: selectedValue, // Actualiza formData.talla con el valor seleccionado
-                            }));
-                        }}
-                        fullWidth
-                        InputLabelProps={{ style: { color: 'white' } }} // Color de la etiqueta
+    <TextField
+        label="Talla"
+        variant="outlined"
+        name="talla"
+        value={formData.talla}
+        onChange={(event) => {
+            const selectedValue = event.target.value;
 
-                        
-                    />
-                </Grid>
+            setFormData((prevData) => ({
+                ...prevData,
+                talla: selectedValue,
+            }));
+        }}
+        fullWidth
+        InputProps={{
+            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+        }}
+        InputLabelProps={{
+            style: { color: 'white' }, // Color de la etiqueta
+        }}
+    />
+</Grid>
 
+<Grid item xs={12} sm={1}>
+    <TextField
+        label="Cantidad"
+        variant="outlined"
+        name="cantidad"
+        value={formData.cantidad}
+        onChange={(event) => {
+            const selectedValue = event.target.value;
 
-                <Grid item xs={12} sm={1}>
-                    <TextField
-                        label="Cantidad"
-                        variant="outlined"
-                        name="cantidad"
-                        value={formData.cantidad}
-                        style={{ color: 'white', backgroundColor: '#333' }}
+            setFormData((prevData) => ({
+                ...prevData,
+                cantidad: selectedValue,
+            }));
+        }}
+        fullWidth
+        InputProps={{
+            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+        }}
+        InputLabelProps={{
+            style: { color: 'white' }, // Color de la etiqueta
+        }}
+    />
+</Grid>
 
-                        onChange={(event) => {
-                            const selectedValue = event.target.value;
-
-                            setFormData((prevData) => ({
-                                ...prevData,
-                                cantidad: selectedValue, // Actualiza formData.talla con el selectedId
-                            }));
-                        }}
-                        fullWidth
-                        InputLabelProps={{ style: { color: 'white' } }} // Color de la etiqueta
-
-                        
-                    />
-                </Grid>
                 
 
                 <Grid item xs={12} sm={1}>
@@ -448,6 +458,8 @@ function ADDInventary() {
                     </Box>
                 </Grid>
             </Grid>
+            <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
+            <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
         </Container>
     );
 }
