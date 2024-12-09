@@ -11,11 +11,14 @@ import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
 import { encryptText } from '../../../utils/Encript';
 import inventaryServices from '../../../service/inventary.services';
+import EmpresaServices from '../../../service/empresa.services';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import UpdateIcon from '@mui/icons-material/Update';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import ErrorAlert from '../../Alerts/ErrorAlert';
+import UpdateInventary from './UpdateInventary';
 
-function Inventary() {
+function Inventary( ) {
     const [search, setSearch] = useState('');
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -29,6 +32,7 @@ function Inventary() {
 
     const handleErrorClose = () => setErrorOpen(false);
     const handleSuccessClose = () => setSuccessOpen(false);
+    const [mostrar, setMostrar] = useState(false);
 
   
 
@@ -39,7 +43,10 @@ function Inventary() {
     const handleCloseDialogUpdate = () => {
         setOpenDialogUpdate(false);
     };
-
+    const handleShowUpdate = (show) => {
+        setMostrar(show);
+        localStorage.setItem('show', show);
+    };
     useEffect(() => {
         fetchInventary();
     }, []);
@@ -572,9 +579,10 @@ function Inventary() {
     
     const handleDelete = async (item) => {
     try {
-        await inventaryServices.DeleteInventary(item.empresa,item.referencia,item.color,item.lugar,item.publico);
+         await inventaryServices.DeleteInventary(item.empresa,item.referencia,item.color,item.lugar,item.publico);
         //console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
-
+         await EmpresaServices.deleteEmpresa(item.empresa,item.color,item.referencia);
+        
         setSuccessMessage(
             "Éxito Borrando.\n" +
             "Empresa: [" + item.empresa + "] " + 
@@ -588,6 +596,14 @@ function Inventary() {
         setErrorOpen(true);
     }
     };
+    const handleUpdate = async (item) => {
+        //onUpdate(true);
+        //alert("Mostrar")
+        handleShowUpdate();
+    }
+
+
+
     return (
         <Container
             
@@ -772,7 +788,7 @@ function Inventary() {
                                     <TableCell sx={{ color: 'white' }}>{item.t41}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.t42}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.t43}</TableCell>
-                                    <TableCell sx={{ textAlign: 'center' }}>
+                                    <TableCell sx={{ textAlign: 'center', display:'flex', gap:'0px 5px' }}>
                                         <Button
                                             variant="outlined"
                                             color="primary"
@@ -789,6 +805,14 @@ function Inventary() {
                                         >
                                             <DeleteForeverIcon />
                                         </Button>
+                                        <Button
+                                            variant="outlined"
+                                            color="secondary"
+                                            sx={{ borderColor: 'white', color: 'white' }}
+                                            onClick={() => handleUpdate(item)}
+                                        >
+                                            <UpdateIcon />
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -796,6 +820,8 @@ function Inventary() {
                     </Table>
                 </TableContainer>
             </Box>
+            {mostrar && <UpdateInventary />}
+
             <Dialog open={openDialog} onClose={handleCloseDialog}>
                 <DialogContent>
                 </DialogContent>

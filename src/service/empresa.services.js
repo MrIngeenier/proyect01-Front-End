@@ -77,8 +77,32 @@ const EmpresaServices = {
       } catch (error) {
         console.error('Error actualizando usuario:', error);
       }
-    }
+    },
     
+    async deleteEmpresa(empresaNombre, referenciaColor, referenciaSerial) {
+      try {
+        const token = localStorage.getItem('token');
+    
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/empresas/deleteData', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({ empresaNombre, referenciaColor, referenciaSerial }),
+        });
+    
+        const data = await response.json();
+        //console.log("Response :" + data);
+    
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error actualizando usuario:', error);
+      }
+    },
     
     
   };

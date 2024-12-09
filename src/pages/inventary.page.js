@@ -6,7 +6,10 @@ function PageInventary(){
         <div>
             <ADDInventary/>{/* <Inventary/> */}
             <Inventary/>
+            
         </div>
+
+        
     );
 }
 

@@ -41,8 +41,8 @@ const inventaryServices = {
         });
 
         const data = await response.json(); 
-        console.log(data);
-        console.log(response);
+        //console.log(data);
+        //console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
@@ -67,7 +67,7 @@ const inventaryServices = {
         });
     
         const data = await response.json();
-        console.log("Response :" + data);
+        //console.log("Response :" + data);
     
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
@@ -222,8 +222,8 @@ const inventaryServices = {
         });
 
         const data = await response.json(); 
-        console.log(data);
-        console.log(response);
+       // console.log(data);
+       // console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
@@ -247,8 +247,8 @@ const inventaryServices = {
         });
 
         const data = await response.json(); 
-        console.log(data);
-        console.log(response);
+       // console.log(data);
+       // console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
@@ -271,8 +271,8 @@ const inventaryServices = {
         });
 
         const data = await response.json(); 
-        console.log(data);
-        console.log(response);
+      //  console.log(data);
+      //  console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
@@ -397,7 +397,7 @@ const inventaryServices = {
         });
     
         const data = await response.json();
-        console.log("Response :" + data);
+        //console.log("Response :" + data);
     
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
