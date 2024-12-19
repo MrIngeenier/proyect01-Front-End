@@ -9,8 +9,37 @@ import SuccessAlert from '../../Alerts/SuccesAlert';
 function ADDInventary() {
     const [formData, setFormData] = useState({
         empresa:'',
-        cantidad: '',
-        talla: '',
+
+        talla34: '34',
+        cantidad34: '0',
+
+        talla35: '35',
+        cantidad35: '0',
+
+        talla36: '36',
+        cantidad36: '0',
+
+        talla37: '37',
+        cantidad37: '0',
+
+        talla38: '38',
+        cantidad38: '0',
+
+        cantidad39: '0',
+        talla39: '39',
+
+        cantidad40: '0',
+        talla40: '40',
+
+        cantidad41: '0',
+        talla41: '41',
+        
+        cantidad42: '0',
+        talla42: '42',
+
+        cantidad43: '0',
+        talla43: '43',
+        
         idUsuario: '',
         descripcionLugar: '',
         serialReferencia: '',
@@ -98,23 +127,131 @@ function ADDInventary() {
 
     // tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla
     
-
+// tipoingresoid, referenciaid, ubicacionesproductoid, usuarioid, cantidad, talla, empresaid
     const FetchAddInventary = async (event) => {
         try {
            // console.log("Cantidad :", formData.cantidad);
-            var idUser = formData.cantidad;
-            var cantidad = formData.idUsuario; 
-            var tipo = formData.tipoPublicoTipoZapato;
-            var Lugar = formData.descripcionLugar;
-           
-            // Llama al servicio pasando el objeto completo
-            const result = await inventaryServices.addInventary(
-                Lugar,
-                formData.serialReferencia,
-                tipo,
-                idUser,
-                cantidad,
-                formData.talla);
+            //var idUser = formData.cantidad;
+            //var cantidad = formData.idUsuario; 
+            //var tipo = formData.tipoPublicoTipoZapato;
+            //var Lugar = formData.descripcionLugar;
+            var tipoingresoid = formData.tipoPublicoTipoZapato;
+            var referenciaid = formData.serialReferencia;
+            var ubicacionesproductoid = formData.descripcionLugar;
+            var usuarioid = formData.idUsuario;
+            var empresaid = formData.empresa;
+
+            alert("LUGAR: "+tipoingresoid+" REF:"+referenciaid+" ESTADO: "
+                +ubicacionesproductoid+" USUARIO: "+usuarioid+" CANTIDAD: "+formData.cantidad34
+                +" TALLA: "+formData.talla34+" EMPRESA: "+empresaid);
+
+           if(tipoingresoid ==='' || referenciaid==='' ||ubicacionesproductoid ==='' ||usuarioid  ===''||empresaid  ===''){
+            //console.error('Error agregando inventario: Faltan');
+            setErrorMessage('Error agregando inventario: Faltan datos.');
+            setErrorOpen(true);
+           }else{
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad34,
+                formData.talla34,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad35,
+                formData.talla35,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad36,
+                formData.talla36,
+                empresaid
+            );
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad37,
+                formData.talla37,
+                empresaid
+            );
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad38,
+                formData.talla38,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad39,
+                formData.talla39,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad40,
+                formData.talla40,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad41,
+                formData.talla41,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad42,
+                formData.talla42,
+                empresaid
+            );
+
+            await inventaryServices.addInventaryPro(
+                ubicacionesproductoid,
+                referenciaid,
+                tipoingresoid ,
+                usuarioid,
+                formData.cantidad43,
+                formData.talla43,
+                empresaid
+            );
+
+            
+            
+           }
+            
             setSuccessMessage("Inventario agregado exitosamente.");
             setSuccessOpen(true);
             
@@ -126,7 +263,7 @@ function ADDInventary() {
 
     const FetchAddEmpresa = async (event) => {
         try {
-            console.log("Cantidad :", formData.cantidad);
+           // console.log("Cantidad :", formData.cantidad);
             
             // Llama al servicio pasando el objeto completo {empresaid, referenciaid}
             const result = await inventaryServices.addEmpresaRef(formData.empresa,formData.serialReferencia);
@@ -209,7 +346,7 @@ function ADDInventary() {
     //const ButtonADD = () => {
       //  event.preventDefault();
         //showJWT();
-        //FetchAddInventary();
+       // FetchAddInventary();
         //FetchAddEmpresa();
         //console.log("Form Data:", formData); // Agrega esta línea para depurar
 
@@ -220,10 +357,13 @@ function ADDInventary() {
     const ButtonADD = (event) => {
         event.preventDefault();
         //showJWT();
+        // ---------------------- Aqui --------------------
         FetchAddInventary();
-        FetchAddEmpresa();
+        //FetchAddEmpresa();
         //fetchInventary();
-        console.log("Form Data:", formData); // Muestra el objeto completo
+        //console.log("Form Data:", formData); // Muestra el objeto completo
+       // alert(JSON.stringify(formData, null, 2));
+
     };
 
     return (
@@ -336,57 +476,8 @@ function ADDInventary() {
                 </Grid>
 
                     
-                <Grid item xs={12} sm={1}>
-    <TextField
-        label="Talla"
-        variant="outlined"
-        name="talla"
-        value={formData.talla}
-        onChange={(event) => {
-            const selectedValue = event.target.value;
 
-            setFormData((prevData) => ({
-                ...prevData,
-                talla: selectedValue,
-            }));
-        }}
-        fullWidth
-        InputProps={{
-            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
-        }}
-        InputLabelProps={{
-            style: { color: 'white' }, // Color de la etiqueta
-        }}
-    />
-</Grid>
-
-<Grid item xs={12} sm={1}>
-    <TextField
-        label="Cantidad"
-        variant="outlined"
-        name="cantidad"
-        value={formData.cantidad}
-        onChange={(event) => {
-            const selectedValue = event.target.value;
-
-            setFormData((prevData) => ({
-                ...prevData,
-                cantidad: selectedValue,
-            }));
-        }}
-        fullWidth
-        InputProps={{
-            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
-        }}
-        InputLabelProps={{
-            style: { color: 'white' }, // Color de la etiqueta
-        }}
-    />
-</Grid>
-
-                
-
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={3}>
                     <FormControl fullWidth>
                         <InputLabel style={{ color: 'white' }}>Lugar</InputLabel>
                         <Select
@@ -443,6 +534,246 @@ function ADDInventary() {
                         </Select>
                     </FormControl>
                 </Grid>
+
+                <Grid item xs={12} sm={1}>
+                <TextField
+                    label="#34"
+                    variant="outlined"
+                    name="cantidad34"
+                    value={formData.cantidad34}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+            </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#35"
+                        variant="outlined"
+                        name="cantidad35"
+                        value={formData.cantidad35}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#36"
+                        variant="outlined"
+                        name="cantidad36"
+                        value={formData.cantidad36}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#37"
+                        variant="outlined"
+                        name="cantidad37"
+                        value={formData.cantidad37}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#38"
+                        variant="outlined"
+                        name="cantidad38"
+                        value={formData.cantidad38}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#39"
+                        variant="outlined"
+                        name="cantidad39"
+                        value={formData.cantidad39}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#40"
+                        variant="outlined"
+                        name="cantidad40"
+                        value={formData.cantidad40}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#41"
+                        variant="outlined"
+                        name="cantidad41"
+                        value={formData.cantidad41}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#42"
+                        variant="outlined"
+                        name="cantidad42"
+                        value={formData.cantidad42}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={1}>
+                    <TextField
+                        label="#43"
+                        variant="outlined"
+                        name="cantidad43"
+                        value={formData.cantidad43}
+                        onChange={(event) => {
+                            const { name: fieldName, value } = event.target;  // Renombramos 'name' a 'fieldName'
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                [fieldName]: value,  // Usamos el nuevo nombre 'fieldName'
+                            }));
+                        }}
+                        fullWidth
+                        type="number"
+                        InputProps={{
+                            style: { color: 'white', backgroundColor: '#333' }, // Color del texto y fondo del input
+                        }}
+                        InputLabelProps={{
+                            style: { color: 'white' }, // Color de la etiqueta
+                        }}
+                    />
+                </Grid>
+
+                
                 
                 {/* --------------------------------------------------------------*/}
                     

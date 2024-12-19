@@ -257,6 +257,34 @@ const inventaryServices = {
         console.error('Error registrando usuario:', error);
       }
     },
+
+    // http://localhost:10000/users/login - https://proyect01-back-end-8ujk.onrender.com/users/login
+
+
+    async addInventaryPro(tipoingresoid, referenciaid, ubicacionesproductoid, usuarioid, cantidad, talla, empresaid ) {
+      try {
+        const token = localStorage.getItem('token'); 
+        //console.log(token);
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/addDataPro', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+          },
+          body: JSON.stringify({ tipoingresoid, referenciaid, ubicacionesproductoid, usuarioid, cantidad, talla, empresaid }),
+        });
+
+        const data = await response.json(); 
+        console.log(data);
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error registrando usuario:', error);
+      }
+    },
     async addEmpresaRef(empresaid, referenciaid) {
       try {
         const token = localStorage.getItem('token'); 
