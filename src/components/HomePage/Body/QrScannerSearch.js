@@ -67,11 +67,12 @@ const QrScannerSearch = () => {
 
     html5QrcodeScanner.render(
       (decodedText) => {
-        setResult(decodedText);
+        //setResult(decodedText);
         setSuccessMessage('¡Código QR escaneado con éxito!');
         setSuccessOpen(true);
         const decrypt = decryptText(decodedText);
         const qrData = decrypt.split('/').map((item) => item.replace(/^'|'$/g, '').trim());
+        setResult(decrypt);
 
         if (qrData.length === 6) {
           const [empresa, serial, color, lugar, talla, publico] = qrData;

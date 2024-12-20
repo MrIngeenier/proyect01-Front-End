@@ -10,6 +10,9 @@ function ADDInventary() {
     const [formData, setFormData] = useState({
         empresa:'',
 
+        talla33: '33',
+        cantidad33: '0',
+
         talla34: '34',
         cantidad34: '0',
 
@@ -128,138 +131,53 @@ function ADDInventary() {
     // tipoingresoid,referenciaid, ubicacionesproductoid,usuarioid,cantidad,talla
     
 // tipoingresoid, referenciaid, ubicacionesproductoid, usuarioid, cantidad, talla, empresaid
-    const FetchAddInventary = async (event) => {
-        try {
-           // console.log("Cantidad :", formData.cantidad);
-            //var idUser = formData.cantidad;
-            //var cantidad = formData.idUsuario; 
-            //var tipo = formData.tipoPublicoTipoZapato;
-            //var Lugar = formData.descripcionLugar;
-            var tipoingresoid = formData.tipoPublicoTipoZapato;
-            var referenciaid = formData.serialReferencia;
-            var ubicacionesproductoid = formData.descripcionLugar;
-            var usuarioid = formData.idUsuario;
-            var empresaid = formData.empresa;
-
-            alert("LUGAR: "+tipoingresoid+" REF:"+referenciaid+" ESTADO: "
-                +ubicacionesproductoid+" USUARIO: "+usuarioid+" CANTIDAD: "+formData.cantidad34
-                +" TALLA: "+formData.talla34+" EMPRESA: "+empresaid);
-
-           if(tipoingresoid ==='' || referenciaid==='' ||ubicacionesproductoid ==='' ||usuarioid  ===''||empresaid  ===''){
-            //console.error('Error agregando inventario: Faltan');
+const FetchAddInventary = async (event) => {
+    try {
+        const { tipoPublicoTipoZapato, serialReferencia, descripcionLugar, idUsuario, empresa, ...rest } = formData;
+        
+        if (!tipoPublicoTipoZapato || !serialReferencia || !descripcionLugar || !idUsuario || !empresa) {
             setErrorMessage('Error agregando inventario: Faltan datos.');
             setErrorOpen(true);
-           }else{
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad34,
-                formData.talla34,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad35,
-                formData.talla35,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad36,
-                formData.talla36,
-                empresaid
-            );
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad37,
-                formData.talla37,
-                empresaid
-            );
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad38,
-                formData.talla38,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad39,
-                formData.talla39,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad40,
-                formData.talla40,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad41,
-                formData.talla41,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad42,
-                formData.talla42,
-                empresaid
-            );
-
-            await inventaryServices.addInventaryPro(
-                ubicacionesproductoid,
-                referenciaid,
-                tipoingresoid ,
-                usuarioid,
-                formData.cantidad43,
-                formData.talla43,
-                empresaid
-            );
-
-            
-            
-           }
-            
-            setSuccessMessage("Inventario agregado exitosamente.");
-            setSuccessOpen(true);
-            
-        } catch (error) {
-            console.error('Error agregando inventario:', error);
-            alert('Error al agregar inventario');
+            alert(JSON.stringify(formData, null, 2));
+            return;
         }
-    };
+
+        const inventaryData = [
+            { cantidad: rest.cantidad33, talla: rest.talla33 },
+            { cantidad: rest.cantidad34, talla: rest.talla34 },
+            { cantidad: rest.cantidad35, talla: rest.talla35 },
+            { cantidad: rest.cantidad36, talla: rest.talla36 },
+            { cantidad: rest.cantidad37, talla: rest.talla37 },
+            { cantidad: rest.cantidad38, talla: rest.talla38 },
+            { cantidad: rest.cantidad39, talla: rest.talla39 },
+            { cantidad: rest.cantidad40, talla: rest.talla40 },
+            { cantidad: rest.cantidad41, talla: rest.talla41 },
+            { cantidad: rest.cantidad42, talla: rest.talla42 },
+            { cantidad: rest.cantidad43, talla: rest.talla43 }
+        ];
+
+       for (const { cantidad, talla } of inventaryData) {
+            await inventaryServices.addInventaryPro(
+                descripcionLugar,
+                serialReferencia,
+                tipoPublicoTipoZapato,
+                idUsuario,
+                cantidad,
+                talla,
+                empresa
+            );
+        }
+        setSuccessMessage('Inventario agregado exitosamente.');
+        setSuccessOpen(true);
+        
+    } catch (error) {
+        console.error('Error agregando inventario:', error.message, error.stack);
+        setErrorMessage('Error agregando inventario: ' + error.message);
+        setErrorOpen(true);
+    }
+};
+
+
 
     const FetchAddEmpresa = async (event) => {
         try {
@@ -534,7 +452,32 @@ function ADDInventary() {
                         </Select>
                     </FormControl>
                 </Grid>
+                    
+                <Grid item xs={12} sm={1}>
+                <TextField
+                    label="#33"
+                    variant="outlined"
+                    name="cantidad33"
+                    value={formData.cantidad33}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
 
+                
                 <Grid item xs={12} sm={1}>
                 <TextField
                     label="#34"
@@ -557,7 +500,7 @@ function ADDInventary() {
                         style: { color: 'white' },
                     }}
                 />
-            </Grid>
+                </Grid>
 
                 <Grid item xs={12} sm={1}>
                     <TextField
