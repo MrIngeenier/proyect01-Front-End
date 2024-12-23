@@ -25,6 +25,7 @@ function GetVentas() {
     const fetchReferenciasZapatos = async () => {
         try {
             const response = await VentasServices.getVentas();
+            console.log(response);
             setReferencias(response);
             setFilteredData(response); // Inicialmente, mostrar todos los datos
         } catch (error) {
@@ -198,7 +199,7 @@ function GetVentas() {
                                 <TableRow key={item.idventas}>
                                     <TableCell sx={{ color: 'white' }}>{item.idventas}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.nombreusuario}</TableCell>
-                                    <TableCell sx={{ color: 'white' }}>{item.nombre}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.empresa}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.serial}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.valor}</TableCell>

@@ -16,8 +16,8 @@ const VentasServices = {
         
         const data = await response.json();
 
-        //console.log(data.body);
-  
+        console.log(data.body);
+        console.log(response);
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
         } else {
@@ -100,8 +100,8 @@ const VentasServices = {
         });
 
         const data = await response.json(); 
-        //console.log(data);
-        //console.log(response);
+        console.log(data);
+        console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }

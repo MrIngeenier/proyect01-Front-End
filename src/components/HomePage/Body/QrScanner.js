@@ -6,6 +6,8 @@ import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
 import VentasServices from '../../../service/ventas.services';
 import { decryptText } from '../../../utils/Encript';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material';
 
 const QrScanner = () => {
   const [result, setResult] = useState('No result');
@@ -15,7 +17,7 @@ const QrScanner = () => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
   const [validador, setValidador] = useState(true);
   const [formData, setFormData] = useState({
     idUsuario: '',
@@ -23,16 +25,21 @@ const QrScanner = () => {
     serialReferencia: '1'
   });
   const token = localStorage.getItem('token');
-
+  const [showButtons, setShowButtons] = useState(false); 
   const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
   const [zoom, setZoom] = useState(2); // Valor inicial del zoom
-
-
+  const [ventasData, setVentasData] = useState([]); 
+  const [isIdReferenceProcessed, setIsIdReferenceProcessed] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false); // Estado para controlar la apertura del diálogo
+  var validator = false;
+  var validatorID = false;
+  var idReferences;
+  
   const fetchInventaryQR = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
     try {
-      const response = await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
-      setData(response);
+      await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
+      //setData(response);
       setSuccessMessage("Inventario actualizado con éxito.");
       setSuccessOpen(true);
     } catch (error) {
@@ -41,7 +48,7 @@ const QrScanner = () => {
       setErrorOpen(true);
     }
   };
-
+  
   const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar) => {
     if (!serialReferencia || !idUsuario || estado == null || lugar == null) {
       
@@ -52,6 +59,7 @@ const QrScanner = () => {
     }
     try {
       const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar);
+      alert(JSON.stringify(response, null, 2));
       setValidador(true);
     } catch (error) {
       console.error('Error registrando venta:', error);
@@ -61,7 +69,7 @@ const QrScanner = () => {
     }
   };
 
-  const fetchGetIDReferences = async (color, serial, tipopublico) => {
+  const fetchGetIDReferences = async (color, serial, tipopublico,html5QrcodeScanner) => {
     if (!color || !serial || tipopublico == null) {
       console.error('Algunos valores están faltando:', { color, serial, tipopublico });
       setErrorMessage('Datos incompletos para tomar id referencia.');
@@ -70,7 +78,11 @@ const QrScanner = () => {
     }
     try {
       const response = await VentasServices.GetReferenciaID(color, serial, tipopublico);
-      setCount(response);
+      //setCount(response.id);
+      html5QrcodeScanner.clear();
+      //alert(JSON.stringify(response, null, 2));
+      //alert(response.id);
+      return response.id;
     } catch (error) {
       console.error('Error registrando para tomar id referencia:', error);
       setErrorMessage('Error para tomar id referencia.');
@@ -102,7 +114,7 @@ const QrScanner = () => {
        const html5QrcodeScanner = new Html5QrcodeScanner(
         'qr-reader',
         {
-          fps: 20,
+          fps: 5,
           qrbox: qrboxSize,
           videoConstraints: {
             facingMode: 'environment',
@@ -119,34 +131,74 @@ const QrScanner = () => {
       handleScanError
     );
     setScanner(html5QrcodeScanner);
+    setShowButtons(true);
+    setIsIdReferenceProcessed(true);
+    validator = false;
+    validatorID = false;
+    
+
   };
 
-  const handleScanSuccess = (decodedText, html5QrcodeScanner) => {
-    setResult(decodedText);
-    setSuccessMessage("¡Código QR escaneado con éxito!");
-    setSuccessOpen(true);
-    const decrypt = decryptText(decodedText);
+  const handleScanSuccess = async(decodedText, html5QrcodeScanner) => {
 
+    
+
+
+    setResult(decodedText);
+    
+    const decrypt = decryptText(decodedText);
     const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
+    setData(decrypt);
+
 
     if (qrData.length === 6) {
       const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrData;
-      console.log(qrData);
-      fetchGetIDReferences(color, serial, tipopublico);
-      
-      // Asegúrate de que el idUsuario se haya configurado correctamente antes de llamar a fetchAddVentas
-      if (formData.idUsuario) {
-        fetchAddVentas(formData.idUsuario, formData.estado, formData.serialReferencia,ubicacionDescripcion);
-        if (validador) {
-          fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
-        }
-      } else {
-        console.error('idUsuario no está disponible:', formData.idUsuario);
-        setErrorMessage('El usuario no está configurado. Por favor, inténtalo de nuevo.');
-        setErrorOpen(true);
+      //console.log(qrData);
+      if(isIdReferenceProcessed === false){
+        html5QrcodeScanner.clear();
       }
 
-      console.log(count.id + "/", formData.estado, "/", formData.idUsuario);
+      if(validatorID === false){
+        idReferences = await fetchGetIDReferences(color, serial, tipopublico,html5QrcodeScanner);
+        console.log('ID Referencia:', idReferences+ ' / '+ validatorID);
+        validatorID = true;
+        //setIsIdReferenceProcessed(false);
+        
+      }
+      
+      
+      
+      
+      if(validator === false){
+        //console.log(validator);
+        if (formData.idUsuario) {
+          //fetchAddVentas(formData.idUsuario, formData.estado, formData.serialReferencia,ubicacionDescripcion);
+          setVentasData(prevData => [
+            ...prevData,
+            {
+                idUsuario: formData.idUsuario,
+                estado: formData.estado,
+                serialReferencia: idReferences,
+                ubicacionDescripcion: ubicacionDescripcion,
+                qrData: qrData
+            }
+        ]);
+        validator = true;
+          if (validador) {
+           // fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
+          }
+  
+          setSuccessMessage("¡Código QR escaneado con éxito!");
+          setSuccessOpen(true);
+        } else {
+          console.error('idUsuario no está disponible:', formData.idUsuario);
+          setErrorMessage('El usuario no está configurado. Por favor, inténtalo de nuevo.');
+          setErrorOpen(true);
+        }
+      }
+      
+
+      //console.log(count.id + "/", formData.estado, "/", formData.idUsuario);
     } else {
       console.error('Formato de código QR inválido:', decodedText);
       setErrorMessage('El formato del código QR es inválido. Asegúrate de que tenga el formato empresa/referencia/color/ubicación/talla.');
@@ -168,6 +220,7 @@ const QrScanner = () => {
     if (scanner) {
       scanner.clear();
     }
+    setShowButtons(false);
   };
 
   const decodeJWT = (token) => {
@@ -215,8 +268,46 @@ const QrScanner = () => {
 
   useEffect(() => {
     showJWT();
+    
   }, []);
 
+  const handleFacturaElectronica = async () => {
+    try {
+        alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
+
+        for (const venta of ventasData) {
+           var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+           console.log('Respuesta de fetchAddVentas:', response);
+          }
+
+        setSuccessMessage('Ventas registradas exitosamente.');
+        setSuccessOpen(true);
+    } catch (error) {
+        console.error('Error procesando Factura Electrónica:', error);
+        setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
+        setErrorOpen(true);
+    }
+};
+
+  const handleFacturaNormal = () => {
+    //alert('Factura Normal seleccionada');
+    alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
+    //setDialogOpen(true);
+  };
+
+  const handleFactura = () => {
+    //alert('Factura Normal seleccionada');
+    //alert('Factura Electrónica seleccionada: ' + JSON.stringify(scannedData, null, 2));
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleDeleteVenta = (index) => {
+    setVentasData(prevData => prevData.filter((_, i) => i !== index));
+  };
   return (
 <Box
   sx={{padding: 2,textAlign: 'center',
@@ -226,6 +317,22 @@ const QrScanner = () => {
         Escanea el código QR
       </Typography>
       <Box id="qr-reader" sx={{ margin: 'auto' }}></Box>
+      <Box>
+      {showButtons && (
+        <>
+          
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ marginTop: 2 }}
+            onClick={handleFactura}
+          >
+            Factura
+          </Button>
+        </>
+      )}
+
+      </Box>
       <Button
         variant="contained"
         color="primary"
@@ -256,6 +363,46 @@ const QrScanner = () => {
           <MenuItem value={10}>10x</MenuItem>
         </Select>
       </FormControl>
+
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+      <DialogTitle>Ventas Data</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Aquí están los datos de ventas escaneados:
+        </DialogContentText>
+        {ventasData.map((venta, index) => (
+          <Box key={index} display="flex" alignItems="center" justifyContent="space-between">
+            <Typography variant="body1">
+              {venta.qrData}
+            </Typography>
+            <IconButton onClick={() => handleDeleteVenta(index)}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        ))}
+      </DialogContent>
+      <DialogActions>
+      <Button
+            variant="contained"
+            color="warning"
+            sx={{ marginTop: 0 }}
+            onClick={handleFacturaElectronica}
+          >
+            Electrónica
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ marginTop: 0 }}
+            onClick={handleFacturaNormal}
+          >
+            NORMAL
+          </Button>
+        <Button onClick={handleDialogClose} color="primary">
+          Cerrar
+        </Button>
+      </DialogActions>
+    </Dialog>
 
       <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
       <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
