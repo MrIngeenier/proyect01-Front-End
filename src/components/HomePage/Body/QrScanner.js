@@ -7,7 +7,8 @@ import inventaryServices from '../../../service/inventary.services';
 import VentasServices from '../../../service/ventas.services';
 import { decryptText } from '../../../utils/Encript';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,TextField } from '@mui/material';
+import { generateReceipt } from '../../../utils/receipt';
 
 const QrScanner = () => {
   const [result, setResult] = useState('No result');
@@ -32,6 +33,11 @@ const QrScanner = () => {
   const [ventasData, setVentasData] = useState([]); 
   const [isIdReferenceProcessed, setIsIdReferenceProcessed] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false); // Estado para controlar la apertura del diálogo
+  const [cliente, setCliente] = useState('');
+  const [cedula, setCedula] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [telefono, setTelefono] = useState('');
+  
   var validator = false;
   var validatorID = false;
   var idReferences;
@@ -180,7 +186,7 @@ const QrScanner = () => {
                 estado: formData.estado,
                 serialReferencia: idReferences,
                 ubicacionDescripcion: ubicacionDescripcion,
-                qrData: qrData
+                qrData: decrypt
             }
         ]);
         validator = true;
@@ -272,14 +278,18 @@ const QrScanner = () => {
   }, []);
 
   const handleFacturaElectronica = async () => {
+    
     try {
-        alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
-
+       if(!cliente || !cedula || !correo || !correo.includes('@')|| !telefono){
+        setErrorMessage('Datos incompletos para la factura.');
+        setErrorOpen(true);
+        return;
+      }
         for (const venta of ventasData) {
-           var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
-           console.log('Respuesta de fetchAddVentas:', response);
+          // var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+           //console.log('Respuesta de fetchAddVentas:', response);
           }
-
+        generateReceipt(ventasData);
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
     } catch (error) {
@@ -289,10 +299,27 @@ const QrScanner = () => {
     }
 };
 
-  const handleFacturaNormal = () => {
+  const handleFacturaNormal = async () => {
     //alert('Factura Normal seleccionada');
-    alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
+    //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
     //setDialogOpen(true);
+    
+    try {
+        //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
+        //const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
+
+        for (const venta of ventasData) {
+          //var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+          //console.log('Respuesta de fetchAddVentas:', response);
+          }
+        generateReceipt(ventasData);
+        setSuccessMessage('Ventas registradas exitosamente.');
+        setSuccessOpen(true);
+    } catch (error) {
+        console.error('Error procesando Factura Electrónica:', error);
+        setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
+        setErrorOpen(true);
+    }
   };
 
   const handleFactura = () => {
@@ -349,8 +376,8 @@ const QrScanner = () => {
       >
         Detener Escaneo
       </Button>
-      <Typography variant="body1" sx={{ marginTop: 2 }}>
-        Resultado: {result}
+      <Typography variant="body1" sx={{ marginTop: 2, fontWeight: 'bold',backgroundColor: 'lightgray',padding: 1,overflow: 'hidden',textOverflow: 'ellipsis', width: { xs: '300px', sm: '100%' },  }}>
+         {result}
       </Typography>
 
       <FormControl fullWidth sx={{ marginTop: 2 }}>
@@ -365,8 +392,46 @@ const QrScanner = () => {
       </FormControl>
 
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
-      <DialogTitle>Ventas Data</DialogTitle>
+      <DialogTitle>Cliente Datos</DialogTitle>
       <DialogContent>
+        
+        <TextField
+           
+            label="Nombre"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={cliente}
+            onChange={(e) => setCliente(e.target.value)}
+          />
+          <TextField
+            label="Cédula"
+            margin="dense"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={cedula}
+            onChange={(e) => setCedula(e.target.value)}
+          />
+          <TextField
+            label="Correo"
+            margin="dense"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+          />
+          <TextField
+            label="Teléfono"
+            margin="dense"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+          />
+        <br />
         <DialogContentText>
           Aquí están los datos de ventas escaneados:
         </DialogContentText>
