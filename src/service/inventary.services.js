@@ -314,7 +314,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/AllData', {
+        const response = await fetch('http://localhost:10000/inventario/AllData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -323,7 +323,7 @@ const inventaryServices = {
         });
           
         const data = await response.json();
-    
+        console.log(data.body);
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
         } else {

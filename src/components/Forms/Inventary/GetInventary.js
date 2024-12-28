@@ -107,7 +107,8 @@ function Inventary( ) {
         try {
             const response = await inventaryServices.getInventary();
             //console.log('Response from backend:', response); // Verifica la estructura de los datos aquí
-
+            //console.log('Datos cargados correctamente: '+JSON.stringify(response, null, 2));
+        
             setData(response); // Asignar la respuesta al estado
             setFilteredData(response); // Inicializar también filteredData
             //console.log(response);
@@ -728,6 +729,7 @@ function Inventary( ) {
                                 <TableCell sx={{ color: 'white' }}>Lugar</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Público</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Estado</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Valor</TableCell>
                                 <TableCell sx={{ color: 'white' }}>21</TableCell>
                                 <TableCell sx={{ color: 'white' }}>22</TableCell>
                                 <TableCell sx={{ color: 'white' }}>23</TableCell>
@@ -765,6 +767,7 @@ function Inventary( ) {
                                     <TableCell sx={{ color: 'white' }}>{item.lugar}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.publico}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.estado}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.valor}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.t21}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.t22}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.t23}</TableCell>

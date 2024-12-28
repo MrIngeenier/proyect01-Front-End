@@ -66,7 +66,9 @@ const QrScanner = () => {
     try {
       const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar);
       alert(JSON.stringify(response, null, 2));
+
       setValidador(true);
+      return response;
     } catch (error) {
       console.error('Error registrando venta:', error);
       setErrorMessage('Error al agregar venta.');
@@ -186,7 +188,8 @@ const QrScanner = () => {
                 estado: formData.estado,
                 serialReferencia: idReferences,
                 ubicacionDescripcion: ubicacionDescripcion,
-                qrData: decrypt
+                qrData: decrypt,
+                idventa: 0
             }
         ]);
         validator = true;
@@ -289,7 +292,7 @@ const QrScanner = () => {
           // var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
            //console.log('Respuesta de fetchAddVentas:', response);
           }
-        generateReceipt(ventasData);
+        generateReceipt(ventasData,cliente,cedula,correo,telefono);
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
     } catch (error) {
@@ -300,19 +303,21 @@ const QrScanner = () => {
 };
 
   const handleFacturaNormal = async () => {
+    const cliente2 ='CONSUMIDOR FINAL';
+    const cedula2='222222222';
+    const correo2='NA';
+    const telefono2='0000000000';
     //alert('Factura Normal seleccionada');
     //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
     //setDialogOpen(true);
     
     try {
-        //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
-        //const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
 
         for (const venta of ventasData) {
-          //var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
-          //console.log('Respuesta de fetchAddVentas:', response);
+          var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+          console.log('Respuesta de fetchAddVentas:', response);
           }
-        generateReceipt(ventasData);
+        generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2);
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
     } catch (error) {

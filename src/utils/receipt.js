@@ -1,62 +1,66 @@
-import calzadoPecas from '../asset/images/CALZADO PECAS (2).png';
+import calzadoPecas from '../asset/images/imagePecas.png';
 
-export function generateReceipt(ventasData) {  
+export function generateReceipt(ventasData, cliente, cedula, correo, telefono) {  
+    let allData = '';
+    ventasData.forEach((venta, index) => {
+        // Separar los datos del QR
+        const qrDataParts = venta.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
+        const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrDataParts;
 
-let allData = '';
-ventasData.forEach((venta, index) => {
-    // Separar los datos del QR
-    const qrDataParts = venta.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
-    const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrDataParts;
+        // Construir el HTML con los datos procesados
+        allData += `
+            <div>
+                <p style="">
+                    <strong>Item #${index + 1}</strong>
+                    Empresa: ${nombreEmpresa}\n
+                    Referencia: ${serial}\n
+                    Color: ${color}\n
+                    Ubicación: ${ubicacionDescripcion}\n
+                    Talla: ${talla}\n
+                    Público: ${tipopublico}\n
+                </p>
+            </div>
+        `;
+    });
 
-    // Construir el HTML con los datos procesados
-    allData += `
-        <div>
-           <p style="margin: -40px -200px ;">
-                <strong>Item #${index + 1}</strong>
-                Empresa: ${nombreEmpresa}
-                Referencia: ${serial}
-                Color: ${color}
-                Ubicación: ${ubicacionDescripcion}
-                Talla: ${talla}
-                Público: ${tipopublico}
-            </p>
-        </div>
-    `;
-});
+    // Crear un elemento de imagen y esperar a que se cargue
+    const img = new Image();
+    img.src = calzadoPecas;
+    img.onload = () => {
+        const receipt = `
+            <div>
+                <div style="width: 300px; display: flex; flex-direction: column; align-items: center;">
+                    <img src="${calzadoPecas}" alt="Descripción de la imagen" style="width: 100px; height: 100px;" />
+                </div>
+                <p style=";">
+                    CLIENTE ${cliente} 
+                    CEDULA ${cedula}
+                    CORREO ${correo}
+                    TELEFONO ${telefono} 
+                </p>
+                ${allData}          
+                <hr />  
+            </div>
+        `;
 
-// Ahora puedes usar `allData` como parte de tu recibo o salida
+        // Crear un iframe para enviar el contenido a la impresora
+        const printIframe = document.createElement('iframe');
+        document.body.appendChild(printIframe);
+        printIframe.style.position = 'absolute';
+        printIframe.style.width = '0';
+        printIframe.style.height = '0';
+        printIframe.style.border = 'none';
 
+        // Escribir el contenido en el iframe
+        printIframe.contentWindow.document.open();
+        printIframe.contentWindow.document.write(receipt);
+        printIframe.contentWindow.document.close();
 
-    const receipt = `
-       <div style="  width: 280px; display: flex; flex-direction: column; align-items: center;">
-            <img src="${calzadoPecas}" alt="Descripción de la imagen" style="width: 100px; height: 100px;" />
-            </br>  
-            ${allData}          
-            <hr />  
-        </div>
-        
-    `;
+        // Imprimir el contenido del iframe
+        printIframe.contentWindow.print();
+    };
 
-    // Crear un iframe para enviar el contenido a la impresora
-    const printIframe = document.createElement('iframe');
-    document.body.appendChild(printIframe);
-    printIframe.style.position = 'absolute';
-    printIframe.style.width = '0';
-    printIframe.style.height = '0';
-    printIframe.style.border = 'none';
-
-  //console.log('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
-    //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
-    const printDocument = printIframe.contentWindow.document;
-    printDocument.open();
-    printDocument.write(`<pre>${receipt}</pre>`); // Formatea como texto
-    printDocument.close();
-
-    printIframe.contentWindow.focus();
-    printIframe.contentWindow.print();
-
-    // Eliminar el iframe después de imprimir
-    setTimeout(() => {
-        document.body.removeChild(printIframe);
-    }, 1000);
+    img.onerror = () => {
+        console.error('Error al cargar la imagen');
+    };
 }
