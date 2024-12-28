@@ -132,18 +132,18 @@ function Inventary( ) {
         // Generar el QR en base64
         try {
             if(item.publico === 'hombre' || item.publico === 'mujer' ){
-                const qrText = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${item.publico}`;
-                const qrText33 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}`;
-                const qrText34 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`;
-                const qrText35 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`;
-                const qrText36 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`;
-                const qrText37 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${37}/${item.publico}`;
-                const qrText38 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${38}/${item.publico}`;
-                const qrText39 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${39}/${item.publico}`;
-                const qrText40 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${40}/${item.publico}`;
-                const qrText41 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${41}/${item.publico}`;
-                const qrText42 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${42}/${item.publico}`;
-                const qrText43 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${43}/${item.publico}`;
+                const qrText = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${item.publico}/${item.valor}`;
+                const qrText33 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}/${item.valor}`;
+                const qrText34 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}/${item.valor}`;
+                const qrText35 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}/${item.valor}`;
+                const qrText36 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}/${item.valor}`;
+                const qrText37 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${37}/${item.publico}/${item.valor}`;
+                const qrText38 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${38}/${item.publico}/${item.valor}`;
+                const qrText39 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${39}/${item.publico}/${item.valor}`;
+                const qrText40 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${40}/${item.publico}/${item.valor}`;
+                const qrText41 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${41}/${item.publico}/${item.valor}`;
+                const qrText42 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${42}/${item.publico}/${item.valor}`;
+                const qrText43 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${43}/${item.publico}/${item.valor}`;
 
                 const encryptedQrText33 = encryptText(qrText33);
                 const encryptedQrText34 = encryptText(qrText34);
@@ -187,7 +187,7 @@ function Inventary( ) {
                     doc.addImage(qrDataUrl33, 'PNG', 130, 10, 20, 20);
                     doc.addImage(qrDataUrl33, 'PNG', 150, 10, 20, 20);
                     doc.addImage(qrDataUrl33, 'PNG', 170, 10, 20, 20);
-                    doc.text(qrText, 70, 290); 
+                    doc.text(qrText, 60, 290); 
 
                     // Horizontal - Vertical x Ancho x Alto
                     doc.rect(10, 33, 180, 20);
@@ -312,23 +312,23 @@ function Inventary( ) {
            
             if(item.publico === 'niña'){
 
-                const qrText = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${item.publico}`;
-                const qrText21 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${21}/${item.publico}`;
-                const qrText22 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${22}/${item.publico}`;
-                const qrText23 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${23}/${item.publico}`;
-                const qrText24 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${24}/${item.publico}`;
-                const qrText25 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${25}/${item.publico}`;
-                const qrText26 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${26}/${item.publico}`;
-                const qrText27 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${27}/${item.publico}`;
-                const qrText28 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${28}/${item.publico}`;
-                const qrText29 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${29}/${item.publico}`;
-                const qrText30 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${30}/${item.publico}`;
-                const qrText31 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${31}/${item.publico}`;
-                const qrText32 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${32}/${item.publico}`;
-                const qrText33 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}`;
-                const qrText34 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}`;
-                const qrText35 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}`;
-                const qrText36 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}`;
+                const qrText = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${item.publico}/${item.valor}`;
+                const qrText21 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${21}/${item.publico}/${item.valor}`;
+                const qrText22 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${22}/${item.publico}/${item.valor}`;
+                const qrText23 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${23}/${item.publico}/${item.valor}`;
+                const qrText24 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${24}/${item.publico}/${item.valor}`;
+                const qrText25 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${25}/${item.publico}/${item.valor}`;
+                const qrText26 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${26}/${item.publico}/${item.valor}`;
+                const qrText27 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${27}/${item.publico}/${item.valor}`;
+                const qrText28 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${28}/${item.publico}/${item.valor}`;
+                const qrText29 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${29}/${item.publico}/${item.valor}`;
+                const qrText30 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${30}/${item.publico}/${item.valor}`;
+                const qrText31 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${31}/${item.publico}/${item.valor}`;
+                const qrText32 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${32}/${item.publico}/${item.valor}`;
+                const qrText33 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${33}/${item.publico}/${item.valor}`;
+                const qrText34 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${34}/${item.publico}/${item.valor}`;
+                const qrText35 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${35}/${item.publico}/${item.valor}`;
+                const qrText36 = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${36}/${item.publico}/${item.valor}`;
 
                 const encryptedQrText21 = encryptText(qrText21);
                 const encryptedQrText22 = encryptText(qrText22);

@@ -314,7 +314,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/inventario/AllData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/AllData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

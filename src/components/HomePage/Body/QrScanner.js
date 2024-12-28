@@ -37,7 +37,8 @@ const QrScanner = () => {
   const [cedula, setCedula] = useState('');
   const [correo, setCorreo] = useState('');
   const [telefono, setTelefono] = useState('');
-  
+  const [showContent, setShowContent] = useState(false);
+
   var validator = false;
   var validatorID = false;
   var idReferences;
@@ -149,9 +150,6 @@ const QrScanner = () => {
 
   const handleScanSuccess = async(decodedText, html5QrcodeScanner) => {
 
-    
-
-
     setResult(decodedText);
     
     const decrypt = decryptText(decodedText);
@@ -159,8 +157,8 @@ const QrScanner = () => {
     setData(decrypt);
 
 
-    if (qrData.length === 6) {
-      const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrData;
+    if (qrData.length === 7) {
+      const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico,valor] = qrData;
       //console.log(qrData);
       if(isIdReferenceProcessed === false){
         html5QrcodeScanner.clear();
@@ -189,7 +187,7 @@ const QrScanner = () => {
                 serialReferencia: idReferences,
                 ubicacionDescripcion: ubicacionDescripcion,
                 qrData: decrypt,
-                idventa: 0
+                valor: valor
             }
         ]);
         validator = true;
@@ -398,10 +396,17 @@ const QrScanner = () => {
 
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
       <DialogTitle>Cliente Datos</DialogTitle>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Button variant="contained" color="secondary" sx={{ width: '60%',justifyContent:'center' }}  onClick={() => setShowContent((prev) => !prev)}>
+        {showContent ? 'Ocultar Cliente' : 'Datos Cliente'}
+      </Button>
+      </Box>
+      
+      
       <DialogContent>
-        
+      {showContent && (
+        <>
         <TextField
-           
             label="Nombre"
             type="text"
             fullWidth
@@ -436,7 +441,10 @@ const QrScanner = () => {
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
           />
-        <br />
+          <br />
+      </>
+        )}
+        
         <DialogContentText>
           Aquí están los datos de ventas escaneados:
         </DialogContentText>
@@ -451,6 +459,7 @@ const QrScanner = () => {
           </Box>
         ))}
       </DialogContent>
+      
       <DialogActions>
       <Button
             variant="contained"
