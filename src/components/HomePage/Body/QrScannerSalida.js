@@ -192,7 +192,7 @@ const QrScannerSalida = () => {
         }}
       >       
       <Typography variant="h6" gutterBottom>
-        QR Sin Registro
+        SCANNER SALIDA DE MERCANCIA
       </Typography>
       <Box id="qr-reader" sx={{ margin: 'auto'}}></Box>
       <Button
@@ -211,8 +211,8 @@ const QrScannerSalida = () => {
       >
         Detener Escaneo
       </Button>
-      <Typography variant="body1" sx={{ marginTop: 2 }}>
-        Resultado: {result}
+      <Typography variant="body1" sx={{ marginTop: 2, fontWeight: 'bold',backgroundColor: 'lightgray',padding: 1,overflow: 'hidden',textOverflow: 'ellipsis', width: { xs: '300px', sm: '100%' },  }}>
+            {result}
       </Typography>
       
       <FormControl fullWidth sx={{ marginTop: 2 }}>

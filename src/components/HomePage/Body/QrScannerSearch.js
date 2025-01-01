@@ -113,7 +113,7 @@ const QrScannerSearch = () => {
   return (
     <Box sx={{ padding: 2, textAlign: 'center', width: { xs: '240px', lg: '50%' }, margin: '0 auto' , marginTop: { lg: '-20px' } }}>
       <Typography variant="h6" gutterBottom>
-        QR Busqueda
+        SCANNER BUSQUEDA DE INVENTARIO
       </Typography>
       <Box id="qr-reader" sx={{ margin: 'auto' }}></Box>
       <Button variant="contained" color="primary" sx={{ marginTop: 2 }} onClick={startScanning}>
@@ -122,8 +122,8 @@ const QrScannerSearch = () => {
       <Button variant="contained" color="secondary" sx={{ marginTop: 2 }} onClick={stopScanning}>
         Detener Escaneo
       </Button>
-      <Typography variant="body1" sx={{ marginTop: 2 }}>
-        Resultado: {result}
+      <Typography variant="body1" sx={{ marginTop: 2, fontWeight: 'bold',backgroundColor: 'lightgray',padding: 1,overflow: 'hidden',textOverflow: 'ellipsis', width: { xs: '300px', sm: '100%' },  }}>
+               {result}
       </Typography>
 
       <FormControl fullWidth sx={{ marginTop: 2 }}>
@@ -136,13 +136,15 @@ const QrScannerSearch = () => {
           <MenuItem value={10}>10x</MenuItem>
         </Select>
       </FormControl>
-
+        
         {data && (
         <TableContainer component={Paper} sx={{ backgroundColor: '#333',    display: 'flex', 
           justifyContent: 'center', 
           borderRadius: '8px',
           overflowX: 'auto',
           width:{ xs: '250px',md:'900px',lg:'1000px' },
+          marginLeft:{ xs: '-20px',md:'-150%',lg:'-20%' },
+          marginTop:{ xs: '20px',md:'20px',lg:'20px'},
           
           }}>          
           <Table size="small" sx={{ tableLayout: 'fixed'}}>

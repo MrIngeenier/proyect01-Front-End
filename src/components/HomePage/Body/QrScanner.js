@@ -156,8 +156,8 @@ const QrScanner = () => {
     const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
     setData(decrypt);
 
-
-    if (qrData.length === 7) {
+    console.log(qrData.length);
+    if (qrData.length === 6) {
       const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico,valor] = qrData;
       //console.log(qrData);
       if(isIdReferenceProcessed === false){
@@ -344,7 +344,7 @@ const QrScanner = () => {
     width: {lg: '50%'},margin: {lg: '0 auto', },marginTop: {lg: '-20px'},
   }}
 >      <Typography variant="h6" gutterBottom>
-        Escanea el código QR
+        SCANNER VENTAS
       </Typography>
       <Box id="qr-reader" sx={{ margin: 'auto' }}></Box>
       <Box>
