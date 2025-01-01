@@ -38,7 +38,12 @@ const QrScanner = () => {
   const [correo, setCorreo] = useState('');
   const [telefono, setTelefono] = useState('');
   const [showContent, setShowContent] = useState(false);
+  const [metodoPago, setMetodoPago] = useState('');
 
+  const handleMetodoPago = (metodo) => {
+    setMetodoPago(metodo);
+    //alert('Método de pago seleccionado: ' + metodo);
+  };
   var validator = false;
   var validatorID = false;
   var idReferences;
@@ -157,7 +162,7 @@ const QrScanner = () => {
     setData(decrypt);
 
     console.log(qrData.length);
-    if (qrData.length === 6) {
+    if (qrData.length === 7) {
       const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico,valor] = qrData;
       //console.log(qrData);
       if(isIdReferenceProcessed === false){
@@ -312,8 +317,8 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
-          console.log('Respuesta de fetchAddVentas:', response);
+          //var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+          //console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2);
         setSuccessMessage('Ventas registradas exitosamente.');
@@ -441,10 +446,35 @@ const QrScanner = () => {
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
           />
-          <br />
+          
       </>
         )}
-        
+        <Box marginTop={2}>
+          
+          <Box display="flex" justifyContent="space-around" marginTop={1}>
+            <Button
+              variant={metodoPago === 'Débito' ? 'contained' : 'outlined'}
+              color="success"
+              onClick={() => handleMetodoPago('Débito')}
+            >
+              Débito
+            </Button>
+            <Button
+              variant={metodoPago === 'Crédito' ? 'contained' : 'outlined'}
+              color="success"
+              onClick={() => handleMetodoPago('Crédito')}
+            >
+              Crédito
+            </Button>
+            <Button
+              variant={metodoPago === 'Efectivo' ? 'contained' : 'outlined'}
+              color="success"
+              onClick={() => handleMetodoPago('Efectivo')}
+            >
+              Efectivo
+            </Button>
+          </Box>
+        </Box>
         <DialogContentText>
           Aquí están los datos de ventas escaneados:
         </DialogContentText>
