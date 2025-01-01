@@ -320,7 +320,7 @@ const QrScanner = () => {
           //var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
           //console.log('Respuesta de fetchAddVentas:', response);
           }
-        generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2);
+        generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2,metodoPago);
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
     } catch (error) {

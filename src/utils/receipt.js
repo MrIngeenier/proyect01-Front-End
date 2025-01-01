@@ -1,6 +1,6 @@
 import calzadoPecas from '../asset/images/imagePecas.png';
 
-export function generateReceipt(ventasData, cliente, cedula, correo, telefono) {  
+export function generateReceipt(ventasData, cliente, cedula, correo, telefono,metodoPago) {  
     let allData = '';
     let total = 0; // Variable para acumular el total de los valores
     let iva = 0;
@@ -70,7 +70,9 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono) {
                 <hr style="border: none; border-top: 1px dashed black; margin: 10px 0; ">
                 
                 <div style="font-family: Arial, sans-serif; margin: 10px 0;">
+                Tarjeta: ${metodoPago || "NA"}
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        
                         <span>Subtotal:</span>
                         <span>${subtotal.toLocaleString()}</span>
                     </div>
@@ -92,9 +94,13 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono) {
                 <hr style="border: none; border-top: 1px dashed black; margin: 10px 0;">
                 <div style=" display: flex; flex-direction: column; align-items: center; font-family: Arial, sans-serif;text-align: center;">
                     
-                    <span> Garantia caduca a los 2 meses despues de su compra, aplica por descose o despegue. </span><br>  
+                    <span>
+                    Estimado cliente, le informamos que la garantía de su producto tiene una duración de 2 meses a partir de la fecha de compra y cubre únicamente defectos por descosido o despegue.  
+                    Asimismo, para realizar un cambio, dispone de un plazo máximo de 1 mes desde la fecha de adquisición.  
+                    Gracias por su preferencia.
+                    </span><br>  
                     <span> Si quiere una factura electronica solicitela en la tieda cuando realice su pago  </span><br>  
-                    <span> *-_ GRACIAS POR SU COMPRA _-* </span>
+                    <span> *--_ GRACIAS POR SU COMPRA _--* </span>
                    <br>
                 </div>
             </div>
