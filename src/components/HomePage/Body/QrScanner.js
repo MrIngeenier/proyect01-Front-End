@@ -122,6 +122,7 @@ const QrScanner = () => {
   };
   
   const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id ) => {
+    alert(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
     if (!serialReferencia || !idUsuario || estado == null || lugar == null || fk_idusuarios == null || id == null) {
       
       console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id  });
@@ -356,7 +357,7 @@ const QrScanner = () => {
      
         for (const venta of ventasData) {
           
-          var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago);
+          var response= await fetchAddVentas(venta.idUsuario, true, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago);
           console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente,cedula,correo,telefono,metodoPago);
@@ -374,6 +375,7 @@ const QrScanner = () => {
     const cedula2='222222222';
     const correo2='NA';
     const telefono2='0000000000';
+    var fk_idusuarios = idClient;
     //alert('Factura Normal seleccionada');
     //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
     //setDialogOpen(true);
@@ -381,7 +383,7 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+          var response= await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
           console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2,metodoPago);
@@ -471,8 +473,13 @@ const QrScanner = () => {
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
      {/* <DialogTitle>Cliente Datos</DialogTitle>*/} 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Button variant="contained" color="secondary" sx={{ width: '60%',justifyContent:'center',marginTop: 2 }}  onClick={() => setShowContent((prev) => !prev)}>
+      <Button variant="contained" color="secondary" sx={{ width: '60%',justifyContent:'center',marginTop: 2 }}  
+      onClick={() => {
+        setShowContent((prev) => !prev);
+        if(showContent === false){fetchGetCliente();}
+       }}>
         {showContent ? 'Ocultar' : 'Cliente'}
+        
       </Button>
       
       </Box>
@@ -482,7 +489,7 @@ const QrScanner = () => {
           <Autocomplete
           value={selectedPlace}
           onChange={handleChange}
-          options={places} // Los lugares que deseas mostrar en la lista
+          options={places} 
           getOptionLabel={(option) => option.nombre || ''} 
           isOptionEqualToValue={(option, value) => option.id === value?.id}
           renderInput={(params) => <TextField {...params} label="Cliente" variant="outlined" />}

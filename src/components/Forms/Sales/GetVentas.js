@@ -33,6 +33,7 @@ function GetVentas() {
         }
     };
     const groupByDate = (data) => {
+        //console.log(JSON.stringify(data, null, 2));
         return data.reduce((acc, item) => {
             const date = new Date(item.fecha).toLocaleDateString();
             if (!acc[date]) {
@@ -214,8 +215,12 @@ function GetVentas() {
                                         </Button>
                                     </TableCell>
                                     <TableCell sx={{ color: 'white', textAlign: 'center' }}>
-                                        {new Date(new Date(item.fecha).getTime() - 5 * 60 * 60 * 1000).toLocaleString()}
-                                    </TableCell>
+                                        {new Intl.DateTimeFormat('es-CO', {
+                                        timeZone: 'America/Bogota',
+                                        dateStyle: 'short',
+                                        timeStyle: 'short'
+                                        }).format(new Date(item.fecha))}                                    
+                                </TableCell>
                                     <TableCell sx={{ textAlign: 'center', color: 'white' }}>
                                         <Box display="flex" justifyContent="center" alignItems='center' gap={2}>
                                             <Button variant="contained" color="error" onClick={() => handleDelete(item.idventas)}>
