@@ -11,13 +11,18 @@ export function generateCashEnclosure(ventasFiltradas) {
     const ivaRate = 0.19;
     ventasFiltradas.forEach((venta, index) => {
         // Extraer datos de cada venta
-        const empresa = venta.empresa || "No especificada";
-        const serial = venta.serial || "No especificada";
-        const color = venta.color || "No especificado";
-        const talla = venta.talla_vendida || "No especificada";
+        const empresa = venta.empresa || "No Empresa";
+        const serial = venta.serial || "No Referencia";
+        const color = venta.color || "No Color";
+        const talla = venta.talla_vendida || "No Talla";
         const valor = venta.valor || 0;
-        const estado = venta.estado || "No especificado";
+        const estado = venta.estado || "False";
+        const cliente = venta.cliente_nombre || "NA";
+        const ccCliente = venta.cliente_cedula || "NA";
         const numericValue = parseFloat(valor) || 0;
+        
+
+        
         totalValue += numericValue;
         
         subtotal = Math.round(totalValue / (1 + ivaRate));
@@ -29,7 +34,7 @@ export function generateCashEnclosure(ventasFiltradas) {
                     <strong>Item #${index + 1}</strong>: <br>
                 </p>
                 <p style="margin-top: 0px;">
-                    Producto : ${empresa} / ${serial} / ${color} / ${talla} / ${estado} / ${numericValue.toLocaleString()}
+                    Producto : ${empresa} / ${serial} / ${color} / ${talla} / ${estado} / ${cliente} / ${ccCliente} / ${numericValue.toLocaleString()}
                     
                 </p>
             </div>

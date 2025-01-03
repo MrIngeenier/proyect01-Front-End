@@ -86,8 +86,9 @@ const VentasServices = {
     
 
     //// http://localhost:10000/users/login
-    async addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,typopago) {
+    async addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,pago) {
       try {
+        var typopago = String(pago);
         const token = localStorage.getItem('token'); 
         console.log("Services : "+fk_referencia+" "+fk_idusuarios+" "+estado+" "+lugar+" "+fk_clientes,typopago)
         //console.log(token);

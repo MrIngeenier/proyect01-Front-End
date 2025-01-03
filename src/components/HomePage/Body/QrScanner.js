@@ -383,7 +383,7 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          var response= await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
+          var response= await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,fk_idusuarios);
           console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2,metodoPago);
