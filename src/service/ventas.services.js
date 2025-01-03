@@ -167,7 +167,7 @@ const VentasServices = {
         const idventas = parseInt(id, 10);
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/DeleteData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/DeleteData', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
