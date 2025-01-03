@@ -6,6 +6,8 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
+import PrintIcon from '@mui/icons-material/Print';
+import { generateCashEnclosure } from '../../../utils/CashEnclosure';
 
 function GetVentas() {
     const [referencias, setReferencias] = useState([]); // Estado para almacenar referencias
@@ -42,6 +44,8 @@ function GetVentas() {
             acc[date].push(item);
             return acc;
         }, {});
+
+        
     };
 
     const handleDelete = async (id) => {
@@ -65,8 +69,24 @@ function GetVentas() {
    
     
     const handleUpdate = (id) => {
-        console.log("Actualizar acción para ID:", id);
+        //console.log("Actualizar acción para ID:", id);
         // Lógica para actualizar
+        //alert("Actualizar acción para ID:" + id + " : "+JSON.stringify(referencias, null, 2));
+        console.log("Actualizar acción para ID:", JSON.stringify(referencias, null, 2));
+    };
+
+    const handleShowVentasByDate = () => {  
+        
+        const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))];
+        const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[0]);
+        if (ventasFiltradas.length > 0) {
+            alert(`Ventas realizadas el ${fechasUnicas}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta, null, 2)}`).join('\n')}`);
+            generateCashEnclosure(ventasFiltradas);
+        } else {
+            alert('No se encontraron ventas para la fecha ${fechasUnicas}');
+        }
+
+        
     };
 
    // const groupedData = groupByDate(filteredData);
@@ -174,11 +194,22 @@ function GetVentas() {
             {/* Tabla agrupada por fecha */}
             {Object.entries(groupByDate(filteredData)).map(([date, ventas]) => (
                 <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#121212' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-around' }} >
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between',backgroundColor: 'rgba(0, 0, 0, 0.5)' }} >
                         <Typography variant="h6" sx={{ color: 'white' }}>Fecha: {date}</Typography>
                         <Typography variant="h6" sx={{ color: 'white' }}>
                             Total: {ventas.reduce((sum, item) => sum + parseFloat(item.valor) || 0, 0)}
                         </Typography>
+                        
+                        <Box display="flex" gap={2}>
+                            <Button variant="contained" color="primary" onClick={handleShowVentasByDate}>
+                                <PrintIcon sx={{ width: '80%' }} />
+                            </Button> 
+                            <Button variant="contained" color="error" onClick={handleShowVentasByDate}>
+                                <DeleteIcon sx={{ width: '80%' }} />
+                            </Button> 
+                            
+                        </Box>
+                                          
                     </Box>
                     <Table>
                         <TableHead>
