@@ -27,7 +27,7 @@ function GetVentas() {
     const fetchReferenciasZapatos = async () => {
         try {
             const response = await VentasServices.getVentas();
-            console.log(response);
+            //console.log(response);
             setReferencias(response);
             setFilteredData(response); // Inicialmente, mostrar todos los datos
         } catch (error) {
@@ -48,18 +48,18 @@ function GetVentas() {
         
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (idventas) => {
         try {
-            if (id === null || id === 0) {
-                console.log("ID no válido:", id);
+            if (idventas === null || idventas === 0) {
+                console.log("ID no válido:", idventas);
                 return; // Salir de la función si el ID no es válido
             }
    
-            console.log("Borrar acción para ID:", id);
+            //console.log("Borrar acción para ID:", id);
    
             // Llamar al servicio de eliminación
-            const response = await VentasServices.deleteVentas(id);
-            console.log(response);
+            const response = await VentasServices.deleteVentas(idventas);
+            //console.log(response);
             // Llamar a la función para actualizar los datos
             fetchReferenciasZapatos();
         } catch (error) {
@@ -80,7 +80,7 @@ function GetVentas() {
         const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))];
         const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[0]);
         if (ventasFiltradas.length > 0) {
-            alert(`Ventas realizadas el ${fechasUnicas}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta, null, 2)}`).join('\n')}`);
+           // alert(`Ventas realizadas el ${fechasUnicas}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta, null, 2)}`).join('\n')}`);
             generateCashEnclosure(ventasFiltradas);
         } else {
             alert('No se encontraron ventas para la fecha ${fechasUnicas}');
@@ -88,6 +88,22 @@ function GetVentas() {
 
         
     };
+
+    const handleDeleteVentasByDate = async () => {  
+        const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))];
+        const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[0]);
+    
+        if (ventasFiltradas.length > 0) {
+            alert(`Ventas realizadas el ${fechasUnicas[0]}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta.idventas, null, 2)}`).join('\n')}`);
+            
+            for (const venta of ventasFiltradas) {
+                await handleDelete(venta.idventas); 
+            }
+        } else {
+            alert(`No se encontraron ventas para la fecha ${fechasUnicas[0]}`);
+        }
+    };
+    
 
    // const groupedData = groupByDate(filteredData);
     const handleToggleStatus = async (id) => {
@@ -204,7 +220,7 @@ function GetVentas() {
                             <Button variant="contained" color="primary" onClick={handleShowVentasByDate}>
                                 <PrintIcon sx={{ width: '80%' }} />
                             </Button> 
-                            <Button variant="contained" color="error" onClick={handleShowVentasByDate}>
+                            <Button variant="contained" color="error" onClick={handleDeleteVentasByDate}>
                                 <DeleteIcon sx={{ width: '80%' }} />
                             </Button> 
                             

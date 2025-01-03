@@ -323,7 +323,7 @@ const inventaryServices = {
         });
           
         const data = await response.json();
-        console.log(data.body);
+        //console.log(data.body);
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
         } else {

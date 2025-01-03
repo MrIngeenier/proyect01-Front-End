@@ -16,8 +16,8 @@ const VentasServices = {
         
         const data = await response.json();
 
-        console.log(data.body);
-        console.log(response);
+        //console.log(data.body);
+        //console.log(response);
         if (response.ok) {
           return data.body; // Devuelve la respuesta del ping
         } else {
@@ -162,11 +162,12 @@ const VentasServices = {
         console.error('Error actualizando usuario:', error);
       }
     },
-    async deleteVentas(idventas) {
+    async deleteVentas(id) {
       try {
+        const idventas = parseInt(id, 10);
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/DeleteData', {
+        const response = await fetch('http://localhost:10000/ventas/DeleteData', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -176,16 +177,16 @@ const VentasServices = {
         });
 
         const data = await response.json(); 
-        console.log("Data:", JSON.stringify(data, null, 2));  // Formato legible con 2 espacios de indentación
-        console.log("Response"+response.status);
-        console.log("Response Headers:", response.headers);  // Los encabezados de la respuesta
+       // console.log("Data:", JSON.stringify(data, null, 2));  // Formato legible con 2 espacios de indentación
+        //console.log("Response"+response.status);
+        //console.log("Response Headers:", response.headers);  // Los encabezados de la respuesta
 
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }
         return data;
       } catch (error) {
-        console.error('Error registrando usuario:', error);
+        console.error('Error borrando [VENTA]:', error);
       }
     }
     
