@@ -85,23 +85,24 @@ const VentasServices = {
 
     
 
-    //
-    async addVentas(fk_referencia,fk_idusuarios,estado,lugar) {
+    //// http://localhost:10000/users/login
+    async addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,typopago) {
       try {
         const token = localStorage.getItem('token'); 
+        console.log("Services : "+fk_referencia+" "+fk_idusuarios+" "+estado+" "+lugar+" "+fk_clientes,typopago)
         //console.log(token);
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/addData', {
+        const response = await fetch('http://localhost:10000/ventas/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ token,
           },
-          body: JSON.stringify({fk_referencia,fk_idusuarios,estado,lugar}),
+          body: JSON.stringify({fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,typopago}),
         });
 
         const data = await response.json(); 
-        console.log(data);
-        console.log(response);
+        //console.log(data);
+        //console.log(response);
         if (!response.ok) {
           throw new Error(data.message || 'Error desconocido');
         }

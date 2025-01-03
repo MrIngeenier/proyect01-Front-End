@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Button, Box,Grid, Typography, Select, MenuItem, InputLabel, FormControl,Autocomplete } from '@mui/material';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import inventaryServices from '../../../service/inventary.services';
+import clienteServices from '../../../service/cliente.service';
 import VentasServices from '../../../service/ventas.services';
 import { decryptText } from '../../../utils/Encript';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,6 +12,8 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, I
 import { generateReceipt } from '../../../utils/receipt';
 
 const QrScanner = () => {
+  const hasRun = useState(false);
+
   const [result, setResult] = useState('No result');
   const [scanner, setScanner] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,15 +36,24 @@ const QrScanner = () => {
   const [ventasData, setVentasData] = useState([]); 
   const [isIdReferenceProcessed, setIsIdReferenceProcessed] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false); // Estado para controlar la apertura del diálogo
+  const [idClient, setidClient] = useState('');
   const [cliente, setCliente] = useState('');
   const [cedula, setCedula] = useState('');
   const [correo, setCorreo] = useState('');
   const [telefono, setTelefono] = useState('');
   const [showContent, setShowContent] = useState(false);
   const [metodoPago, setMetodoPago] = useState('');
+  const [idPago, setidPago] = useState(0);
+
+  const [places, setPlaces] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState(null); // Estado para el lugar seleccionado
 
   const handleMetodoPago = (metodo) => {
     setMetodoPago(metodo);
+    if( metodo === 'Débito') { setidPago(2); }
+    if( metodo === 'Crédito') { setidPago(3); }
+    if( metodo === 'Efectivo') { setidPago(1); }
+      
     //alert('Método de pago seleccionado: ' + metodo);
   };
   var validator = false;
@@ -60,18 +72,66 @@ const QrScanner = () => {
       setErrorOpen(true);
     }
   };
-  
-  const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar) => {
-    if (!serialReferencia || !idUsuario || estado == null || lugar == null) {
+
+  const fetchGetCliente = async () => {
+    try {
+      const response = await clienteServices.getData();
+      //alert('Clientes: ' + JSON.stringify(response, null, 2));
+      setPlaces(response);
+      //alert('Clientes: ' + JSON.stringify(places, null, 2));
+      //setData(response);
+      setSuccessMessage("Clientes obtenidos con éxito.");
+      setSuccessOpen(true);
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+      setErrorMessage('Error al actualizar el inventario.');
+      setErrorOpen(true);
+    }
+  };
+  const handleChange = (event, newValue) => {
+    setSelectedPlace(newValue);
+    setidClient(newValue.id);
+    //alert(JSON.stringify(newValue.id, null, 2));
+    setCliente(newValue.nombre);
+    setCedula(newValue.cedula);
+    setCorreo(newValue.correo);
+    setTelefono(newValue.telefono);
+  };
+
+  const fetchAddCliente = async (nombre, cedula, telefono, correo) => {
+    if (!nombre || !cedula ) {
       
-      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar });
+      console.error('Algunos valores están faltando:', { nombre, cedula, telefono, correo });
+      setErrorMessage('Datos incompletos para agregar cliente.');
+      setErrorOpen(true);
+      return;
+    }
+    try {
+      const response = await clienteServices.addData(nombre, cedula, telefono, correo);
+      //alert(JSON.stringify(response, null, 2));
+      setSuccessMessage("Cliente agregado con éxito.");
+      setSuccessOpen(true);
+      return response;
+
+    } catch (error) {
+      console.error('Error registrando cliente:', error);
+      setErrorMessage('Error al agregar cliente.');
+      setErrorOpen(true);
+      setValidador(false);
+    }
+  };
+  
+  const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id ) => {
+    if (!serialReferencia || !idUsuario || estado == null || lugar == null || fk_idusuarios == null || id == null) {
+      
+      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id  });
       setErrorMessage('Datos incompletos para agregar venta.');
       setErrorOpen(true);
       return;
     }
     try {
-      const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar);
-      alert(JSON.stringify(response, null, 2));
+      const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar,fk_idusuarios,id);
+      //alert(JSON.stringify(response, null, 2));
 
       setValidador(true);
       return response;
@@ -197,7 +257,7 @@ const QrScanner = () => {
         ]);
         validator = true;
           if (validador) {
-           // fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
+            fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
           }
   
           setSuccessMessage("¡Código QR escaneado con éxito!");
@@ -279,23 +339,27 @@ const QrScanner = () => {
   };
 
   useEffect(() => {
-    showJWT();
     
+    showJWT();
+    fetchGetCliente();
   }, []);
 
   const handleFacturaElectronica = async () => {
-    
+    var fk_idusuarios = idClient;
+    console.log('Respuesta de idPago:', idPago);
     try {
-       if(!cliente || !cedula || !correo || !correo.includes('@')|| !telefono){
+       if(!cliente || !cedula || !correo || !correo.includes('@')|| !telefono || !fk_idusuarios || !metodoPago || idPago==='') {
         setErrorMessage('Datos incompletos para la factura.');
         setErrorOpen(true);
         return;
       }
+     
         for (const venta of ventasData) {
-          // var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
-           //console.log('Respuesta de fetchAddVentas:', response);
+          
+          var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago);
+          console.log('Respuesta de fetchAddVentas:', response);
           }
-        generateReceipt(ventasData,cliente,cedula,correo,telefono);
+        generateReceipt(ventasData,cliente,cedula,correo,telefono,metodoPago);
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
     } catch (error) {
@@ -317,8 +381,8 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          //var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
-          //console.log('Respuesta de fetchAddVentas:', response);
+          var response= await fetchAddVentas(venta.idUsuario, venta.estado, venta.serialReferencia, venta.ubicacionDescripcion);
+          console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2,metodoPago);
         setSuccessMessage('Ventas registradas exitosamente.');
@@ -329,6 +393,11 @@ const QrScanner = () => {
         setErrorOpen(true);
     }
   };
+
+  const handleClients = () => {
+    fetchAddCliente(cliente, cedula, telefono, correo);
+    //alert('Cliente: ' + cliente + ' Cédula: ' + cedula + ' Correo: ' + correo + ' Teléfono: ' + telefono);
+  }
 
   const handleFactura = () => {
     //alert('Factura Normal seleccionada');
@@ -400,13 +469,28 @@ const QrScanner = () => {
       </FormControl>
 
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
-      <DialogTitle>Cliente Datos</DialogTitle>
+     {/* <DialogTitle>Cliente Datos</DialogTitle>*/} 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Button variant="contained" color="secondary" sx={{ width: '60%',justifyContent:'center' }}  onClick={() => setShowContent((prev) => !prev)}>
-        {showContent ? 'Ocultar Cliente' : 'Datos Cliente'}
+      <Button variant="contained" color="secondary" sx={{ width: '60%',justifyContent:'center',marginTop: 2 }}  onClick={() => setShowContent((prev) => !prev)}>
+        {showContent ? 'Ocultar' : 'Cliente'}
       </Button>
-      </Box>
       
+      </Box>
+      <Grid item xs={12} sm={6}  sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginTop: 2 }}>
+        <FormControl sx={{ width: '80%',color:'withe' }}>
+          <InputLabel></InputLabel>
+          <Autocomplete
+          value={selectedPlace}
+          onChange={handleChange}
+          options={places} // Los lugares que deseas mostrar en la lista
+          getOptionLabel={(option) => option.nombre || ''} 
+          isOptionEqualToValue={(option, value) => option.id === value?.id}
+          renderInput={(params) => <TextField {...params} label="Cliente" variant="outlined" />}
+          fullWidth
+          disableClearable  // Si deseas evitar que se borre la selección
+        />
+        </FormControl>
+      </Grid>
       
       <DialogContent>
       {showContent && (
@@ -446,12 +530,25 @@ const QrScanner = () => {
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
           />
-          
+          <Box marginTop={1} sx={{
+            display: 'flex',        
+            justifyContent: 'center', 
+            alignItems: 'center',       
+          }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ marginTop: 1 }}
+              onClick={handleClients}
+            >
+              AGREGAR
+            </Button>
+          </Box>
       </>
         )}
-        <Box marginTop={2}>
+        <Box marginTop={1}>
           
-          <Box display="flex" justifyContent="space-around" marginTop={1}>
+          <Box display="flex" justifyContent="space-around" >
             <Button
               variant={metodoPago === 'Débito' ? 'contained' : 'outlined'}
               color="success"
