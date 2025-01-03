@@ -91,7 +91,7 @@ const VentasServices = {
         const token = localStorage.getItem('token'); 
         console.log("Services : "+fk_referencia+" "+fk_idusuarios+" "+estado+" "+lugar+" "+fk_clientes,typopago)
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/addData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
