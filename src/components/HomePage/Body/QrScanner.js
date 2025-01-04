@@ -375,7 +375,7 @@ const QrScanner = () => {
     const cedula2='222222222';
     const correo2='NA';
     const telefono2='0000000000';
-    var fk_idusuarios = idClient;
+   
     //alert('Factura Normal seleccionada');
     //alert('Factura Electrónica seleccionada: ' + JSON.stringify(ventasData, null, 2));
     //setDialogOpen(true);
@@ -383,7 +383,7 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          var response= await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,fk_idusuarios);
+          var response= await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
           console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2,metodoPago);

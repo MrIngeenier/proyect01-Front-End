@@ -75,32 +75,34 @@ function GetVentas() {
         console.log("Actualizar acción para ID:", JSON.stringify(referencias, null, 2));
     };
 
-    const handleShowVentasByDate = () => {  
-        
+    const handleShowVentasByDate = (index,date) => {
+        //console.log("Fecha "+date+" : "+index);
         const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))];
-        const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[0]);
+       
+        const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[index]);
+        
         if (ventasFiltradas.length > 0) {
-           // alert(`Ventas realizadas el ${fechasUnicas}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta, null, 2)}`).join('\n')}`);
             generateCashEnclosure(ventasFiltradas);
-        } else {
-            alert('No se encontraron ventas para la fecha ${fechasUnicas}');
+        }else{
+            alert(`No se encontraron ventas para la fecha ${date}`);
         }
-
-        
     };
+    
+        
 
-    const handleDeleteVentasByDate = async () => {  
-        const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))];
-        const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[0]);
+    const handleDeleteVentasByDate = async (index,date) => {  
+
+        const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))]; 
+        const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[index]);
     
         if (ventasFiltradas.length > 0) {
-            alert(`Ventas realizadas el ${fechasUnicas[0]}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta.idventas, null, 2)}`).join('\n')}`);
+           // alert(`Ventas realizadas el ${fechasUnicas[0]}:\n${ventasFiltradas.map(venta => ` ${JSON.stringify(venta.idventas, null, 2)}`).join('\n')}`);
             
             for (const venta of ventasFiltradas) {
                 await handleDelete(venta.idventas); 
             }
         } else {
-            alert(`No se encontraron ventas para la fecha ${fechasUnicas[0]}`);
+            alert(`No se encontraron ventas para la fecha ${date}`);
         }
     };
     
@@ -208,7 +210,7 @@ function GetVentas() {
                 }}
             >
             {/* Tabla agrupada por fecha */}
-            {Object.entries(groupByDate(filteredData)).map(([date, ventas]) => (
+            {Object.entries(groupByDate(filteredData)).map(([date, ventas],index) => (
                 <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#121212' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between',backgroundColor: 'rgba(0, 0, 0, 0.5)' }} >
                         <Typography variant="h6" sx={{ color: 'white' }}>Fecha: {date}</Typography>
@@ -217,10 +219,10 @@ function GetVentas() {
                         </Typography>
                         
                         <Box display="flex" gap={2}>
-                            <Button variant="contained" color="primary" onClick={handleShowVentasByDate}>
+                            <Button variant="contained" color="primary" onClick={() =>handleShowVentasByDate(index, date)}>
                                 <PrintIcon sx={{ width: '80%' }} />
                             </Button> 
-                            <Button variant="contained" color="error" onClick={handleDeleteVentasByDate}>
+                            <Button variant="contained" color="error" onClick={() =>handleDeleteVentasByDate(index, date)}>
                                 <DeleteIcon sx={{ width: '80%' }} />
                             </Button> 
                             
@@ -237,9 +239,9 @@ function GetVentas() {
                                 <TableCell sx={{ color: 'white' }}>Color</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Valor</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Lugar</TableCell>
-                                
                                 <TableCell sx={{ color: 'white' }}>Cliente</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Cedula</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Pago</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Estado</TableCell>
 
                                 <TableCell sx={{ color: 'white', textAlign: 'center' }}>Fecha</TableCell>
@@ -258,6 +260,7 @@ function GetVentas() {
                                     <TableCell sx={{ color: 'white' }}>{item.lugar}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.cliente_nombre}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.cliente_cedula}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.tipo_pago}</TableCell>
                                     <TableCell>
                                         <Button
                                             variant="contained"

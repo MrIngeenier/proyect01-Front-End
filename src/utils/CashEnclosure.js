@@ -8,6 +8,13 @@ export function generateCashEnclosure(ventasFiltradas) {
     let totalValue = 0;
     let iva = 0;
     let subtotal = 0;
+    let debito = 0;
+    let efectivo = 0;
+    let credito = 0;
+    let contdebito = 0;
+    let contefectivo = 0;
+    let contcredito = 0;
+
     const ivaRate = 0.19;
     ventasFiltradas.forEach((venta, index) => {
         // Extraer datos de cada venta
@@ -19,14 +26,29 @@ export function generateCashEnclosure(ventasFiltradas) {
         const estado = venta.estado || "False";
         const cliente = venta.cliente_nombre || "NA";
         const ccCliente = venta.cliente_cedula || "NA";
+        const tipo = venta.tipo_pago || "NA";
         const numericValue = parseFloat(valor) || 0;
-        
 
         
         totalValue += numericValue;
         
         subtotal = Math.round(totalValue / (1 + ivaRate));
         iva = totalValue  - subtotal;
+        
+        if (tipo === "Debito") {
+            debito += numericValue;
+            contdebito += 1;
+        }
+
+        if (tipo === "Credito") {
+            credito += numericValue;
+            contcredito += 1;
+        }
+
+        if (tipo === "Efectivo") {
+            efectivo += numericValue;
+            contefectivo += 1;
+        }
         // Construir el HTML con los datos procesados
         allData += `
             <div>
@@ -34,7 +56,7 @@ export function generateCashEnclosure(ventasFiltradas) {
                     <strong>Item #${index + 1}</strong>: <br>
                 </p>
                 <p style="margin-top: 0px;">
-                    Producto : ${empresa} / ${serial} / ${color} / ${talla} / ${estado} / ${cliente} / ${ccCliente} / ${numericValue.toLocaleString()}
+                    ${empresa} / ${serial} / ${color} / ${talla} / ${estado} / ${cliente} / ${ccCliente} / ${tipo} / ${numericValue.toLocaleString()}
                     
                 </p>
             </div>
@@ -68,6 +90,23 @@ export function generateCashEnclosure(ventasFiltradas) {
                 <hr style="border: none; border-top: 1px dashed black; margin: 10px 0; ">
                     <div style="font-family: Arial, sans-serif; margin: 10px 0;">
                     
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            
+                            <span>Debito:   #${contdebito.toLocaleString()} </span>
+                            <span>${debito.toLocaleString()}</span>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            
+                            <span>Credito:  #${contcredito.toLocaleString()}</span>
+                            <span>${credito.toLocaleString()}</span>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            
+                            <span>Efectivo: #${contefectivo.toLocaleString()}</span>
+                            <span>${efectivo.toLocaleString()}</span>
+                        </div>
 
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                             
@@ -80,7 +119,7 @@ export function generateCashEnclosure(ventasFiltradas) {
                             <span>${iva.toLocaleString()}</span>
                         </div>
 
-                        <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; background-color: gray; ">
                             <span>Total:</span>
                         <strong>Total: ${totalValue.toLocaleString()}</strong>
                         </div>
