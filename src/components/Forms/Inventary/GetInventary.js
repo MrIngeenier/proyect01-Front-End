@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
     Button,Container, TextField, Table, TableBody, TableCell, TableContainer, 
     TableHead, TableRow, Paper,
-    Box,Dialog, DialogContent, DialogActions 
+    Box,Dialog, DialogContent, DialogActions ,Switch 
 } from '@mui/material';
+import PrintIcon from '@mui/icons-material/Print';
 
 
 
@@ -33,7 +34,8 @@ function Inventary( ) {
     const handleErrorClose = () => setErrorOpen(false);
     const handleSuccessClose = () => setSuccessOpen(false);
     const [mostrar, setMostrar] = useState(false);
-
+    const [checked, setChecked] = useState(false);
+    const [dataToggle, setDataToggle] = useState([]);
   
 
     const handleCloseDialog = () => {
@@ -49,7 +51,44 @@ function Inventary( ) {
     };
     useEffect(() => {
         fetchInventary();
+        
     }, []);
+
+    const handleToggle = (item) => {
+        // Alternar el estado del botón específico
+        setChecked((prev) => ({
+          ...prev,
+          [item.id]: !prev[item.id], // Cambia el estado solo del botón correspondiente
+        }));
+        addData(item);
+       // console.log(`ID seleccionado: ${ JSON.stringify(dataToggle, null, 2)}`); // Muestra el alert con el ID
+      };
+
+
+
+      const addData = (newItem) => {
+        setDataToggle((prevData) => {
+            // Verificar si el id ya está en el arreglo
+            const itemExists = prevData.some(item => item.id === newItem.id); // Compara el id
+            
+            // Si el id no está ya en el arreglo, lo agregamos
+            if (!itemExists) {
+                return [...prevData, newItem];
+            } else {
+                // Si el id ya está, lo eliminamos
+                return prevData.filter(item => item.id !== newItem.id);
+            }
+        });
+    };
+
+      const showDataToggle = (item) => {
+        // Alternar el estado del botón específico
+        //alert("GG+"+JSON.stringify(item, null, 2))
+        item.forEach((obj) => {
+            console.log("ID: "+ obj.id);  // Imprime la propiedad id de cada objeto en el arreglo
+        });
+        //console.log(`ID seleccionado: ${ JSON.stringify(item, null, 2)}`); // Muestra el alert con el ID
+      };
 
     // Busqueda segun el filtro de datos
     const applyFilters = (searchValue, filters) => {
@@ -639,10 +678,20 @@ function Inventary( ) {
                 <Button
                     variant="outlined"
                     color='primary'
-                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px'}}
+                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px',
+                        fontSize: { xs: '10px', sm: '16px' }
+                    }}
                     onClick={fetchInventary}
                 >
                     ACTUALIZAR
+                </Button>
+                <Button
+                    variant="outlined"
+                    color='primary'
+                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px'}}
+                    onClick={() =>showDataToggle(dataToggle)}
+                >
+                    <PrintIcon sx={{ width: '80%' }} />
                 </Button>
             </Box>
     
@@ -815,7 +864,13 @@ function Inventary( ) {
                                             onClick={() => handleUpdate(item)}
                                         >
                                             <UpdateIcon />
+                                            
                                         </Button>
+                                        <Switch
+                                            checked={checked[item.id] || false} // Estado del switch por ID
+                                            onChange={() => handleToggle(item)} // Alterna el estado
+                                            inputProps={{ 'aria-label': `switch-${item.id}` }}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ))}

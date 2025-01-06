@@ -119,7 +119,7 @@ export function generateCashEnclosure(ventasFiltradas) {
                             <span>${iva.toLocaleString()}</span>
                         </div>
 
-                        <div style="display: flex; justify-content: space-between; font-weight: bold; background-color: gray; ">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; ">
                             <span>Total:</span>
                         <strong>Total: ${totalValue.toLocaleString()}</strong>
                         </div>
