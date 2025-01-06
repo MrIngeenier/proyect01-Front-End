@@ -5,8 +5,7 @@ import {
     Box,Dialog, DialogContent, DialogActions ,Switch 
 } from '@mui/material';
 import PrintIcon from '@mui/icons-material/Print';
-
-
+import { generatePrintInventary } from '../../../utils/printInventary';
 
 import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
@@ -82,12 +81,15 @@ function Inventary( ) {
     };
 
       const showDataToggle = (item) => {
-        // Alternar el estado del botón específico
-        //alert("GG+"+JSON.stringify(item, null, 2))
-        item.forEach((obj) => {
-            console.log("ID: "+ obj.id);  // Imprime la propiedad id de cada objeto en el arreglo
-        });
-        //console.log(`ID seleccionado: ${ JSON.stringify(item, null, 2)}`); // Muestra el alert con el ID
+
+        if(item.length === 0) { 
+            setErrorMessage('No hay datos seleccionados');
+            setErrorOpen(true);
+            alert('No hay datos seleccionados');
+        }else{
+            generatePrintInventary(item);
+        }
+        
       };
 
     // Busqueda segun el filtro de datos
