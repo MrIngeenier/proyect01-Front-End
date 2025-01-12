@@ -100,7 +100,7 @@ const QrScannerSalida = () => {
 
         const decrypt = decryptText(decodedText);
         const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
-        if (qrData.length === 6) {
+        if (qrData.length === 7) {
           const [nombreEmpresa, serial, color, ubicacionDescripcion, talla,tipopublico] = qrData;
           //console.log(qrData);
           
@@ -174,22 +174,9 @@ const QrScannerSalida = () => {
 
   return (
       <Box
-        sx={{
-          padding: 2,
-          textAlign: 'center',
-          width: {
-            xs: '240px',
-            lg: '50%', // Para pantallas extra grandes
-          },
-          margin: {
-            xs: '0 auto',
-            lg: '0 auto', // Para pantallas extra grandes
-          },
-          marginTop: {
-            lg: '-20px', // Para pantallas extra grandes
-          },
-          
-        }}
+      sx={{padding: 2,textAlign: 'center',
+        width: {lg: '50%'},margin: {lg: '0 auto', },marginTop: {lg: '-20px'},
+      }}
       >       
       <Typography variant="h6" gutterBottom>
         SCANNER SALIDA DE MERCANCIA
