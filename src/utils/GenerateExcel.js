@@ -3,7 +3,7 @@ import { encryptText } from './Encript';
 
 export function generateExcel(ventasFiltradas) {
   const result = [];
-  console.log(ventasFiltradas);
+  //console.log(ventasFiltradas);
 
   // Iterar sobre los productos filtrados
   ventasFiltradas.forEach(item => {
@@ -12,8 +12,10 @@ export function generateExcel(ventasFiltradas) {
       // Si la talla tiene una cantidad mayor que 0, agregar la fila
       const tallaNumero = talla.slice(1); 
 
+
       if (item[talla] > 0) {
-        const QR = `${item.empresa}/${item.referencia}/${item.color}/${tallaNumero}/${item[talla]}`;
+        const QR = `${item.empresa}/${item.referencia}/${item.color}/${item.lugar}/${tallaNumero}/${item.publico}/${item.valor}`;
+        //console.log("QR: "+QR);
         const encryptedQR = encryptText(QR);
         result.push({
           EMPRESA: item.empresa,
@@ -23,6 +25,7 @@ export function generateExcel(ventasFiltradas) {
           PUBLICO: item.publico,
           TALLA: tallaNumero,
           CANTIDAD: item[talla],
+          VALOR: item.valor,
           QR: encryptedQR,
         });
       }
@@ -31,7 +34,7 @@ export function generateExcel(ventasFiltradas) {
 
   // Convertir el array de objetos a hoja de trabajo de Excel
   const worksheet = XLSX.utils.json_to_sheet(result, {
-    header: ['EMPRESA', 'REFERENCIA', 'COLOR','LUGAR','PUBLICO', 'TALLA', 'CANTIDAD', 'QR'],
+    header: ['EMPRESA', 'REFERENCIA', 'COLOR','LUGAR','PUBLICO', 'TALLA', 'CANTIDAD','VALOR', 'QR'],
   });
 
   // Crear el libro de trabajo

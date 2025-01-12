@@ -122,7 +122,7 @@ const QrScanner = () => {
   };
   
   const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id ) => {
-    alert(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
+    console.log(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
     if (!serialReferencia || !idUsuario || estado == null || lugar == null || fk_idusuarios == null || id == null) {
       
       console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id  });
@@ -156,7 +156,7 @@ const QrScanner = () => {
       //setCount(response.id);
       html5QrcodeScanner.clear();
       //alert(JSON.stringify(response, null, 2));
-      //alert(response.id);
+      console.log("ID:"+response.id);
       return response.id;
     } catch (error) {
       console.error('Error registrando para tomar id referencia:', error);
@@ -219,6 +219,7 @@ const QrScanner = () => {
     setResult(decodedText);
     
     const decrypt = decryptText(decodedText);
+    console.log(decrypt);
     const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
     setData(decrypt);
 
