@@ -4,19 +4,25 @@ import {
     TableHead, TableRow, Paper,
     Box,Dialog, DialogContent, DialogActions ,Switch 
 } from '@mui/material';
-import PrintIcon from '@mui/icons-material/Print';
-import { generatePrintInventary } from '../../../utils/printInventary';
 
+import PrintIcon from '@mui/icons-material/Print';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import UpdateIcon from '@mui/icons-material/Update';
+
+import { generatePrintInventary } from '../../../utils/printInventary';
+import { generateExcel } from '../../../utils/GenerateExcel';
 import { jsPDF } from 'jspdf';
 import QRCode from 'qrcode';
 import { encryptText } from '../../../utils/Encript';
+
 import inventaryServices from '../../../service/inventary.services';
 import EmpresaServices from '../../../service/empresa.services';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import UpdateIcon from '@mui/icons-material/Update';
 import SuccessAlert from '../../Alerts/SuccesAlert';
 import ErrorAlert from '../../Alerts/ErrorAlert';
 import UpdateInventary from './UpdateInventary';
+
 
 function Inventary( ) {
     const [search, setSearch] = useState('');
@@ -88,6 +94,18 @@ function Inventary( ) {
             alert('No hay datos seleccionados');
         }else{
             generatePrintInventary(item);
+        }
+        
+      };
+
+      const showDataToggleExcel = (item) => {
+
+        if(item.length === 0) { 
+            setErrorMessage('No hay datos seleccionados');
+            setErrorOpen(true);
+            alert('No hay datos seleccionados');
+        }else{
+            generateExcel(item);
         }
         
       };
@@ -695,6 +713,14 @@ function Inventary( ) {
                 >
                     <PrintIcon sx={{ width: '80%' }} />
                 </Button>
+                <Button
+                    variant="outlined"
+                    color='primary'
+                    sx={{ borderColor: 'white', color: 'white', height: '56px', marginLeft: '8px'}}
+                    onClick={() =>showDataToggleExcel(dataToggle)}
+                >
+                    <ReceiptIcon sx={{ width: '80%' }} />
+                </Button>
             </Box>
     
             <Box display="flex" sx={{ padding: '20px 0px' }}>
@@ -849,8 +875,8 @@ function Inventary( ) {
                                             sx={{ borderColor: 'white', color: 'white' }}
                                             onClick={() => handlePdfClick(item)}
                                         >
-                                            PDF
-                                        </Button>
+                                            <PictureAsPdfIcon/>  
+                                          </Button>  
                                         <Button
                                             variant="outlined"
                                             color="secondary"

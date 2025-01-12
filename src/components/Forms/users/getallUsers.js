@@ -96,9 +96,10 @@ function Getallusers() {
 
     const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
-
+  
     useEffect(() => {
         fetchUsers();
+        return;
       }, []);
 
     return (
