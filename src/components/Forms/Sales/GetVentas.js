@@ -237,6 +237,7 @@ function GetVentas() {
                                 <TableCell sx={{ color: 'white' }}>Empresa</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Referencia</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Color</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Talla</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Valor</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Lugar</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Cliente</TableCell>
@@ -256,6 +257,7 @@ function GetVentas() {
                                     <TableCell sx={{ color: 'white' }}>{item.empresa}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.serial}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.talla_vendida}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.valor}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.lugar}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.cliente_nombre}</TableCell>
