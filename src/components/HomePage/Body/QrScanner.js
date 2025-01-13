@@ -61,11 +61,21 @@ const QrScanner = () => {
   var idReferences;
   
   const fetchInventaryQR = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
+    //console.log("Empresa: "+nombreEmpresa+" Referencia : "+referenciaSerial+" Color: "+color+" Ubicacion: "+ubicacionDescripcion+" Talla: "+talla);
     try {
-      await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
+      const response = await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
       //setData(response);
-      setSuccessMessage("Inventario actualizado con éxito.");
-      setSuccessOpen(true);
+      console.log("Response : "+JSON.stringify(response, null, 2));
+      
+      if(response.body === null){
+        setErrorMessage('Talla sin cantidad en [Inventario].');
+        setErrorOpen(true);
+        
+      }else{
+        setSuccessMessage("Inventario actualizado con éxito.");
+        setSuccessOpen(true);
+      }
+      return response;
     } catch (error) {
       console.error('Error fetching inventory:', error);
       setErrorMessage('Error al actualizar el inventario.');
@@ -122,7 +132,7 @@ const QrScanner = () => {
   };
   
   const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id ) => {
-    console.log(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
+    //console.log(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
     if (!serialReferencia || !idUsuario || estado == null || lugar == null || fk_idusuarios == null || id == null) {
       
       console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id  });
@@ -132,7 +142,7 @@ const QrScanner = () => {
     }
     try {
       const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar,fk_idusuarios,id);
-      //alert(JSON.stringify(response, null, 2));
+      console.log(JSON.stringify(response, null, 2));
 
       setValidador(true);
       return response;
@@ -172,12 +182,12 @@ const QrScanner = () => {
     if (windowWidth <= 500) {
       // Móvil
       qrboxSize = { width: 150, height: 150 };
-      console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
+      //console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
     }
     if (windowWidth > 500 && windowWidth <= 1024) {
       // Móvil
       qrboxSize = { width: 600, height: 500 };
-      console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
+      //console.log('Ancho Pantalla'+qrboxSize.width+' '+qrboxSize.height);
     }  if(windowWidth > 1024 ) {
       qrboxSize = { width: 450, height: 400 };
     }
@@ -201,6 +211,7 @@ const QrScanner = () => {
         },
         false
       );
+
     html5QrcodeScanner.render(
       (decodedText) => handleScanSuccess(decodedText, html5QrcodeScanner),
       handleScanError
@@ -254,13 +265,19 @@ const QrScanner = () => {
                 serialReferencia: idReferences,
                 ubicacionDescripcion: ubicacionDescripcion,
                 qrData: decrypt,
-                valor: valor
+                valor: valor,
+                nombreEmpresa: nombreEmpresa,
+                color: color,
+                talla: talla,
+                tipopublico: tipopublico,
+                ubicacionDescripcion: ubicacionDescripcion,
+                serial: serial,
             }
         ]);
-        validator = true;
-          if (validador) {
-            fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
-          }
+        
+          
+            //fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
+          
   
           setSuccessMessage("¡Código QR escaneado con éxito!");
           setSuccessOpen(true);
@@ -348,7 +365,8 @@ const QrScanner = () => {
 
   const handleFacturaElectronica = async () => {
     var fk_idusuarios = idClient;
-    console.log('Respuesta de idPago:', idPago);
+    //console.log('Respuesta de idPago:', idPago);
+    console.log(ventasData)
     try {
        if(!cliente || !cedula || !correo || !correo.includes('@')|| !telefono || !fk_idusuarios || !metodoPago || idPago==='') {
         setErrorMessage('Datos incompletos para la factura.');
@@ -358,9 +376,13 @@ const QrScanner = () => {
      
         for (const venta of ventasData) {
           
-          var response= await fetchAddVentas(venta.idUsuario, true, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago);
-          console.log('Respuesta de fetchAddVentas:', response);
+          await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
+          const response = await fetchAddVentas(venta.idUsuario, true, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago);
+            
+          console.log('Respuesta de fetchAddVentas:'+ response);
           }
+
+          
         generateReceipt(ventasData,cliente,cedula,correo,telefono,metodoPago);
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
@@ -384,8 +406,10 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          var response= await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
-          console.log('Respuesta de fetchAddVentas:', response);
+          await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
+          await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
+          
+          //console.log('Respuesta de fetchAddVentas:', response);
           }
         generateReceipt(ventasData,cliente2,cedula2,correo2,telefono2,metodoPago);
         setSuccessMessage('Ventas registradas exitosamente.');
