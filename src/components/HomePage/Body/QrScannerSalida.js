@@ -27,6 +27,7 @@ const QrScannerSalida = () => {
   });
 
   const fetchInventaryQR = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
+    console.log("Empresa: "+nombreEmpresa+" Referencia : "+referenciaSerial+" Color: "+color+" Ubicacion: "+ubicacionDescripcion+" Talla: "+talla);
     try {
       const response = await inventaryServices.updateDataQR(
         nombreEmpresa,
@@ -35,7 +36,12 @@ const QrScannerSalida = () => {
         ubicacionDescripcion,
         talla
       );
-
+      //console.log("Response : "+JSON.stringify(response, null, 2));
+      if(response.body === null){
+        setErrorMessage('Talla sin cantidad en [Inventario].');
+        setErrorOpen(true);
+        return;
+      }
       setData(response);
       setSuccessMessage("Inventario actualizado con éxito.");
       setSuccessOpen(true);
@@ -79,7 +85,7 @@ const QrScannerSalida = () => {
     const html5QrcodeScanner = new Html5QrcodeScanner(
       'qr-reader',
       {
-        fps: 20,
+        fps: 10,
         qrbox: qrboxSize,
         videoConstraints: {
           facingMode: 'environment',
@@ -102,11 +108,9 @@ const QrScannerSalida = () => {
         const qrData = decrypt.split('/').map(item => item.replace(/^'|'$/g, '').trim());
         if (qrData.length === 7) {
           const [nombreEmpresa, serial, color, ubicacionDescripcion, talla,tipopublico] = qrData;
-          //console.log(qrData);
+          console.log(qrData);
           
             fetchInventaryQR(nombreEmpresa, serial, color, ubicacionDescripcion, talla);
-          
-          
 
         }
 
