@@ -18,6 +18,8 @@
     "html5-qrcode": "^2.3.8",
     "jspdf": "^2.5.2",
     "jwt-decode": "^4.0.0",
+    "lz-string": "^1.5.0",
+    "pako": "^2.1.0",
     "qrcode": "^1.5.4",
     "qrcode.react": "^4.0.1",
     "react": "^18.3.1",
