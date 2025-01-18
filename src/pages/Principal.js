@@ -7,6 +7,8 @@ import publicServices from '../service/public.services';
 import LoadingScreen from '../utils/LoadingSceen';
 import ErrorAlert from '../components/Alerts/ErrorAlert';
 import SuccessAlert from '../components/Alerts/SuccesAlert';
+import BackgroundImage from '../asset/images/Stock.png';
+
 const theme = createTheme();
 
 function Principal() {
@@ -67,14 +69,32 @@ function Principal() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} >
+      <Box
+        sx={{
+          backgroundImage: `url(${BackgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          height: '100vh',
+          width: '100vw',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: 0,
+          padding: 0,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+        }}
+      >
       <Container
         component="main"
         sx={{
-          bgcolor: '#d2d1d1',
+          bgcolor: 'rgba(203, 199, 199, 0.9)',
           color: '#333',
           padding: 4,
-          borderRadius: 4,
+          borderRadius: 1,
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
           display: 'flex',
           flexDirection: 'column',
@@ -97,7 +117,7 @@ function Principal() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Welcome
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -144,6 +164,7 @@ function Principal() {
       </Container>
       <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
       <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
+      </Box>
     </ThemeProvider>
   );
 }
