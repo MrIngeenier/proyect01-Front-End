@@ -29,6 +29,7 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 
 import BodyHomepage from '../Body/BodyHomePage';
 import QrScanner from '../Body/QrScanner';
@@ -43,6 +44,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import QrScannerSearch from '../Body/QrScannerSearch';
 import QrScannerADD from '../Body/QrAddInventary';
+import Store from '../../Forms/Store/Store';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -181,8 +183,15 @@ export default function SidebarDashboard() {
 
   const handleQRADD = () => {
     //console.log('Botón QR presionado');
-    setTitle("SCANNER QR SEARCH");
+    setTitle("SCANNER QR ADD");
     setActiveComponent(() => QrScannerADD);
+    
+  };
+
+  const handleStore = () => {
+    //console.log('Botón QR presionado');
+    setTitle("STORE");
+    setActiveComponent(() => Store);
     
   };
 
@@ -270,6 +279,12 @@ export default function SidebarDashboard() {
         icon={<QrCodeScannerIcon />} 
         onClick={handleQRClick}
       />
+      <BottomNavigationAction 
+        label="QRVenta"
+        sx={{color:'white'}} 
+        icon={<StorefrontIcon />} 
+        onClick={handleStore}
+      /> 
       
       <BottomNavigationAction 
         label="Logout"
@@ -373,6 +388,14 @@ export default function SidebarDashboard() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton onClick={handleStore} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+              <StorefrontIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+                <QrCodeScannerIcon />
+              </StorefrontIcon>
+              <ListItemText primary="Tienda" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton onClick={handleVentasClick} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
               <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
                 <ShoppingCartIcon />
@@ -394,12 +417,12 @@ export default function SidebarDashboard() {
         </List>
       </Drawer>
       
-      <Box component="main" sx={{ flexGrow: 1, p: 3}}>
+      <Box sx={{ flexGrow: 1, p: 3}}>
         <DrawerHeader />
         
         {RenderedComponent}
       </Box>
-      <Box component="main2" sx={{ flexGrow: 1, p: 3, display: { xs: 'none'} }}>
+      <Box sx={{ flexGrow: 1, p: 3, display: { xs: 'none'} }}>
         <DrawerHeader />
         
         {RenderedComponent}
