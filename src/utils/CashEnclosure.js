@@ -147,17 +147,10 @@ export function generateCashEnclosure(ventasFiltradas) {
 
         // Imprimir el contenido del iframe
         printIframe.contentWindow.print();
-        sendCutCommandToPrinter();
+       // sendCutCommandToPrinter();
     };
 
     img.onerror = () => {
         console.error('Error al cargar la imagen');
     };
-}
-function sendCutCommandToPrinter() {
-    // Este comando corresponde a ESC/POS para cortar el papel
-    const cutCommand = '\x1D\x56\x00';  // Comando ESC/POS para cortar el papel
-
-    console.log('Enviando comando de corte:', cutCommand);
-    
 }

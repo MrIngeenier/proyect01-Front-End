@@ -10,13 +10,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -25,6 +27,9 @@ import CropFreeIcon from '@mui/icons-material/CropFree';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+
 import BodyHomepage from '../Body/BodyHomePage';
 import QrScanner from '../Body/QrScanner';
 import SalesDashboard from '../Body/SalesDashboard';
@@ -37,7 +42,7 @@ import AllData from '../../../pages/AddData';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import QrScannerSearch from '../Body/QrScannerSearch';
-
+import QrScannerADD from '../Body/QrAddInventary';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -174,6 +179,13 @@ export default function SidebarDashboard() {
     
   };
 
+  const handleQRADD = () => {
+    //console.log('Botón QR presionado');
+    setTitle("SCANNER QR SEARCH");
+    setActiveComponent(() => QrScannerADD);
+    
+  };
+
   const handleSalidaClick = () => {
     console.log('Botón Salida presionado');
     navigate('/'); // Guarda el token si es necesario
@@ -241,11 +253,17 @@ export default function SidebarDashboard() {
         onClick={handleQRClick2}
       />
       <BottomNavigationAction 
-        label="QRBusqueda"
+        label="Busqueda"
         sx={{color:'white'}} 
-        icon={<CropFreeIcon />} 
+        icon={<FindInPageIcon />} 
         onClick={handleQRSearch}
       />
+      <BottomNavigationAction 
+        label="Agregar"
+        sx={{color:'white'}} 
+        icon={<AddBoxIcon />} 
+        onClick={handleQRADD}
+      /> 
       <BottomNavigationAction 
         label="QRVenta"
         sx={{color:'white'}} 
@@ -340,10 +358,18 @@ export default function SidebarDashboard() {
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton onClick={handleQRSearch} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
-              <CropFreeIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+              <FindInPageIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
                 <QrCodeScannerIcon />
-              </CropFreeIcon>
+              </FindInPageIcon>
               <ListItemText primary="Scanner/Busqueda" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton onClick={handleQRADD} sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+              <AddBoxIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+                <QrCodeScannerIcon />
+              </AddBoxIcon>
+              <ListItemText primary="Scanner/Agregar" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
