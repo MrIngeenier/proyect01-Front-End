@@ -95,13 +95,26 @@ function Store() {
         setSelectedItems(newSelectedItems);
     };
 
-    return (
-        <Box sx={Backgrond}>
+    const handleValorChange = (event, index) => {
+        const newSelectedItems = [...selectedItems];
+        newSelectedItems[index].valor = event.target.value; // Actualiza el valor
+        setSelectedItems(newSelectedItems);
+    };
+    
 
-            <Box sx={{ marginTop: 3,marginBottom:3, width: '100%' }}>
+    return (
+        <Box sx={ { marginBottom: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            maxWidth: { xs: '350px', sm: '100%', md: '100%', lg: '100%', xl: '100%' } 
+
+        }}>
+
+            <Box sx={{ marginTop: 3,marginBottom:3, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <Typography variant="h6" sx={{ marginBottom: 2 }}>Productos Seleccionados</Typography>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="Productos seleccionados">
+                    <Table sx={{ backgroundColor: 'rgba(227, 226, 226, 0.25)',
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.4)',
+                    borderRadius: '8px',
+                    minWidth: 700 }} aria-label="Productos seleccionados">
                         <TableHead>
                             <TableRow>
                                 <TableCell><strong>Empresa</strong></TableCell>
@@ -120,7 +133,16 @@ function Store() {
                                     <TableCell>{item.empresa}</TableCell>
                                     <TableCell>{item.referencia}</TableCell>
                                     <TableCell>{item.color}</TableCell>
-                                    <TableCell>{item.valor}</TableCell>
+                                    <TableCell>
+                                    <TextField
+                                        type="number"
+                                        value={item.valor}
+                                        onChange={(event) => handleValorChange(event, index)}
+                                        variant="outlined"
+                                        size="small"
+                                    />
+                                </TableCell>
+
                                     <TableCell>{item.publico}</TableCell>
 
                                     <TableCell>
