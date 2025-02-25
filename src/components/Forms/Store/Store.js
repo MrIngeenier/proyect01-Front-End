@@ -2,20 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, Select, FormControl, InputLabel, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete'; // Icono de eliminar
 import inventaryServices from "../../../service/inventary.services";
-
+import VentasServices from "../../../service/ventas.services";
+import clienteServices from "../../../service/cliente.service";
+import { Dialog, DialogActions, DialogContent, DialogContentText,Autocomplete } from '@mui/material';
+import SuccessAlert from "../../Alerts/SuccesAlert";
+import ErrorAlert from "../../Alerts/ErrorAlert";
 // Estilos
-const Backgrond = {
-    backgroundColor: 'rgba(223, 223, 223, 0.7)', 
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: '20px',
-    marginBottom: '-20px',
-    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.4)',
-    borderRadius: '8px', 
-};
 
 const buttonStyle = {
     width: '100%', // Ancho del botón (cuadrado)
@@ -39,13 +31,83 @@ const searchStyle = {
 };
 
 function Store() {
+    const token = localStorage.getItem('token');
+    const [formData, setFormData] = useState({
+        idUsuario: '',
+        estado: false,
+        serialReferencia: '1'
+      });
     const [data, setData] = useState([]);           // Datos del inventario
     const [search, setSearch] = useState('');        // Valor de búsqueda
     const [selectedItems, setSelectedItems] = useState([]);  // Arreglo de productos seleccionados
+    const [ItemsID, setItemsID] = useState([]);  // Arreglo de productos seleccionados
+    const [isIdReferenceProcessed, setIsIdReferenceProcessed] = useState(true);
+    const [dialogOpen, setDialogOpen] = useState(false); // Estado para controlar la apertura del diálogo
+    const [idClient, setidClient] = useState('');
+    const [cliente, setCliente] = useState('');
+    const [cedula, setCedula] = useState('');
+    const [correo, setCorreo] = useState('');
+    const [telefono, setTelefono] = useState('');
+    const [showContent, setShowContent] = useState(false);
+    const [metodoPago, setMetodoPago] = useState('');
+    const [idPago, setidPago] = useState(0); 
+    const [places, setPlaces] = useState([]);
+      const [selectedPlace, setSelectedPlace] = useState(null);   
+      const [errorMessage, setErrorMessage] = useState('');
+        const [successMessage, setSuccessMessage] = useState('');
+        const [errorOpen, setErrorOpen] = useState(false);
+        const [successOpen, setSuccessOpen] = useState(false);
+          const [validador, setValidador] = useState(true);
+            const [ventasData, setVentasData] = useState([]); 
+    const [idVentas, setIdVentas] = useState(0);
+    const [idReferencia, setIdReferencia] = useState(0);
+    const handleErrorClose = () => setErrorOpen(false);
+  const handleSuccessClose = () => setSuccessOpen(false);
+    const handleDeleteVenta = (index) => {
+        setVentasData(prevData => prevData.filter((_, i) => i !== index));
+      };
+        
 
     useEffect(() => {
+        showJWT();
         fetchInventary();
     }, []);
+
+    const decodeJWT = (token) => {
+        if (!token) {
+          console.error("No token provided");
+          return null;
+        }
+    
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+          console.error("Invalid token format");
+          return null;
+        }
+    
+        const payload = parts[1];
+        try {
+          const decodedPayload = atob(payload);
+          return JSON.parse(decodedPayload);
+        } catch (error) {
+          console.error("Error decoding token payload:", error);
+          return null;
+        }
+      };
+    
+
+    const showJWT = () => {
+        const decodedData = decodeJWT(token);
+        if (decodedData) {
+          setFormData((prev) => ({
+            ...prev,
+            idUsuario: decodedData.userId || ''  // Asegúrate de que userId esté disponible
+          }));
+          //console.log("DecodeJWT:", decodedData.userId);
+        } else {
+          console.error("No se pudo decodificar el JWT o no contiene userId.");
+        }
+      };
 
     const fetchInventary = async () => {
         try {
@@ -100,7 +162,120 @@ function Store() {
         newSelectedItems[index].valor = event.target.value; // Actualiza el valor
         setSelectedItems(newSelectedItems);
     };
+
+    const handleSendSales = async () => {
+        const faltaTalla = selectedItems.some(item => !item.talla || item.talla.trim() === '');
+        
+        if (selectedItems.length === 0 || faltaTalla) {
+            alert('No hay productos seleccionados o falta seleccionar la talla');
+            return;
+        }
     
+        try {
+            const responses = await Promise.all(
+                selectedItems.map(async (item) => {
+                    return await VentasServices.GetReferenciaID(item.color, item.referencia, item.publico);
+                })
+            );
+
+           /**  const reponseSales = await Promise.all(
+                selectedItems.map(async (item) => {
+                    return await VentasServices.addVentas(responses,1,item.estado,item.lugar,1,item.valor);
+                })
+            );*/
+    
+            setItemsID(responses);
+    
+           // addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,pago)
+
+                alert("Cantidad: " + responses.length + " ID: " + JSON.stringify(responses, null, 2));
+            
+    
+        } catch (error) {
+            console.error('Error enviando ventas:', error);
+        }
+    };
+    const fetchGetCliente = async () => {
+        try {
+          const response = await clienteServices.getData();
+          //alert('Clientes: ' + JSON.stringify(response, null, 2));
+          setPlaces(response);
+          //alert('Clientes: ' + JSON.stringify(places, null, 2));
+          //setData(response);
+          setSuccessMessage("Clientes obtenidos con éxito.");
+          setSuccessOpen(true);
+        } catch (error) {
+          console.error('Error fetching inventory:', error);
+          setErrorMessage('Error al actualizar el inventario.');
+          setErrorOpen(true);
+        }
+      };
+
+      const handleChange = (event, newValue) => {
+        setSelectedPlace(newValue);
+        setidClient(newValue.id);
+        //alert(JSON.stringify(newValue.id, null, 2));
+        setCliente(newValue.nombre);
+        setCedula(newValue.cedula);
+        setCorreo(newValue.correo);
+        setTelefono(newValue.telefono);
+      };
+
+      const fetchAddCliente = async (nombre, cedula, telefono, correo) => {
+        if (!nombre || !cedula ) {
+          
+          console.error('Algunos valores están faltando:', { nombre, cedula, telefono, correo });
+          setErrorMessage('Datos incompletos para agregar cliente.');
+          setErrorOpen(true);
+          return;
+        }
+        try {
+          const response = await clienteServices.addData(nombre, cedula, telefono, correo);
+          //alert(JSON.stringify(response, null, 2));
+          setSuccessMessage("Cliente agregado con éxito.");
+          setSuccessOpen(true);
+          return response;
+    
+        } catch (error) {
+          console.error('Error registrando cliente:', error);
+          setErrorMessage('Error al agregar cliente.');
+          setErrorOpen(true);
+          setValidador(false);
+        }
+      };
+
+      const handleClients = () => {
+        fetchAddCliente(cliente, cedula, telefono, correo);
+        //alert('Cliente: ' + cliente + ' Cédula: ' + cedula + ' Correo: ' + correo + ' Teléfono: ' + telefono);
+      }
+    
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+      };
+
+    const handleMetodoPago = (metodo) => {
+        setMetodoPago(metodo);
+        if( metodo === 'Débito') { setidPago(2); }
+        if( metodo === 'Crédito') { setidPago(3); }
+        if( metodo === 'Efectivo') { setidPago(1); }
+          
+        //alert('Método de pago seleccionado: ' + metodo);
+      };
+    
+    const handleFacturaNormal = async () => {
+       alert('Factura Normal');
+       handleSendSales();
+      };
+      const handleFacturaElectronica = async () => {
+        alert('Factura Electronica');
+        handleSendSales();
+       };
+
+       const handleFactura = () => {
+        //alert('Factura Normal seleccionada');
+        
+        setDialogOpen(true);
+      };
 
     return (
         <Box sx={ { marginBottom: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -194,7 +369,7 @@ function Store() {
                 </TableContainer>
             </Box>
 
-            <Button variant="contained" color="success" sx={{ marginTop: 3,marginBottom:3 }}>
+            <Button variant="contained" color="success" sx={{ marginTop: 3,marginBottom:3 }} onClick={() => handleFactura()}>
               Factura
             </Button>
 
@@ -224,8 +399,155 @@ function Store() {
                 ))}
             </Grid>
 
-            {/* Mostrar la lista de productos seleccionados en una tabla */}
-            
+            <Dialog open={dialogOpen} onClose={handleDialogClose}>
+     {/* <DialogTitle>Cliente Datos</DialogTitle>*/} 
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Button variant="contained" color="secondary" sx={{ width: '60%',justifyContent:'center',marginTop: 2 }}  
+      onClick={() => {
+        setShowContent((prev) => !prev);
+        if(showContent === false){fetchGetCliente();}
+       }}>
+        {showContent ? 'Ocultar' : 'Cliente'}
+        
+      </Button>
+      
+      </Box>
+      <Grid item xs={12} sm={6}  sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',marginTop: 2 }}>
+        <FormControl sx={{ width: '80%',color:'withe' }}>
+          <InputLabel></InputLabel>
+          <Autocomplete
+          value={selectedPlace}
+          onChange={handleChange}
+          options={places} 
+          getOptionLabel={(option) => option.nombre || ''} 
+          isOptionEqualToValue={(option, value) => option.id === value?.id}
+          renderInput={(params) => <TextField {...params} label="Cliente" variant="outlined" />}
+          fullWidth
+          disableClearable  // Si deseas evitar que se borre la selección
+        />
+        </FormControl>
+      </Grid>
+      
+      <DialogContent>
+      {showContent && (
+        <>
+        <TextField
+            label="Nombre"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={cliente}
+            onChange={(e) => setCliente(e.target.value)}
+          />
+          <TextField
+            label="Cédula"
+            margin="dense"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={cedula}
+            onChange={(e) => setCedula(e.target.value)}
+          />
+          <TextField
+            label="Correo"
+            margin="dense"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+          />
+          <TextField
+            label="Teléfono"
+            margin="dense"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={telefono}
+            onChange={(e) => setTelefono(e.target.value)}
+          />
+          <Box marginTop={1} sx={{
+            display: 'flex',        
+            justifyContent: 'center', 
+            alignItems: 'center',       
+          }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ marginTop: 1 }}
+              onClick={handleClients}
+            >
+              AGREGAR
+            </Button>
+          </Box>
+      </>
+        )}
+        <Box marginTop={1}>
+          
+          <Box display="flex" justifyContent="space-around" >
+            <Button
+              variant={metodoPago === 'Débito' ? 'contained' : 'outlined'}
+              color="success"
+              onClick={() => handleMetodoPago('Débito')}
+            >
+              Débito
+            </Button>
+            <Button
+              variant={metodoPago === 'Crédito' ? 'contained' : 'outlined'}
+              color="success"
+              onClick={() => handleMetodoPago('Crédito')}
+            >
+              Crédito
+            </Button>
+            <Button
+              variant={metodoPago === 'Efectivo' ? 'contained' : 'outlined'}
+              color="success"
+              onClick={() => handleMetodoPago('Efectivo')}
+            >
+              Efectivo
+            </Button>
+          </Box>
+        </Box>
+        <DialogContentText>
+          Aquí están los datos de ventas escaneados:
+        </DialogContentText>
+        {ventasData.map((venta, index) => (
+          <Box key={index} display="flex" alignItems="center" justifyContent="space-between">
+            <Typography variant="body1">
+              {venta.qrData}
+            </Typography>
+            <IconButton onClick={() => handleDeleteVenta(index)}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        ))}
+      </DialogContent>
+      
+      <DialogActions>
+      <Button
+            variant="contained"
+            color="warning"
+            sx={{ marginTop: 0 }}
+            onClick={handleFacturaElectronica}
+          >
+            Electrónica
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ marginTop: 0 }}
+            onClick={handleFacturaNormal}
+          >
+            NORMAL
+          </Button>
+        <Button onClick={handleDialogClose} color="primary">
+          Cerrar
+        </Button>
+      </DialogActions>
+    </Dialog>
+
+    <SuccessAlert open={successOpen} handleClose={handleSuccessClose} message={successMessage} />
+    <ErrorAlert open={errorOpen} handleClose={handleErrorClose} message={errorMessage} />
         </Box>
     );
 }
