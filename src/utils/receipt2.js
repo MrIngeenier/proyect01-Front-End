@@ -1,6 +1,6 @@
 import calzadoPecas from '../asset/images/imagePecas.png';
 
-export function generateReceipt(ventasData, cliente, cedula, correo, telefono,metodoPago) {  
+export function generateReceipt2(ventasData, cliente, cedula, correo, telefono,metodoPago) {  
     let allData = '';
     let total = 0; // Variable para acumular el total de los valores
     let iva = 0;
@@ -10,17 +10,13 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono,me
     // Recorrer los datos de las ventas
     
     //console.log("Ventas Data: "+JSON.stringify(ventasData, null, 2));
-    const qrDataParts = ventasData.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
-        console.log("QRDATA: "+qrDataParts);
+   
 
     ventasData.forEach((venta, index) => {
         // Separar los datos del QR
-        const qrDataParts = venta.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
-        console.log("QRDATA: "+qrDataParts);
-        const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico, valor] = qrDataParts;
-        
-        // Convertir el valor a número
-        const numericValue = parseFloat(valor) || 0;
+        console.log("venta :"+JSON.stringify(venta, null, 2));
+            // Convertir el valor a número
+        const numericValue = parseFloat(venta.valor) || 0;
         total += numericValue; // Sumar el valor al total
         subtotal = Math.round(total / (1 + ivaRate));
         iva = total  - subtotal;
@@ -31,12 +27,12 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono,me
                     <strong>Item #${index + 1}</strong>: <br>
                 </p>
                 <p style="margin-top: 0px;">
-                    Empresa: ${nombreEmpresa}<br>
-                    Referencia: ${serial}<br>
-                    Color: ${color}<br>
-                    Talla: ${talla}<br>
+                    Empresa: ${venta.empresa}<br>
+                    Referencia: ${venta.referencia}<br>
+                    Color: ${venta.color}<br>
+                    Talla: ${venta.talla}<br>
                     valor: ${numericValue.toLocaleString()}<br>
-                    Público: ${tipopublico}<br>
+                    Público: ${venta.publico}<br>
                 </p>
             </div>
         `;

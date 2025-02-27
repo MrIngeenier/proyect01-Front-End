@@ -7,6 +7,7 @@ import clienteServices from "../../../service/cliente.service";
 import { Dialog, DialogActions, DialogContent, DialogContentText,Autocomplete } from '@mui/material';
 import SuccessAlert from "../../Alerts/SuccesAlert";
 import ErrorAlert from "../../Alerts/ErrorAlert";
+import { generateReceipt2 } from "../../../utils/receipt2";
 // Estilos
 
 const buttonStyle = {
@@ -63,14 +64,16 @@ function Store() {
     const [idReferencia, setIdReferencia] = useState(0);
     const handleErrorClose = () => setErrorOpen(false);
   const handleSuccessClose = () => setSuccessOpen(false);
+
+
     const handleDeleteVenta = (index) => {
-        setVentasData(prevData => prevData.filter((_, i) => i !== index));
+      setSelectedItems(prevData => prevData.filter((_, i) => i !== index));
       };
         
 
     useEffect(() => {
         showJWT();
-        fetchInventary();
+        fetchInventaryGET();
     }, []);
 
     const decodeJWT = (token) => {
@@ -109,13 +112,36 @@ function Store() {
         }
       };
 
-    const fetchInventary = async () => {
+    const fetchInventaryGET = async () => {
         try {
             const response = await inventaryServices.getInventary();
             setData(response); // Asignar la respuesta al estado
         } catch (error) {
             console.error('Error fetching inventory:', error);
         }
+    };
+
+    const fetchInventarySales = async (empresa, referencia, color, ubicacionDescripcion, talla) => {
+      //console.log("Empresa: "+empresa+" Referencia : "+ +" Color: "+color+" Ubicacion: "+ubicacionDescripcion+" Talla: "+talla);
+      try {
+        //const response = await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
+        //setData(response);
+        //console.log("Response : "+JSON.stringify(response, null, 2));
+        
+        /*if(response.body === null){
+          setErrorMessage('Talla sin cantidad en [Inventario].');
+          setErrorOpen(true);
+          
+        }else{
+          setSuccessMessage("Inventario actualizado con éxito.");
+          setSuccessOpen(true);
+        }
+        return response;*/
+      } catch (error) {
+        console.error('Error fetching inventory:', error);
+        setErrorMessage('Error al actualizar el inventario.');
+        setErrorOpen(true);
+      }
     };
 
     // Filtrar los datos según la búsqueda
@@ -131,18 +157,24 @@ function Store() {
 
     // Manejar clic en el botón para seleccionar el producto
     const handleSelect = (item) => {
-        setSelectedItems((prevSelected) => [
-            ...prevSelected,
-            { 
-                empresa: item.empresa, 
-                referencia: item.referencia, 
-                color: item.color, 
-                valor: item.valor,
-                publico: item.publico,
-                talla: ''  // Inicializamos la talla vacía
-            }
-        ]);
-    };
+      //console.log('DEBUG:', { item, tallaStr }); // Ver qué valores tiene item
+  
+      setSelectedItems((prevSelected) => [
+          ...prevSelected,
+          { 
+              empresa: item.empresa, 
+              referencia: item.referencia, 
+              color: item.color, 
+              valor: item.valor,
+              publico: item.publico,
+              talla: String(item.talla), 
+              lugar: item.lugar,
+          }
+      ]);
+  };
+  
+  
+  
 
     // Manejar cambio de talla en la tabla
     const handleTallaChange = (event, index) => {
@@ -263,9 +295,37 @@ function Store() {
       };
     
     const handleFacturaNormal = async () => {
-       alert('Factura Normal');
-       handleSendSales();
+      const cliente2 ='CONSUMIDOR FINAL';
+      const cedula2='222222222';
+      const correo2='NA';
+      const telefono2='0000000000';
+
+      try {
+       // console.log(" Basico: " + JSON.stringify(filteredData, null, 2));
+       // console.log(" Selecccionado: " + JSON.stringify(selectedItems, null, 2));
+              for (const venta of selectedItems) {
+                //console.log('Empresa: '+venta.empresa+' Referencia :'+ venta.referencia,+' Color: '+ venta.color+' Ubicacion: '+ venta.lugar+' talla: '+ venta.talla+" Valor: "+venta.valor);
+                
+                //console.log("venta :"+JSON.stringify(venta, null, 2));
+                await fetchInventarySales(venta.empresa, venta.serial, venta.color, venta.lugar, venta.talla);
+                //await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
+                
+                //console.log('Respuesta de fetchAddVentas:', response);
+                }
+                //console.log(selectedItems,cliente2,cedula2,correo2,telefono2,metodoPago)  ;
+              generateReceipt2(selectedItems,cliente2,cedula2,correo2,telefono2,metodoPago);
+              setSuccessMessage('Ventas registradas exitosamente.');
+              setSuccessOpen(true);
+          } catch (error) {
+              console.error('Error procesando Factura Electrónica:', error);
+              setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
+              setErrorOpen(true);
+          }
+
+       //alert('Factura Normal');
+      // handleSendSales();
       };
+
       const handleFacturaElectronica = async () => {
         alert('Factura Electronica');
         handleSendSales();
@@ -292,11 +352,11 @@ function Store() {
                     minWidth: 700 }} aria-label="Productos seleccionados">
                         <TableHead>
                             <TableRow>
-                                <TableCell><strong>Empresa</strong></TableCell>
-                                <TableCell><strong>Referencia</strong></TableCell>
-                                <TableCell><strong>Color</strong></TableCell>
-                                <TableCell><strong>Valor</strong></TableCell>
-                                <TableCell><strong>publico</strong></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><strong>Empresa</strong></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><strong>Referencia</strong></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><strong>Color</strong></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><strong>Valor</strong></TableCell>
+                                <TableCell sx={{ textAlign: 'center' }}><strong>publico</strong></TableCell>
 
                                 <TableCell><strong>Talla</strong></TableCell>
                                 <TableCell><strong>Acciones</strong></TableCell>
@@ -305,20 +365,21 @@ function Store() {
                         <TableBody>
                             {selectedItems.map((item, index) => (
                                 <TableRow key={index}>
-                                    <TableCell>{item.empresa}</TableCell>
-                                    <TableCell>{item.referencia}</TableCell>
-                                    <TableCell>{item.color}</TableCell>
-                                    <TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>{item.empresa}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>{item.referencia}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>{item.color}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>
                                     <TextField
                                         type="number"
                                         value={item.valor}
                                         onChange={(event) => handleValorChange(event, index)}
                                         variant="outlined"
                                         size="small"
+                                        
                                     />
                                 </TableCell>
 
-                                    <TableCell>{item.publico}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }}>{item.publico}</TableCell>
 
                                     <TableCell>
                                         <FormControl fullWidth>
@@ -393,6 +454,8 @@ function Store() {
                                 <p>{item.referencia}</p>
                                 <p>{item.color}</p>
                                 <strong>{item.valor}</strong>
+                                
+                                
                             </Box>
                         </Button>
                     </Grid>
@@ -511,10 +574,11 @@ function Store() {
         <DialogContentText>
           Aquí están los datos de ventas escaneados:
         </DialogContentText>
-        {ventasData.map((venta, index) => (
+        {selectedItems.map((venta, index) => (
           <Box key={index} display="flex" alignItems="center" justifyContent="space-between">
             <Typography variant="body1">
-              {venta.qrData}
+              {venta.empresa}/{venta.referencia}/{venta.color}/{venta.lugar}/{venta.talla}/{venta.publico}/
+              {venta.valor}
             </Typography>
             <IconButton onClick={() => handleDeleteVenta(index)}>
               <DeleteIcon />
