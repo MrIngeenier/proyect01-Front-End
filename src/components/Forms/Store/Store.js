@@ -74,6 +74,7 @@ function Store() {
     useEffect(() => {
         showJWT();
         fetchInventaryGET();
+        
     }, []);
 
     const decodeJWT = (token) => {
@@ -121,22 +122,22 @@ function Store() {
         }
     };
 
-    const fetchInventarySales = async (empresa, referencia, color, ubicacionDescripcion, talla) => {
+    const fetchInventarySales = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
       //console.log("Empresa: "+empresa+" Referencia : "+ +" Color: "+color+" Ubicacion: "+ubicacionDescripcion+" Talla: "+talla);
       try {
-        //const response = await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
-        //setData(response);
-        //console.log("Response : "+JSON.stringify(response, null, 2));
+        const response = await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
+        setData(response);
+        console.log("Response updateData Inventary : "+JSON.stringify(response, null, 2));
         
-        /*if(response.body === null){
-          setErrorMessage('Talla sin cantidad en [Inventario].');
+        if(response.body === null){
+         setErrorMessage('Talla sin cantidad en [Inventario].');
           setErrorOpen(true);
           
         }else{
           setSuccessMessage("Inventario actualizado con éxito.");
           setSuccessOpen(true);
         }
-        return response;*/
+        return ;
       } catch (error) {
         console.error('Error fetching inventory:', error);
         setErrorMessage('Error al actualizar el inventario.');
@@ -145,10 +146,13 @@ function Store() {
     };
 
     // Filtrar los datos según la búsqueda
-    const filteredData = data.filter(item => 
+    const filteredData = Array.isArray(data) 
+    ? data.filter(item => 
         (item.empresa && item.empresa.toLowerCase().includes(search.toLowerCase())) ||
         (item.referencia && item.referencia.toLowerCase().includes(search.toLowerCase()))
-    );
+    ) 
+    : [];
+
 
     // Manejar cambio en el input de búsqueda
     const handleSearchChange = (event) => {
@@ -195,38 +199,51 @@ function Store() {
         setSelectedItems(newSelectedItems);
     };
 
-    const handleSendSales = async () => {
-        const faltaTalla = selectedItems.some(item => !item.talla || item.talla.trim() === '');
+    const fetchGetIDReferences = async (color, serial, tipopublico) => {
+      if (!color || !serial || tipopublico == null) {
+        console.error('Algunos valores están faltando:', { color, serial, tipopublico });
+        setErrorMessage('Datos incompletos para tomar id referencia.');
+        setErrorOpen(true);
+        return;
+      }
+      try {
+        const response = await VentasServices.GetReferenciaID(color, serial, tipopublico);
+        //setCount(response.id);
         
-        if (selectedItems.length === 0 || faltaTalla) {
-            alert('No hay productos seleccionados o falta seleccionar la talla');
-            return;
-        }
-    
-        try {
-            const responses = await Promise.all(
-                selectedItems.map(async (item) => {
-                    return await VentasServices.GetReferenciaID(item.color, item.referencia, item.publico);
-                })
-            );
-
-           /**  const reponseSales = await Promise.all(
-                selectedItems.map(async (item) => {
-                    return await VentasServices.addVentas(responses,1,item.estado,item.lugar,1,item.valor);
-                })
-            );*/
-    
-            setItemsID(responses);
-    
-           // addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,pago)
-
-                alert("Cantidad: " + responses.length + " ID: " + JSON.stringify(responses, null, 2));
-            
-    
-        } catch (error) {
-            console.error('Error enviando ventas:', error);
-        }
+        //alert(JSON.stringify(response, null, 2));
+        //console.log("ID:"+response.id);
+        return response.id;
+      } catch (error) {
+        console.error('Error registrando para tomar id referencia:', error);
+        setErrorMessage('Error para tomar id referencia.');
+        setErrorOpen(true);
+      }
     };
+
+    const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id,valor ) => {
+      //console.log(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
+      if (!serialReferencia || !idUsuario || estado == null || lugar == null || fk_idusuarios == null || id == null) {
+        
+        console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id,valor  });
+        setErrorMessage('Datos incompletos para agregar venta.');
+        setErrorOpen(true);
+        return;
+      }
+      try {
+        const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar,fk_idusuarios,id,valor);
+        console.log(JSON.stringify(response, null, 2));
+  
+        setValidador(true);
+        return response;
+      } catch (error) {
+        console.error('Error registrando venta:', error);
+        setErrorMessage('Error al agregar venta.');
+        setErrorOpen(true);
+        setValidador(false);
+      }
+    };
+  
+  
     const fetchGetCliente = async () => {
         try {
           const response = await clienteServices.getData();
@@ -294,41 +311,48 @@ function Store() {
         //alert('Método de pago seleccionado: ' + metodo);
       };
     
-    const handleFacturaNormal = async () => {
-      const cliente2 ='CONSUMIDOR FINAL';
-      const cedula2='222222222';
-      const correo2='NA';
-      const telefono2='0000000000';
-
-      try {
-       // console.log(" Basico: " + JSON.stringify(filteredData, null, 2));
-       // console.log(" Selecccionado: " + JSON.stringify(selectedItems, null, 2));
-              for (const venta of selectedItems) {
-                //console.log('Empresa: '+venta.empresa+' Referencia :'+ venta.referencia,+' Color: '+ venta.color+' Ubicacion: '+ venta.lugar+' talla: '+ venta.talla+" Valor: "+venta.valor);
-                
+      const handleFacturaNormal = async () => {
+        const cliente2 = 'CONSUMIDOR FINAL';
+        const cedula2 = '222222222';
+        const correo2 = 'NA';
+        const telefono2 = '0000000000';
+      
+        try {
+          // Obtener idUsuario del token
+          showJWT(); 
+          
+          // Esperar a que se actualice el estado antes de usarlo
+          setTimeout(async () => {
+            for (const venta of selectedItems) {
+              console.log(venta);
+              var id = await fetchGetIDReferences(venta.color, venta.referencia, venta.publico);
+              console.log('Empresa: ' + venta.empresa + ' Referencia: ' + venta.referencia +
+                ' Color: ' + venta.color + ' Ubicacion: ' + venta.lugar + ' talla: ' + venta.talla +
+                " Valor: " + venta.valor);
+      
+              // Llamar a fetchAddVentas con idUsuario obtenido del JWT
+              await fetchAddVentas(formData.idUsuario, false, id, venta.lugar, 1, idPago,venta.valor);
+               
                 //console.log("venta :"+JSON.stringify(venta, null, 2));
-                await fetchInventarySales(venta.empresa, venta.serial, venta.color, venta.lugar, venta.talla);
-                //await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
-                
-                //console.log('Respuesta de fetchAddVentas:', response);
-                }
-                //console.log(selectedItems,cliente2,cedula2,correo2,telefono2,metodoPago)  ;
-              generateReceipt2(selectedItems,cliente2,cedula2,correo2,telefono2,metodoPago);
-              setSuccessMessage('Ventas registradas exitosamente.');
-              setSuccessOpen(true);
-          } catch (error) {
-              console.error('Error procesando Factura Electrónica:', error);
-              setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
-              setErrorOpen(true);
-          }
-
-       //alert('Factura Normal');
-      // handleSendSales();
+              await fetchInventarySales(venta.empresa, venta.referencia, venta.color, venta.lugar, venta.talla);
+            }
+      
+            generateReceipt2(selectedItems, cliente2, cedula2, correo2, telefono2, metodoPago);
+            setSuccessMessage('Ventas registradas exitosamente.');
+            setSuccessOpen(true);
+          }, 100); // Pequeña pausa para asegurar que showJWT haya actualizado formData
+      
+        } catch (error) {
+          console.error('Error procesando Factura Electrónica:', error);
+          setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
+          setErrorOpen(true);
+        }
       };
+      
 
       const handleFacturaElectronica = async () => {
         alert('Factura Electronica');
-        handleSendSales();
+        fetchGetIDReferences();
        };
 
        const handleFactura = () => {
@@ -450,7 +474,8 @@ function Store() {
                             onClick={() => handleSelect(item)}
                         >
                             <Box>
-                                <strong>{item.empresa}</strong>
+                            <strong>{item.id}</strong>
+                                <p>{item.empresa}</p>
                                 <p>{item.referencia}</p>
                                 <p>{item.color}</p>
                                 <strong>{item.valor}</strong>

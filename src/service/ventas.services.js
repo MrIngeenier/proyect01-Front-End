@@ -86,19 +86,19 @@ const VentasServices = {
     
 
     //// http://localhost:10000/users/login
-    async addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,pago) {
+    async addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,pago,valor) {
       try {
         var typopago = String(pago);
         const token = localStorage.getItem('token'); 
-        console.log("Services : "+fk_referencia+" "+fk_idusuarios+" "+estado+" "+lugar+" "+fk_clientes,typopago)
+        console.log("Services addVenta : "+fk_referencia+" "+fk_idusuarios+" "+estado+" "+lugar+" "+fk_clientes,typopago+" "+valor );
         //console.log(token);
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/addData', {
+        const response = await fetch('http://localhost:10000/ventas/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ token,
           },
-          body: JSON.stringify({fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,typopago}),
+          body: JSON.stringify({fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,typopago,valor}),
         });
 
         const data = await response.json(); 
@@ -116,8 +116,9 @@ const VentasServices = {
     async GetReferenciaID(color,serial,tipopublico) {
         try {
           const token = localStorage.getItem('token'); 
+          //console.log("GETreference Data : "+color+" "+serial+" "+tipopublico)
           //console.log(token);
-          const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/getDataID', {
+          const response = await fetch('http://localhost:10000/referencias/getDataID', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -125,8 +126,9 @@ const VentasServices = {
             },
             body: JSON.stringify({color,serial,tipopublico}),
           });
-  
           const data = await response.json(); 
+          
+
           //console.log(data);
           //console.log(response);
           if (!response.ok) {
@@ -134,7 +136,7 @@ const VentasServices = {
           }
           return data;
         } catch (error) {
-          console.error('Error registrando usuario:', error);
+          console.error('Error obteniendo referenceID:', error);
         }
       },
 

@@ -389,8 +389,8 @@ const inventaryServices = {
     async updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) {
       try {
         const token = localStorage.getItem('token');
-    
-        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/updateDataQR', {
+        // https://proyect01-back-end-8ujk.onrender.com/inventario/updateDataQR
+        const response = await fetch('http://localhost:10000/inventario/updateDataQR', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

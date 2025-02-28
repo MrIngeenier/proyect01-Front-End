@@ -14,7 +14,7 @@ export function generateReceipt2(ventasData, cliente, cedula, correo, telefono,m
 
     ventasData.forEach((venta, index) => {
         // Separar los datos del QR
-        console.log("venta :"+JSON.stringify(venta, null, 2));
+        //console.log("venta :"+JSON.stringify(venta, null, 2));
             // Convertir el valor a número
         const numericValue = parseFloat(venta.valor) || 0;
         total += numericValue; // Sumar el valor al total
@@ -125,17 +125,17 @@ export function generateReceipt2(ventasData, cliente, cedula, correo, telefono,m
 
         // Imprimir el contenido del iframe
         printIframe.contentWindow.print();
-        sendCutCommandToPrinter();
+        //sendCutCommandToPrinter();
     };
 
     img.onerror = () => {
         console.error('Error al cargar la imagen');
     };
 }
-function sendCutCommandToPrinter() {
+/*function sendCutCommandToPrinter() {
     // Este comando corresponde a ESC/POS para cortar el papel
     const cutCommand = '\x1D\x56\x00';  // Comando ESC/POS para cortar el papel
 
-    console.log('Enviando comando de corte:', cutCommand);
+    //console.log('Enviando comando de corte:', cutCommand);
     
-}
+}*/
