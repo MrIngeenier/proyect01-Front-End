@@ -390,7 +390,7 @@ const inventaryServices = {
       try {
         const token = localStorage.getItem('token');
         // https://proyect01-back-end-8ujk.onrender.com/inventario/updateDataQR
-        const response = await fetch('http://localhost:10000/inventario/updateDataQR', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/inventario/updateDataQR', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
