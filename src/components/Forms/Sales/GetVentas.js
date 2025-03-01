@@ -58,7 +58,7 @@ function GetVentas() {
             //console.log("Borrar acción para ID:", id);
    
             // Llamar al servicio de eliminación
-            const response = await VentasServices.deleteVentas(idventas);
+            await VentasServices.deleteVentas(idventas);
             //console.log(response);
             // Llamar a la función para actualizar los datos
             fetchReferenciasZapatos();
@@ -78,13 +78,13 @@ function GetVentas() {
     const handleShowVentasByDate = (index,date) => {
         //console.log("Fecha "+date+" : "+index);
         const fechasUnicas = [...new Set(referencias.map(venta => new Date(venta.fecha).toLocaleDateString()))];
-       
+       // Mapear segun la fecha
         const ventasFiltradas = referencias.filter(venta => new Date(venta.fecha).toLocaleDateString() === fechasUnicas[index]);
-        
+       // console.log(ventasFiltradas); // -- Verificar las ventas para imprimir
         if (ventasFiltradas.length > 0) {
-            generateCashEnclosure(ventasFiltradas);
+            generateCashEnclosure(ventasFiltradas); // Generar el recibo de caja
         }else{
-            alert(`No se encontraron ventas para la fecha ${date}`);
+            alert(`No se encontraron ventas para la fecha ${date}`); // Mensaje si no hay ventas
         }
     };
     
@@ -212,10 +212,14 @@ function GetVentas() {
             {/* Tabla agrupada por fecha */}
             {Object.entries(groupByDate(filteredData)).map(([date, ventas],index) => (
                 <Paper key={date} sx={{ margin: '20px 0', padding: '10px', backgroundColor: '#121212' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between',backgroundColor: 'rgba(0, 0, 0, 0.5)' }} >
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between',backgroundColor: 'rgba(34, 34, 34, 0.5)',minWidth: '900px'  }} >
                         <Typography variant="h6" sx={{ color: 'white' }}>Fecha: {date}</Typography>
                         <Typography variant="h6" sx={{ color: 'white' }}>
                             Total: {ventas.reduce((sum, item) => sum + parseFloat(item.valor) || 0, 0)}
+                        </Typography>
+
+                        <Typography variant="h6" sx={{ color: 'white', textAlign: 'center' }}>
+                            Precio: {ventas.reduce((sum, item) => sum + parseFloat(item.precio) || 0, 0)}
                         </Typography>
                         
                         <Box display="flex" gap={2}>
@@ -239,6 +243,7 @@ function GetVentas() {
                                 <TableCell sx={{ color: 'white' }}>Color</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Talla</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Valor</TableCell>
+                                <TableCell sx={{ color: 'white' }}>Precio</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Lugar</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Cliente</TableCell>
                                 <TableCell sx={{ color: 'white' }}>Cedula</TableCell>
@@ -259,6 +264,7 @@ function GetVentas() {
                                     <TableCell sx={{ color: 'white' }}>{item.color}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.talla_vendida}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.valor}</TableCell>
+                                    <TableCell sx={{ color: 'white' }}>{item.precio}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.lugar}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.cliente_nombre}</TableCell>
                                     <TableCell sx={{ color: 'white' }}>{item.cliente_cedula}</TableCell>

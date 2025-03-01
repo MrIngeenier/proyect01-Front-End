@@ -22,12 +22,14 @@ export function generateCashEnclosure(ventasFiltradas) {
         const serial = venta.serial || "No Referencia";
         const color = venta.color || "No Color";
         const talla = venta.talla_vendida || "No Talla";
-        const valor = venta.valor || 0;
+        //const valor = venta.valor || 0;
+        const precio = venta.precio || 0;
         const estado = venta.estado || "False";
         const cliente = venta.cliente_nombre || "NA";
         const ccCliente = venta.cliente_cedula || "NA";
         const tipo = venta.tipo_pago || "NA";
-        const numericValue = parseFloat(valor) || 0;
+       // const numericValue = parseFloat(valor) || 0;
+        const numericValue = parseFloat(precio) || 0;
 
         
         totalValue += numericValue;
