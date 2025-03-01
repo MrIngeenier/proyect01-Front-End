@@ -10,17 +10,17 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono,me
     // Recorrer los datos de las ventas
     
     //console.log("Ventas Data: "+JSON.stringify(ventasData, null, 2));
-    const qrDataParts = ventasData.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
-        console.log("QRDATA: "+qrDataParts);
+    //const qrDataParts = ventasData.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
+      //  console.log("QRDATA: "+qrDataParts);
 
     ventasData.forEach((venta, index) => {
         // Separar los datos del QR
         const qrDataParts = venta.qrData.split('/').map(item => item.replace(/^'|'$/g, '').trim());
         console.log("QRDATA: "+qrDataParts);
-        const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico, valor] = qrDataParts;
+        const [nombreEmpresa, serial, color, ubicacionDescripcion, talla, tipopublico] = qrDataParts;
         
         // Convertir el valor a número
-        const numericValue = parseFloat(valor) || 0;
+        const numericValue = parseFloat(venta.valor) || 0;
         total += numericValue; // Sumar el valor al total
         subtotal = Math.round(total / (1 + ivaRate));
         iva = total  - subtotal;
@@ -78,7 +78,7 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono,me
                 <hr style="border: none; border-top: 1px dashed black; margin: 10px 0; ">
                 
                 <div style="font-family: Arial, sans-serif; margin: 10px 0;">
-                Tarjeta: ${metodoPago || "NA"}
+                Metodo de Pago: ${metodoPago || "NA"}
                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                         
                         <span>Subtotal:</span>
@@ -129,17 +129,10 @@ export function generateReceipt(ventasData, cliente, cedula, correo, telefono,me
 
         // Imprimir el contenido del iframe
         printIframe.contentWindow.print();
-        sendCutCommandToPrinter();
+        
     };
 
     img.onerror = () => {
         console.error('Error al cargar la imagen');
     };
-}
-function sendCutCommandToPrinter() {
-    // Este comando corresponde a ESC/POS para cortar el papel
-    const cutCommand = '\x1D\x56\x00';  // Comando ESC/POS para cortar el papel
-
-    console.log('Enviando comando de corte:', cutCommand);
-    
 }

@@ -8,11 +8,10 @@ import clienteServices from '../../../service/cliente.service';
 import VentasServices from '../../../service/ventas.services';
 import { decryptText } from '../../../utils/Encript';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton,TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, IconButton,TextField } from '@mui/material';
 import { generateReceipt } from '../../../utils/receipt';
 
 const QrScanner = () => {
-  const hasRun = useState(false);
 
   const [result, setResult] = useState('No result');
   const [scanner, setScanner] = useState(null);
@@ -23,6 +22,8 @@ const QrScanner = () => {
   const [data, setData] = useState([]);
   //const [count, setCount] = useState(0);
   const [validador, setValidador] = useState(true);
+      const [search, setSearch] = useState('');        // Valor de búsqueda
+  
   const [formData, setFormData] = useState({
     idUsuario: '',
     estado: false,
@@ -44,6 +45,7 @@ const QrScanner = () => {
   const [showContent, setShowContent] = useState(false);
   const [metodoPago, setMetodoPago] = useState('');
   const [idPago, setidPago] = useState(0);
+  const [searchValues, setSearchValues] = useState([]);
 
   const [places, setPlaces] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null); // Estado para el lugar seleccionado
@@ -131,17 +133,17 @@ const QrScanner = () => {
     }
   };
   
-  const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id ) => {
+  const fetchAddVentas = async (idUsuario, estado, serialReferencia,lugar,fk_idusuarios,id,valor ) => {
     //console.log(idUsuario+" / "+ estado+" / "+ serialReferencia+" / "+lugar+" / "+fk_idusuarios+" / "+id)
     if (!serialReferencia || !idUsuario || estado == null || lugar == null || fk_idusuarios == null || id == null) {
       
-      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id  });
+      console.error('Algunos valores están faltando:', { idUsuario,  serialReferencia, estado,lugar,fk_idusuarios,id,valor  });
       setErrorMessage('Datos incompletos para agregar venta.');
       setErrorOpen(true);
       return;
     }
     try {
-      const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar,fk_idusuarios,id);
+      const response = await VentasServices.addVentas(serialReferencia, idUsuario, estado,lugar,fk_idusuarios,id,valor);
       console.log(JSON.stringify(response, null, 2));
 
       setValidador(true);
@@ -335,7 +337,20 @@ const QrScanner = () => {
       return null;
     }
   };
+  const handleSearchChange = (index, event) => {
+    const { value } = event.target;
 
+    setVentasData((prevVentas) => {
+        const newVentas = [...prevVentas];
+        newVentas[index] = {
+            ...newVentas[index], // Mantiene los otros datos de la venta
+            valor: value, // Actualiza solo el valor del precio
+        };
+        return newVentas;
+    });
+};
+  
+  
   const showJWT = () => {
     const decodedData = decodeJWT(token);
     if (decodedData) {
@@ -356,7 +371,11 @@ const QrScanner = () => {
       startScanning(); // Reiniciar el escaneo con el nuevo zoom
     }
   };
-
+  const searchStyle = {
+    
+    width: '30%', // Ancho de la barra de búsqueda
+    maxWidth: '500px', // Tamaño máximo
+};
   useEffect(() => {
     
     showJWT();
@@ -406,8 +425,11 @@ const QrScanner = () => {
     try {
 
         for (const venta of ventasData) {
-          await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
-          await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago);
+          
+          console.log("Ventas Data"+JSON.stringify(venta, null, 2)); 
+
+         // await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
+         // await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago,venta.valor);
           
           //console.log('Respuesta de fetchAddVentas:', response);
           }
@@ -415,8 +437,8 @@ const QrScanner = () => {
         setSuccessMessage('Ventas registradas exitosamente.');
         setSuccessOpen(true);
     } catch (error) {
-        console.error('Error procesando Factura Electrónica:', error);
-        setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
+        console.error('Error procesando Factura :', error);
+        setErrorMessage('Error procesando Factura : ' + error.message);
         setErrorOpen(true);
     }
   };
@@ -604,14 +626,24 @@ const QrScanner = () => {
             </Button>
           </Box>
         </Box>
-        <DialogContentText>
+        <DialogContentText sx={{ marginTop: 2,textAlign: 'center' }}>
           Aquí están los datos de ventas escaneados:
         </DialogContentText>
         {ventasData.map((venta, index) => (
-          <Box key={index} display="flex" alignItems="center" justifyContent="space-between">
+          <Box key={index} display="flex" alignItems="center" justifyContent="space-between"  backgroundColor="lightgray" padding={1} marginTop={1}>
             <Typography variant="body1">
-              {venta.qrData}
+              {venta.nombreEmpresa}-{venta.color}-{venta.talla}
+              
             </Typography>
+            <TextField
+              key={index}
+              type="number"
+              label={`Precio ${index + 1}`}
+              variant="outlined"
+              value={venta.valor || ''}
+              onChange={(event) => handleSearchChange(index, event)}
+              style={searchStyle}
+          />
             <IconButton onClick={() => handleDeleteVenta(index)}>
               <DeleteIcon />
             </IconButton>
