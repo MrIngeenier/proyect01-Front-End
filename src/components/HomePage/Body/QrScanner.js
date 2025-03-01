@@ -385,7 +385,7 @@ const QrScanner = () => {
   const handleFacturaElectronica = async () => {
     var fk_idusuarios = idClient;
     //console.log('Respuesta de idPago:', idPago);
-    console.log(ventasData)
+    //console.log(ventasData)
     try {
        if(!cliente || !cedula || !correo || !correo.includes('@')|| !telefono || !fk_idusuarios || !metodoPago || idPago==='') {
         setErrorMessage('Datos incompletos para la factura.');
@@ -396,9 +396,9 @@ const QrScanner = () => {
         for (const venta of ventasData) {
           
           await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
-          const response = await fetchAddVentas(venta.idUsuario, true, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago);
+          await fetchAddVentas(venta.idUsuario, true, venta.serialReferencia, venta.ubicacionDescripcion,fk_idusuarios,idPago,venta.valor);
             
-          console.log('Respuesta de fetchAddVentas:'+ response);
+          //console.log('Respuesta de fetchAddVentas:'+ response);
           }
 
           
@@ -426,10 +426,10 @@ const QrScanner = () => {
 
         for (const venta of ventasData) {
           
-          console.log("Ventas Data"+JSON.stringify(venta, null, 2)); 
+          //console.log("Ventas Data"+JSON.stringify(venta, null, 2)); 
 
-         // await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
-         // await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago,venta.valor);
+          await fetchInventaryQR(venta.nombreEmpresa, venta.serial, venta.color, venta.ubicacionDescripcion, venta.talla);
+          await fetchAddVentas(venta.idUsuario, false, venta.serialReferencia, venta.ubicacionDescripcion,1,idPago,venta.valor);
           
           //console.log('Respuesta de fetchAddVentas:', response);
           }

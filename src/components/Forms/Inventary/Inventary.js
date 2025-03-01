@@ -10,6 +10,42 @@ function ADDInventary() {
     const [formData, setFormData] = useState({
         empresa:'',
 
+        talla21: '21',
+        cantidad21: '0',
+
+        talla22: '22',
+        cantidad22: '0',
+
+        talla23: '23',
+        cantidad23: '0',
+
+        talla24: '24',
+        cantidad24: '0',
+
+        talla25: '25',
+        cantidad25: '0',
+
+        talla26: '26',
+        cantidad26: '0',
+
+        talla27: '27',
+        cantidad27: '0',
+
+        talla28: '28',
+        cantidad28: '0',
+
+        talla29: '29',
+        cantidad29: '0',
+
+        talla30: '30',
+        cantidad30: '0',
+
+        talla31: '31',
+        cantidad31: '0',
+
+        talla32: '32',
+        cantidad32: '0',
+
         talla33: '33',
         cantidad33: '0',
 
@@ -143,6 +179,19 @@ const FetchAddInventary = async (event) => {
         }
 
         const inventaryData = [
+
+            { cantidad: rest.cantidad21, talla: rest.talla21 },
+            { cantidad: rest.cantidad22, talla: rest.talla22 },
+            { cantidad: rest.cantidad23, talla: rest.talla23 },
+            { cantidad: rest.cantidad24, talla: rest.talla24 },
+            { cantidad: rest.cantidad25, talla: rest.talla25 },
+            { cantidad: rest.cantidad26, talla: rest.talla26 },
+            { cantidad: rest.cantidad27, talla: rest.talla27 },
+            { cantidad: rest.cantidad28, talla: rest.talla28 },
+            { cantidad: rest.cantidad29, talla: rest.talla29 },
+            { cantidad: rest.cantidad30, talla: rest.talla30 },
+            { cantidad: rest.cantidad31, talla: rest.talla31 },
+            { cantidad: rest.cantidad32, talla: rest.talla32 },
             { cantidad: rest.cantidad33, talla: rest.talla33 },
             { cantidad: rest.cantidad34, talla: rest.talla34 },
             { cantidad: rest.cantidad35, talla: rest.talla35 },
@@ -399,8 +448,8 @@ const FetchAddInventary = async (event) => {
                     <FormControl fullWidth>
                         <InputLabel style={{ color: 'white' }}>Lugar</InputLabel>
                         <Select
+                        name="tipoPublicoTipoZapato"
                             variant="outlined"
-                            name="tipoPublicoTipoZapato"
                             value={formData.tipoPublicoTipoZapato }
                             onChange={(event) => {
                                 const selectedId = event.target.value;
@@ -431,8 +480,8 @@ const FetchAddInventary = async (event) => {
                     <FormControl fullWidth>
                         <InputLabel style={{ color: 'white' }}>Tipo</InputLabel>
                         <Select
-                            variant="outlined"
                             name="descripcionLugar"
+                            variant="outlined"
                             value={formData.descripcionLugar} 
                             onChange={(event) => {
                                 const selectedId = event.target.value;
@@ -452,8 +501,301 @@ const FetchAddInventary = async (event) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                    
-                <Grid item xs={12} sm={1}>
+
+                <Grid item xs={12} sm={20} sx={{ display: 'grid', gap: 1 ,
+                        gridTemplateColumns: { xs: 'repeat(3, 1fr)', sm: 'repeat(6, 1fr)', md: 'repeat(8, 1fr)', lg: 'repeat(12, 1fr)' }, 
+
+                }}>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#21"
+                    variant="outlined"
+                    name="cantidad21"
+                    value={formData.cantidad21}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                <TextField
+                    label="#22"
+                    variant="outlined"
+                    name="cantidad22"
+                    value={formData.cantidad22}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12}  sm={12}>
+                <TextField
+                    label="#23"
+                    variant="outlined"
+                    name="cantidad23"
+                    value={formData.cantidad23}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid> 
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#24"
+                    variant="outlined"
+                    name="cantidad24"
+                    value={formData.cantidad24}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#25"
+                    variant="outlined"
+                    name="cantidad25"
+                    value={formData.cantidad25}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#26"
+                    variant="outlined"
+                    name="cantidad26"
+                    value={formData.cantidad26}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#27"
+                    variant="outlined"
+                    name="cantidad27"
+                    value={formData.cantidad27}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#28"
+                    variant="outlined"
+                    name="cantidad28"
+                    value={formData.cantidad28}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#29"
+                    variant="outlined"
+                    name="cantidad29"
+                    value={formData.cantidad29}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#30"
+                    variant="outlined"
+                    name="cantidad30"
+                    value={formData.cantidad30}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#31"
+                    variant="outlined"
+                    name="cantidad31"
+                    value={formData.cantidad31}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+                
+                <Grid item xs={12} sm={12} >
+                <TextField
+                    label="#32"
+                    variant="outlined"
+                    name="cantidad32"
+                    value={formData.cantidad32}
+                    onChange={(event) => {
+                        const { name: fieldName, value } = event.target;  
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            [fieldName]: value,  
+                        }));
+                    }}
+                    fullWidth
+                    type="number"
+                    InputProps={{
+                        style: { color: 'white', backgroundColor: '#333' },
+                    }}
+                    InputLabelProps={{
+                        style: { color: 'white' },
+                    }}
+                />
+                </Grid>
+                
+                <Grid item xs={12} sm={12}>
                 <TextField
                     label="#33"
                     variant="outlined"
@@ -477,8 +819,7 @@ const FetchAddInventary = async (event) => {
                 />
                 </Grid>
 
-                
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                 <TextField
                     label="#34"
                     variant="outlined"
@@ -502,7 +843,7 @@ const FetchAddInventary = async (event) => {
                 />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#35"
                         variant="outlined"
@@ -526,7 +867,7 @@ const FetchAddInventary = async (event) => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#36"
                         variant="outlined"
@@ -550,7 +891,7 @@ const FetchAddInventary = async (event) => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#37"
                         variant="outlined"
@@ -574,7 +915,7 @@ const FetchAddInventary = async (event) => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#38"
                         variant="outlined"
@@ -598,7 +939,7 @@ const FetchAddInventary = async (event) => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#39"
                         variant="outlined"
@@ -622,7 +963,7 @@ const FetchAddInventary = async (event) => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#40"
                         variant="outlined"
@@ -646,7 +987,7 @@ const FetchAddInventary = async (event) => {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#41"
                         variant="outlined"
@@ -669,7 +1010,8 @@ const FetchAddInventary = async (event) => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#42"
                         variant="outlined"
@@ -692,7 +1034,8 @@ const FetchAddInventary = async (event) => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12} sm={1}>
+
+                <Grid item xs={12} sm={12}>
                     <TextField
                         label="#43"
                         variant="outlined"
@@ -715,6 +1058,17 @@ const FetchAddInventary = async (event) => {
                         }}
                     />
                 </Grid>
+
+                </Grid>
+
+                    
+
+                
+
+                
+
+                
+                
 
                 
                 

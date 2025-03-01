@@ -123,7 +123,7 @@ function Store() {
     };
 
     const fetchInventarySales = async (nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla) => {
-      //console.log("Empresa: "+empresa+" Referencia : "+ +" Color: "+color+" Ubicacion: "+ubicacionDescripcion+" Talla: "+talla);
+      console.log("Empresa: "+nombreEmpresa+" Referencia : "+ referenciaSerial+" Color: "+color+" Ubicacion: "+ubicacionDescripcion+" Talla: "+talla);
       try {
         const response = await inventaryServices.updateDataQR(nombreEmpresa, referenciaSerial, color, ubicacionDescripcion, talla);
         setData(response);
@@ -351,9 +351,39 @@ function Store() {
       
 
       const handleFacturaElectronica = async () => {
-        alert('Factura Electronica');
-        fetchGetIDReferences();
-       };
+          var fk_idusuarios = idClient;
+
+          //console.log('Respuesta de idPago:', idPago);
+          
+          try {
+             if(!cliente || !cedula || !correo || !correo.includes('@')|| !telefono || !fk_idusuarios || !metodoPago || idPago==='') {
+              setErrorMessage('Datos incompletos para la factura.');
+              setErrorOpen(true);
+              return;
+            }
+           
+              for (const venta of selectedItems) {
+                console.log(venta);
+                var id = await fetchGetIDReferences(venta.color, venta.referencia, venta.publico);
+
+
+                const response = await fetchInventarySales(venta.empresa, venta.referencia, venta.color, venta.lugar, venta.talla);
+                const response2 = await fetchAddVentas(formData.idUsuario, true, id, venta.lugar,fk_idusuarios,idPago,venta.valor);
+                  
+                console.log('Respuesta de fetchAddVentas:'+ response2);
+                console.log('Respuesta de fetchInventarySales:'+ response);
+                }
+      
+                
+              generateReceipt2(selectedItems,cliente,cedula,correo,telefono,metodoPago);
+              setSuccessMessage('Ventas registradas exitosamente.');
+              setSuccessOpen(true);
+          } catch (error) {
+              console.error('Error procesando Factura Electrónica:', error);
+              setErrorMessage('Error procesando Factura Electrónica: ' + error.message);
+              setErrorOpen(true);
+          }
+      };
 
        const handleFactura = () => {
         //alert('Factura Normal seleccionada');
