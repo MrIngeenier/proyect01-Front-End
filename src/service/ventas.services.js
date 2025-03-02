@@ -6,7 +6,7 @@ const VentasServices = {
       try {
         const token = localStorage.getItem('token'); 
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/getFullData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/getFullData', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -83,8 +83,6 @@ const VentasServices = {
       }
     },
 
-    
-
     //// http://localhost:10000/users/login
     async addVentas(fk_referencia,fk_idusuarios,estado,lugar,fk_clientes,pago,valor) {
       try {
@@ -92,7 +90,7 @@ const VentasServices = {
         const token = localStorage.getItem('token'); 
         console.log("Services addVenta : "+fk_referencia+" "+fk_idusuarios+" "+estado+" "+lugar+" "+fk_clientes,typopago+" "+valor );
         //console.log(token);
-        const response = await fetch('http://localhost:10000/ventas/addData', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/addData', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -118,7 +116,7 @@ const VentasServices = {
           const token = localStorage.getItem('token'); 
           //console.log("GETreference Data : "+color+" "+serial+" "+tipopublico)
           //console.log(token);
-          const response = await fetch('http://localhost:10000/referencias/getDataID', {
+          const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/referencias/getDataID', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
