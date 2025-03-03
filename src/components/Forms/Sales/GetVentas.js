@@ -34,6 +34,8 @@ function GetVentas() {
             console.error('Error fetching TipoZapato:', error);
         }
     };
+
+
     const groupByDate = (data) => {
         //console.log(JSON.stringify(data, null, 2));
         return data.reduce((acc, item) => {
@@ -109,18 +111,13 @@ function GetVentas() {
 
    // const groupedData = groupByDate(filteredData);
     const handleToggleStatus = async (id) => {
-        console.log("Estado acción para ID:", id);
 
-        // Aquí puedes implementar la lógica para actualizar el estado en el backend
         try {
-            // Lógica para cambiar el estado del usuario
-           // const updatedStatus = /* lógica para determinar el nuevo estado */;
-            
-            // Actualiza el estado en el backend (puedes hacer una llamada API aquí)
-            //await publicServices.updateStatus(id, updatedStatus);
-    
-            // Actualiza el estado localmente si es necesario
-            // setVentas(prev => prev.map(item => item.idventas === id ? { ...item, estado: updatedStatus } : item));
+            // Llamar al servicio de actualización
+            await VentasServices.updateStateSales(id);
+            fetchReferenciasZapatos();
+            //console.log(response);
+           
         } catch (error) {
             console.error('Error updating status:', error);
         }

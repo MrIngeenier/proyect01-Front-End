@@ -163,6 +163,32 @@ const VentasServices = {
         console.error('Error actualizando usuario:', error);
       }
     },
+
+    async updateStateSales(idventas) {
+      try {
+        const token = localStorage.getItem('token');
+       // console.log("Venta Actualizada :"+idventas);
+    
+        const response = await fetch('http://localhost:10000/ventas/updateState', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+          body: JSON.stringify({ idventas }),
+        });
+    
+        const data = await response.json();
+       // console.log("Response :" + data);
+    
+        if (!response.ok) {
+          throw new Error(data.message || 'Error desconocido');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error actualizando el estado [VENTA]:', error);
+      }
+    },
     async deleteVentas(id) {
       try {
         const idventas = parseInt(id, 10);
