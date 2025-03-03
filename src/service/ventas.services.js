@@ -169,7 +169,7 @@ const VentasServices = {
         const token = localStorage.getItem('token');
        // console.log("Venta Actualizada :"+idventas);
     
-        const response = await fetch('http://localhost:10000/ventas/updateState', {
+        const response = await fetch('https://proyect01-back-end-8ujk.onrender.com/ventas/updateState', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
